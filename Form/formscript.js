@@ -15,6 +15,8 @@ var surveyItemNumbersWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheet
 //Survey Entry Google Form
 var form = FormApp.openById(formId);
 
+/** Event Triggers **/
+
 function onSubmit(){
   if(isExistingSurvey()){
     copyDataFromExistingSurvey()
@@ -22,6 +24,8 @@ function onSubmit(){
     updateSurveyItemNumbers() //We have added a new Survey Item #
   }
 }
+
+/** Form Processing Methods **/
 
 function copyDataFromExistingSurvey(){
   Logger.log("Copying data from existing survey...")
@@ -60,6 +64,7 @@ function isExistingSurvey(){
   }
 }
 
+// Run this function if you manually update "Survey Item #" worksheet
 function updateExistingSurveyItemDropdown(){
   Logger.log("Updating Existing Survey Item # Dropdown...")
 
@@ -111,7 +116,19 @@ function updateSurveyItemNumbers(){
   }
 }
 
-// Private helper functions
+//Copy survey metadata from source row to destination row
+function copySurveyMetadata(sourceRow, destinationRow){
+  //copy every column from Polling Group up to (but not including) Question
+  var pollingGroupColumn = getColumnFromName(responseWorksheet, "Polling Group")
+  var questionColumn = getColumnFromName(responseWorksheet, "Question")
+  for (var i = pollingGroupColumn; i < questionColumn; i++) {
+    var sourceCell = responseWorksheet.getRange(sourceRow, i)
+    var destinationCell = responseWorksheet.getRange(destinationRow, i)
+    destinationCell.setValue(sourceCell.getValue())
+  }
+}
+
+/** Private Helper Functions **/
 
 function getFormItemByTitle(titleToSearch){
   var items = form.getItems()
@@ -142,18 +159,6 @@ function getColumnFromName(sheet, name) {
     if (headers[i] == name) return i + 1;
   }
   return -1;
-}
-
-//Copy survey metadata from source row to destination row
-function copySurveyMetadata(sourceRow, destinationRow){
-  //copy every column from Polling Group up to (but not including) Question
-  var pollingGroupColumn = getColumnFromName(responseWorksheet, "Polling Group")
-  var questionColumn = getColumnFromName(responseWorksheet, "Question")
-  for (var i = pollingGroupColumn; i < questionColumn; i++) {
-    var sourceCell = responseWorksheet.getRange(sourceRow, i)
-    var destinationCell = responseWorksheet.getRange(destinationRow, i)
-    destinationCell.setValue(sourceCell.getValue())
-  }
 }
 
 function removeDups(values) {
