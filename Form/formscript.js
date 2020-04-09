@@ -1,6 +1,8 @@
 /**
+
 This script runs to process the Google Sheet containing the COVID-19 Survey Entry Form Responses
 Author: Lilly Tong
+
 **/
 
 //Global variables
@@ -15,7 +17,9 @@ var surveyItemNumbersWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheet
 //Survey Entry Google Form
 var form = FormApp.openById(formId);
 
+/********************/
 /** Event Triggers **/
+/********************/
 
 function onSubmit(){
   if(isExistingSurvey()){
@@ -25,7 +29,9 @@ function onSubmit(){
   }
 }
 
+/*****************************/
 /** Form Processing Methods **/
+/*****************************/
 
 function copyDataFromExistingSurvey(){
   Logger.log("Copying data from existing survey...")
@@ -128,7 +134,9 @@ function copySurveyMetadata(sourceRow, destinationRow){
   }
 }
 
+/******************************/
 /** Private Helper Functions **/
+/******************************/
 
 function getFormItemByTitle(titleToSearch){
   var items = form.getItems()
