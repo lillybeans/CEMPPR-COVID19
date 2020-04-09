@@ -15,10 +15,6 @@ var surveyItemNumbersWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheet
 //Survey Entry Google Form
 var form = FormApp.openById(formId);
 
-function onOpen(){
-  updateExistingSurveyItemDropdown()
-}
-
 function onSubmit(){
   if(isExistingSurvey()){
     copyDataFromExistingSurvey()
