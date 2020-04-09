@@ -1,3 +1,8 @@
+/**
+This script runs to process the Google Sheet containing the COVID-19 Survey Entry Form Responses
+Author: Lilly Tong
+**/
+
 //Global variables
 
 var formId = "1manXOOsXt0VRXnODhRHKBTm4GXpsUkkB1dSik5d5LtU"; //Google Form: COVID-19 Survey Entry
@@ -10,15 +15,20 @@ var surveyItemNumbersWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheet
 //Survey Entry Google Form
 var form = FormApp.openById(formId);
 
-function postSubmissionProcessing(){
+function onOpen(){
+  updateExistingSurveyItemDropdown()
+}
+
+function onSubmit(){
   if(isExistingSurvey()){
     copyDataFromExistingSurvey()
   } else {
-    updateExistingSurveyItemDropdown() //We have added a new Survey Item #
+    updateSurveyItemNumbers() //We have added a new Survey Item #
   }
 }
 
 function copyDataFromExistingSurvey(){
+  Logger.log("Copying data from existing survey...")
   var lastResponseRow = responseWorksheet.getLastRow() //get the last response
 
   //Grab the "Existing Survey Item #" answer entered by the user
@@ -29,11 +39,10 @@ function copyDataFromExistingSurvey(){
   var surveyItemColumn = getColumnFromName(responseWorksheet, "Survey Item #")
   var surveyItemColumnValues = responseWorksheet.getRange(1, surveyItemColumn, lastResponseRow, 1).getValues() //start_row, start_col, num_rows, num_cols
 
-  for (var row = 2; row < lastResponseRow; row++) { //since row=1 is header, we start with second row
+  for (var row = 2; row < lastResponseRow; row++) { //first response is at row=2
     var surveyItemValue = responseWorksheet.getRange(row, surveyItemColumn).getValue()
     if(surveyItemValue == existingSurveyItemAnswer) { //found a response whose survey item # matches ours
       copySurveyMetadata(row, lastResponseRow)
-      Logger.log("source row:" + row + ",destinationRow number:" + lastResponseRow)
       break
     }
   }
@@ -48,35 +57,61 @@ function isExistingSurvey(){
 
   if (isExistingAnswer == "Yes") {
     return true
+    Logger.log("Is Existing Survey: True")
   } else {
     return false
+    Logger.log("Is Existing Survey: False")
   }
 }
 
 function updateExistingSurveyItemDropdown(){
+  Logger.log("Updating Existing Survey Item # Dropdown...")
 
   //form: find "Existing Survey Item #" Dropdown
   var existingSurveyItemDropdown = getFormItemByTitle("Existing Survey Item #")
   var existingSurveyItemId = existingSurveyItemDropdown.getId()
 
-  //worksheet: get "Survey Item #" column and grab all the values
-  var surveyItemColumn = getColumnFromName(responseWorksheet, "Survey Item #")
-  var lastResponseRow = responseWorksheet.getLastRow()
-  Logger.log("Last row:"+lastResponseRow)
+  var newValues = ["No Existing Surveys Found"]
 
-  var uniqueValues = ["No Existing Survey Item"]
+  //Survey Item # worksheet: check all the existing values, make sure this is not a dup
+  var lastSurveyItemRow = surveyItemNumbersWorksheet.getLastRow()
+  if (lastSurveyItemRow > 0) { //if this is not an empty sheet
+    var currentSurveyItemNumbers = surveyItemNumbersWorksheet.getRange(1, 1, lastSurveyItemRow, 1).getValues() //get a list of current survey item numbers
+    newValues = currentSurveyItemNumbers
+  }
+
+  updateDropdown(existingSurveyItemId,newValues)
+}
+
+function updateSurveyItemNumbers(){
+  Logger.log("Updating Survey Item Numbers...")
+
+  //Response worksheet: get last response row
+  var lastResponseRow = responseWorksheet.getLastRow()
+  Logger.log("Last response is at row: " + lastResponseRow)
+
+  //Response worksheet: get "Survey Item #" column and grab all the values in the column
+  var surveyItemColumn = getColumnFromName(responseWorksheet, "Survey Item #")
 
   if (lastResponseRow >= 2) { //if there are responses
-    var newSurveyItemNumber = responseWorksheet.getRange(lastResponseRow, surveyItemColumn).getValue()
+    var newSurveyItemNumber = responseWorksheet.getRange(lastResponseRow, surveyItemColumn).getValue() //get newly added survey item number
 
     //Survey Item # worksheet: check all the existing values, make sure this is not a dup
     var lastSurveyItemRow = surveyItemNumbersWorksheet.getLastRow()
-    var currentSurveyItemNumbers = surveyItemNumbersWorksheet.getRange(1, 1, lastSurveyItemRow, 1).getValues() //get a list of current survey item numbers
-    if (currentSurveyItemNumbers.filter(v => v == newSurveyItemNumber).length == 0){ //Duplicate prevention: if list doesn't already contain it
-      currentSurveyItemNumbers.push(newSurveyItemNumber)
-      updateDropdown(existingSurveyItemId,currentSurveyItemNumbers)
-      surveyItemNumbersWorksheet.getRange(lastSurveyItemRow + 1, 1).setValue(newSurveyItemNumber) //update our spreadsheet to include the new value
+
+    if(lastSurveyItemRow > 0) { //If survey item # worksheet is not empty
+      var currentSurveyItemNumbers = surveyItemNumbersWorksheet.getRange(1, 1, lastSurveyItemRow, 1).getValues() //get a list of current survey item numbers
+      if (currentSurveyItemNumbers.filter(v => v == newSurveyItemNumber).length == 0){ //Duplicate prevention: if list doesn't already contain this survey item number
+        surveyItemNumbersWorksheet.getRange(lastSurveyItemRow + 1, 1).setValue(newSurveyItemNumber) //add a new row to the Survey Item # worksheet
+        Logger.log("Survey Item # Worksheet: Added New Value - " + newSurveyItemNumber)
+        updateExistingSurveyItemDropdown()
+      }
+    } else { //add our first survey item number
+      surveyItemNumbersWorksheet.getRange(1, 1).setValue(newSurveyItemNumber)
+      Logger.log("Survey Item # Worksheet: Added First Value - " + newSurveyItemNumber)
+      updateExistingSurveyItemDropdown()
     }
+
   }
 }
 
