@@ -16,12 +16,16 @@ var spreadsheetId = "1-FCuugGS9MTJvT9uCZiIVLhPTRMzdiSckEHveXRs-Vg"; //Google She
 var responseWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheets()[0]
 var optionsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Options")
 
+var lastResponseRow = responseWorksheet.getLastRow() //get the last response's row
+
 //Survey Entry Google Form
 var form = FormApp.openById(formId);
 var formItems = form.getItems()
 
 //Constants: Dropdown/Column headers
+const TIMESTAMP = "Timestamp"
 const IS_EXISTING = "Is this question for an existing survey?"
+const INITIAL = "Your Initial"
 const QUESTION = "Question"
 const SURVEY_ITEM = "Survey Item #"
 const EXISTING_SURVEY_ITEM = "Existing Survey Item #"
@@ -73,12 +77,22 @@ function updateItemOptionsByTitle(title, values){
 * Updates the form description to show last submitted response
 */
 function updateFormDescription(){
+  var questionColumn = getColumnFromName(responseWorksheet, QUESTION)
+  var lastQuestion = responseWorksheet.getRange(lastResponseRow, questionColumn).getValue()
+
+  var timestampColumn = getColumnFromName(responseWorksheet, TIMESTAMP)
+  var lastTimestamp = responseWorksheet.getRange(lastResponseRow, timestampColumn).getValue()
+  var lastTimestampFormatted = Utilities.formatDate(lastTimestamp, Session.getScriptTimeZone(), "EEEE, MMM dd, yyyy @ hh:mm:ss a")
+
+  var initialColumn = getColumnFromName(responseWorksheet, INITIAL)
+  var lastInitial = responseWorksheet.getRange(lastResponseRow, initialColumn).getValue()
+
+  var description = "Last Submitted by: " + lastInitial + "\n" + lastQuestion + "\n" + lastTimestampFormatted
+
+  form.setDescription(description)
 }
 
 function copyDataFromExistingSurvey(){
-  //Logger.log("Copying data from existing survey...")
-  var lastResponseRow = responseWorksheet.getLastRow() //get the last response
-
   //Grab the "Existing Survey Item #" answer entered by the user
   var existingSurveyItemColumn = getColumnFromName(responseWorksheet, EXISTING_SURVEY_ITEM)
   var existingSurveyItemAnswer = responseWorksheet.getRange(lastResponseRow, existingSurveyItemColumn).getValue() //get the existing survey item #
@@ -97,7 +111,7 @@ function copyDataFromExistingSurvey(){
 }
 
 function isExistingSurvey(){
-  var lastResponseRow = responseWorksheet.getLastRow() //get the last response
+
 
   //worksheet: find the answer to "Is this question for an existing survey?" for the last submitted response
   var isExistingColumn = getColumnFromName(responseWorksheet, IS_EXISTING)
@@ -119,9 +133,6 @@ function isExistingSurvey(){
 */
 
 function updateOptions(itemName, itemNameInResponse = itemName){
-  //Response worksheet: get last response row
-  var lastResponseRow = responseWorksheet.getLastRow()
-
   if(lastResponseRow < 2) { //No responses
     return
   }
@@ -176,7 +187,6 @@ function updateMultipleChoice(item, values){
   item.asMultipleChoiceItem().setChoiceValues(values).showOtherOption(true)
 }
 
-//This function alone reduced overall runtime by 70%
 function getFormItemByTitle(titleToSearch){
   for(var i in formItems){
     if(formItems[i].getTitle() == titleToSearch){
