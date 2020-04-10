@@ -18,6 +18,16 @@ var optionsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Op
 //Survey Entry Google Form
 var form = FormApp.openById(formId);
 
+var itemTypes = {
+  "Existing Survey Item #": "Dropdown",
+  "Polling Group": "Multiple Choice",
+  "Country": "Dropdown",
+  "Type of Study": "Dropdown",
+  "Group": "Dropdown",
+  "Theme": "Checkbox",
+  "Population": "Dropdown"
+}
+
 /*----------------*/
 /* Event Triggers */
 /*----------------*/
@@ -29,18 +39,30 @@ function installableOnEdit(e){
     return
   }
   var col = e.range.getColumn() //find out which column was edited
-  updateDropdownForColumn(col)
+  updateOptionsForColumn(col)
 }
 
-//Update a dropdown given the column number in the options worksheet
-function updateDropdownForColumn(col){
+function updateOptionsForColumn(col){
   //1. Find the column header given the column number (i.e. find out which dropdown this is for)
-  var dropdownTitle = getHeaderFromColumn(optionsWorksheet, col)
+  var title = getHeaderFromColumn(optionsWorksheet, col)
   //2. Get all the values (options) for this column
   var values = getValuesForColumn(optionsWorksheet, col)
-  //3. Update the corresponding dropdown with the same title
-  Logger.log("Updating dropdown column " + col + " - " + dropdownTitle + " with values " + printArray(values))
-  updateDropdownByTitle(dropdownTitle, values)
+  //3. Find out what type the item is, then update the item
+  var itemType = itemTypes[title]
+
+  switch(itemType){
+    case "Dropdown":
+      updateDropdownByTitle(title, values)
+      Logger.log("Updating Dropdown column " + col + " - " + title + " - with values " + printArray(values))
+    case "Multiple Choice":
+      updateMultipleChoiceByTitle(title, values)
+      Logger.log("Updating Multiple Choice column " + col + " - " + title + " - with values " + printArray(values))
+    case "Checkbox":
+      updateCheckboxByTitle(title, values)
+      Logger.log("Updating Checkbox column " + col + " - " + title + " - with values " + printArray(values))
+    default:
+      return
+  }
 }
 
 /*--------------------------*/
@@ -53,6 +75,17 @@ function updateDropdownByTitle(title, values){
   item.asListItem().setChoiceValues(values)
 }
 
+//update a multiple choice item given the multiple choice item's title and new values
+function updateMultipleChoiceByTitle(title, values){
+  var item = getFormItemByTitle(title)
+  item.asMultipleChoiceItem().setChoiceValues(values).showOtherOption(true)
+}
+
+//update a checkbox item given the checkbox item's title and new values
+function updateCheckboxByTitle(title, values){
+  var item = getFormItemByTitle(title)
+  item.asCheckboxItem().setChoiceValues(values)
+}
 
 function getFormItemByTitle(titleToSearch){
   var items = form.getItems()
