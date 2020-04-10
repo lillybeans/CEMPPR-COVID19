@@ -24,16 +24,6 @@ const POLLING_GROUP = "Polling Group"
 const SURVEY_ITEM = "Survey Item #"
 const EXISTING_SURVEY_ITEM = "Existing Survey Item #"
 
-var itemTypes = {
-  "Existing Survey Item #": "Dropdown",
-  "Polling Group": "Multiple Choice",
-  "Country": "Dropdown",
-  "Type of Study": "Dropdown",
-  "Group": "Dropdown",
-  "Theme": "Checkbox",
-  "Population": "Dropdown"
-}
-
 /*----------------*/
 /* Event Triggers */
 /*----------------*/
@@ -168,18 +158,18 @@ function copySurveyMetadata(sourceRow, destinationRow){
 }
 
 function updateItemOptionsByTitle(title, values){
-  var itemType = itemTypes[title]
+  var item = getFormItemByTitle(title)
 
-  switch(itemType){
-    case "Dropdown":
+  switch(item.getType()){
+    case FormApp.ItemType.LIST:
       updateDropdownByTitle(title, values)
       Logger.log("Updating Dropdown column - " + title + " - with values " + printArray(values))
       break
-    case "Multiple Choice":
+    case FormApp.ItemType.MULTIPLE_CHOICE:
       updateMultipleChoiceByTitle(title, values)
       Logger.log("Updating Multiple Choice column - " + title + " - with values " + printArray(values))
       break
-    case "Checkbox":
+    case FormApp.ItemType.CHECKBOX:
       updateCheckboxByTitle(title, values)
       Logger.log("Updating Checkbox column - " + title + " - with values " + printArray(values))
       break
