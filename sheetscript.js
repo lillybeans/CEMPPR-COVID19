@@ -17,6 +17,7 @@ var optionsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Op
 
 //Survey Entry Google Form
 var form = FormApp.openById(formId);
+var formItems = form.getItems()
 
 /*----------------*/
 /* Event Triggers */
@@ -42,15 +43,15 @@ function updateOptionsForColumn(col){
 
   switch(item.getType()){
     case FormApp.ItemType.LIST:
-      updateDropdownByTitle(title, values)
+      updateDropdown(item, values)
       Logger.log("Updating Dropdown column - " + title + " - with values " + printArray(values))
       break
     case FormApp.ItemType.MULTIPLE_CHOICE:
-      updateMultipleChoiceByTitle(title, values)
+      updateMultipleChoice(item, values)
       Logger.log("Updating Multiple Choice column - " + title + " - with values " + printArray(values))
       break
     case FormApp.ItemType.CHECKBOX:
-      updateCheckboxByTitle(title, values)
+      updateCheckbox(item, values)
       Logger.log("Updating Checkbox column - " + title + " - with values " + printArray(values))
       break
     default:
@@ -62,32 +63,28 @@ function updateOptionsForColumn(col){
 /* Private Helper Functions */
 /*--------------------------*/
 
-//update a dropdown given the dropdown's title and new values
-function updateDropdownByTitle(title, values){
-  var item = getFormItemByTitle(title)
+//update a dropdown options
+function updateDropdown(item, values){
   item.asListItem().setChoiceValues(values)
 }
 
-//update a multiple choice item given the multiple choice item's title and new values
-function updateMultipleChoiceByTitle(title, values){
-  var item = getFormItemByTitle(title)
+//update a multiple choice item options
+function updateMultipleChoice(item, values){
   item.asMultipleChoiceItem().setChoiceValues(values).showOtherOption(true)
 }
 
-//update a checkbox item given the checkbox item's title and new values
-function updateCheckboxByTitle(title, values){
-  var item = getFormItemByTitle(title)
+//update a checkbox item options
+function updateCheckbox(item, values){
   item.asCheckboxItem().setChoiceValues(values)
 }
 
 function getFormItemByTitle(titleToSearch){
-  var items = form.getItems()
-  var itemTitles = items.map(function(item){
+  var itemTitles = formItems.map(function(item){
     return item.getTitle()
   })
 
   var index = itemTitles.indexOf(titleToSearch)
-  return items[index]
+  return formItems[index]
 }
 
 function addOptionToDropdown(dropdownId, newOption){

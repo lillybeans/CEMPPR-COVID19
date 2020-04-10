@@ -18,6 +18,7 @@ var optionsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Op
 
 //Survey Entry Google Form
 var form = FormApp.openById(formId);
+var formItems = form.getItems()
 
 //Constants: Dropdown/Column headers
 const IS_EXISTING = "Is this question for an existing survey?"
@@ -39,6 +40,10 @@ function onSubmit(){
   }
 
   updateFormDescription()
+}
+
+function test(){
+  updateOptions(EXISTING_SURVEY_ITEM, SURVEY_ITEM)
 }
 
 /*-------------------------*/
@@ -176,13 +181,7 @@ function updateMultipleChoice(item, values){
 }
 
 function getFormItemByTitle(titleToSearch){
-  var items = form.getItems()
-  var itemTitles = items.map(function(item){
-    return item.getTitle()
-  })
-
-  var index = itemTitles.indexOf(titleToSearch)
-  return items[index]
+  return formItems.filter(item => item.getTitle() == titleToSearch)[0]
 }
 
 function addOptionToDropdown(dropdownId, newOption){
