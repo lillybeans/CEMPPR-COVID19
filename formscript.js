@@ -20,9 +20,15 @@ var optionsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Op
 var form = FormApp.openById(formId);
 
 //Constants: Dropdown/Column headers
-const POLLING_GROUP = "Polling Group"
+const QUESTION = "Question"
 const SURVEY_ITEM = "Survey Item #"
 const EXISTING_SURVEY_ITEM = "Existing Survey Item #"
+const POLLING_GROUP = "Polling Group"
+const COUNTRY = "Country"
+const TYPE_OF_STUDY = "Type of Study"
+const GROUP = "Group"
+const THEME = "Theme"
+const POPULATION = "Population"
 
 /*----------------*/
 /* Event Triggers */
@@ -32,8 +38,12 @@ function onSubmit(){
   if(isExistingSurvey()){
     copyDataFromExistingSurvey()
   } else {
+    updateOptions(EXISTING_SURVEY_ITEM, SURVEY_ITEM)
     updateOptions(POLLING_GROUP)
-    updateSurveyItemNumbers() //We have added a new Survey Item #
+    updateOptions(COUNTRY)
+    updateOptions(TYPE_OF_STUDY)
+    updateOptions(GROUP)
+    updateOptions(POPULATION)
   }
 }
 
@@ -71,85 +81,56 @@ function isExistingSurvey(){
 
   if (isExistingAnswer == "Yes") {
     return true
-    Logger.log("Is Existing Survey: True")
   } else {
     return false
-    Logger.log("Is Existing Survey: False")
   }
 }
 
-function updateOptions(itemName){
-  Logger.log("Updating Options for " + itemName + " ...")
+/**
+* Given an itemName (i.e. "Polling Group") in the form, this function updates the Options worksheet by copying over the last entered value for this item in the Response worksheet.
+*
+* @param {string} itemName: The item name in the Options worksheet.
+* @param {string} itemNameInResponse: (optional) do not set this value unless copying from a different item in the Response worksheet.
+*  currently, we are only using this when copying "Survey Item #" into "Existing Survey Item #"
+*/
 
+function updateOptions(itemName, itemNameInResponse = itemName){
   //Response worksheet: get last response row
   var lastResponseRow = responseWorksheet.getLastRow()
-  Logger.log("Last response is at row: " + lastResponseRow)
+
+  if(lastResponseRow < 2) { //No responses
+    return
+  }
 
   //Response worksheet: get this item's column
-  var itemColumn = getColumnFromName(responseWorksheet, itemName)
+  var itemColumn = getColumnFromName(responseWorksheet, itemNameInResponse)
+  var newItemValue = responseWorksheet.getRange(lastResponseRow, itemColumn).getValue() //get newly added item value
 
-  if (lastResponseRow >= 2) { //if there are responses
-    var newItemValue = responseWorksheet.getRange(lastResponseRow, itemColumn).getValue() //get newly added item value
+  //Options Worksheet - Existing Item column
+  var existingItemOptionsColumn = getColumnFromName(optionsWorksheet, itemName)
+  var existingItemOptionValues = getValuesForColumnWithName(optionsWorksheet, itemName)
 
-    //Options Worksheet - Existing Item column
-    var existingItemOptionsColumn = getColumnFromName(optionsWorksheet, itemName)
-    var existingItemOptionValues = getValuesForColumnWithName(optionsWorksheet, itemName)
-
-    if(existingItemOptionValues.length > 0) { //If there are existing survey item #s
-      if (existingItemOptionValues.filter(v => v == newItemValue).length == 0){ //Check for dups
-        var lastItemOptionRow = existingItemOptionValues.length + 1 // +1 because of header
-        optionsWorksheet.getRange(lastItemOptionRow + 1, existingItemOptionsColumn).setValue(newItemValue) //add a new row to the Item Options worksheet
-        Logger.log("Options Worksheet - " + itemName + " : Added New Value - " + newItemValue)
-        existingItemOptionValues.push(newItemValue)
-        updateItemOptionsByTitle(itemName,existingItemOptionValues)
-      }
-    } else { //add our first survey item number
-      optionsWorksheet.getRange(2, existingItemOptionsColumn).setValue(newItemValue) //second row is first entry
-      Logger.log("Options Worksheet - " + itemName + " : Added First Value - " + newItemValue)
-      updateItemOptionsByTitle(itemName,[newItemValue])
+  if(existingItemOptionValues.length > 0) { //If there are existing survey item #s
+    if (doesNotContain(existingItemOptionValues, newItemValue)){ //Check for dups
+      var lastItemOptionRow = existingItemOptionValues.length + 1 // +1 because of header
+      optionsWorksheet.getRange(lastItemOptionRow + 1, existingItemOptionsColumn).setValue(newItemValue) //append new value to the Item Options
+      Logger.log("Options Worksheet - " + itemName + " : Added New Value - " + newItemValue)
+      existingItemOptionValues.push(newItemValue)
+      updateItemOptionsByTitle(itemName,existingItemOptionValues) //update form
     }
+  } else { //add our first survey item number
+    optionsWorksheet.getRange(2, existingItemOptionsColumn).setValue(newItemValue) //second row is first entry
+    Logger.log("Options Worksheet - " + itemName + " : Added First Value - " + newItemValue)
+    updateItemOptionsByTitle(itemName,[newItemValue]) //update form
   }
+
 }
-
-function updateSurveyItemNumbers(){
-  Logger.log("Updating Survey Item Numbers...")
-
-  //Response worksheet: get last response row
-  var lastResponseRow = responseWorksheet.getLastRow()
-  Logger.log("Last response is at row: " + lastResponseRow)
-
-  //Response worksheet: get "Survey Item #" column
-  var surveyItemColumn = getColumnFromName(responseWorksheet, "Survey Item #")
-
-  if (lastResponseRow >= 2) { //if there are responses
-    var newSurveyItemNumber = responseWorksheet.getRange(lastResponseRow, surveyItemColumn).getValue() //get newly added survey item number
-
-    //Options Worksheet - Existing Survey Item # column
-    var existingSurveyItemColumn = getColumnFromName(optionsWorksheet, EXISTING_SURVEY_ITEM)
-    var existingSurveyItemValues = getValuesForColumnWithName(optionsWorksheet, EXISTING_SURVEY_ITEM)
-
-    if(existingSurveyItemValues.length > 0) { //If there are existing survey item #s
-      if (existingSurveyItemValues.filter(v => v == newSurveyItemNumber).length == 0){ //Check for dups
-        var lastSurveyItemRow = existingSurveyItemValues.length + 1 // +1 because of header
-        optionsWorksheet.getRange(lastSurveyItemRow + 1, existingSurveyItemColumn).setValue(newSurveyItemNumber) //add a new row to the Survey Item # worksheet
-        Logger.log("Options Worksheet - Existing Survey Item #: Added New Value - " + newSurveyItemNumber)
-        existingSurveyItemValues.push(newSurveyItemNumber)
-        updateDropdownByTitle(EXISTING_SURVEY_ITEM,existingSurveyItemValues)
-      }
-    } else { //add our first survey item number
-      optionsWorksheet.getRange(2, existingSurveyItemColumn).setValue(newSurveyItemNumber) //second row is first entry
-      Logger.log("Options Worksheet - Existing Survey Item #: Added First Value - " + newSurveyItemNumber)
-      updateDropdownByTitle(EXISTING_SURVEY_ITEM,[newSurveyItemNumber])
-    }
-  }
-}
-
 
 //Copy survey metadata from source row to destination row
 function copySurveyMetadata(sourceRow, destinationRow){
   //copy every column from Polling Group up to (but not including) Question
-  var pollingGroupColumn = getColumnFromName(responseWorksheet, "Polling Group")
-  var questionColumn = getColumnFromName(responseWorksheet, "Question")
+  var pollingGroupColumn = getColumnFromName(responseWorksheet, POLLING_GROUP)
+  var questionColumn = getColumnFromName(responseWorksheet, QUESTION)
   for (var i = pollingGroupColumn; i < questionColumn; i++) {
     var sourceCell = responseWorksheet.getRange(sourceRow, i)
     var destinationCell = responseWorksheet.getRange(destinationRow, i)
@@ -157,23 +138,29 @@ function copySurveyMetadata(sourceRow, destinationRow){
   }
 }
 
+/**
+* Updates a Google Form item's options
+*
+* @param {string} title: The item name Google form
+* @param {string} values: No options for the item
+*/
 function updateItemOptionsByTitle(title, values){
   var item = getFormItemByTitle(title)
 
   switch(item.getType()){
     case FormApp.ItemType.LIST:
       updateDropdownByTitle(title, values)
-      Logger.log("Updating Dropdown column - " + title + " - with values " + printArray(values))
+      Logger.log("Updating Dropdown - " + title + " - with values " + printArray(values))
       break
-    case FormApp.ItemType.MULTIPLE_CHOICE:
+      case FormApp.ItemType.MULTIPLE_CHOICE:
       updateMultipleChoiceByTitle(title, values)
-      Logger.log("Updating Multiple Choice column - " + title + " - with values " + printArray(values))
+      Logger.log("Updating Multiple Choice - " + title + " - with values " + printArray(values))
       break
-    case FormApp.ItemType.CHECKBOX:
+      case FormApp.ItemType.CHECKBOX:
       updateCheckboxByTitle(title, values)
-      Logger.log("Updating Checkbox column - " + title + " - with values " + printArray(values))
+      Logger.log("Updating Checkbox - " + title + " - with values " + printArray(values))
       break
-    default:
+      default:
       return
   }
 }
@@ -260,14 +247,8 @@ function getValuesForColumn(sheet, column){
   return values
 }
 
-function removeDups(values) {
-  let unique = {};
-  values.forEach(function(value) {
-    if(!unique[value]) {
-      unique[value] = true; //"set" this to true so the keys will include it.
-    }
-  });
-  return Object.keys(unique); //basically this will return all the indices that have been "set" to true. If an index is unset it won't be in the key.
+function doesNotContain(values, valueToScan) {
+  return values.filter(v => v == valueToScan).length == 0
 }
 
 
