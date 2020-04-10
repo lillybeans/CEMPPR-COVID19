@@ -20,15 +20,11 @@ var optionsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Op
 var form = FormApp.openById(formId);
 
 //Constants: Dropdown/Column headers
+const IS_EXISTING = "Is this question for an existing survey?"
 const QUESTION = "Question"
 const SURVEY_ITEM = "Survey Item #"
 const EXISTING_SURVEY_ITEM = "Existing Survey Item #"
 const POLLING_GROUP = "Polling Group"
-const COUNTRY = "Country"
-const TYPE_OF_STUDY = "Type of Study"
-const GROUP = "Group"
-const THEME = "Theme"
-const POPULATION = "Population"
 
 /*----------------*/
 /* Event Triggers */
@@ -40,19 +36,46 @@ function onSubmit(){
   } else {
     updateOptions(EXISTING_SURVEY_ITEM, SURVEY_ITEM)
     updateOptions(POLLING_GROUP)
-    updateOptions(COUNTRY)
-    updateOptions(TYPE_OF_STUDY)
-    updateOptions(GROUP)
-    updateOptions(POPULATION)
   }
+
+  updateFormDescription()
 }
 
 /*-------------------------*/
 /* Form Processing Methods */
 /*-------------------------*/
 
+/**
+* Updates a Google Form item's options
+*
+* @param {string} title: The item name Google form
+* @param {string} values: No options for the item
+*/
+function updateItemOptionsByTitle(title, values){
+  var item = getFormItemByTitle(title)
+
+  switch(item.getType()){
+    case FormApp.ItemType.LIST:
+      updateDropdown(item, values)
+      //Logger.log("Updating Dropdown - " + title + " - with values " + arrayToString(values))
+      break
+    case FormApp.ItemType.MULTIPLE_CHOICE:
+      updateMultipleChoice(item, values)
+      //Logger.log("Updating Multiple Choice - " + title + " - with values " + arrayToString(values))
+      break
+    default: //we aren't updating any other data types
+      return
+  }
+}
+
+/**
+* Updates the form description to show last submitted response
+*/
+function updateFormDescription(){
+}
+
 function copyDataFromExistingSurvey(){
-  Logger.log("Copying data from existing survey...")
+  //Logger.log("Copying data from existing survey...")
   var lastResponseRow = responseWorksheet.getLastRow() //get the last response
 
   //Grab the "Existing Survey Item #" answer entered by the user
@@ -76,7 +99,7 @@ function isExistingSurvey(){
   var lastResponseRow = responseWorksheet.getLastRow() //get the last response
 
   //worksheet: find the answer to "Is this question for an existing survey?" for the last submitted response
-  var isExistingColumn = getColumnFromName(responseWorksheet, "Is this question for an existing survey?")
+  var isExistingColumn = getColumnFromName(responseWorksheet, IS_EXISTING)
   var isExistingAnswer = responseWorksheet.getRange(lastResponseRow, isExistingColumn).getValue()
 
   if (isExistingAnswer == "Yes") {
@@ -138,53 +161,18 @@ function copySurveyMetadata(sourceRow, destinationRow){
   }
 }
 
-/**
-* Updates a Google Form item's options
-*
-* @param {string} title: The item name Google form
-* @param {string} values: No options for the item
-*/
-function updateItemOptionsByTitle(title, values){
-  var item = getFormItemByTitle(title)
-
-  switch(item.getType()){
-    case FormApp.ItemType.LIST:
-      updateDropdownByTitle(title, values)
-      Logger.log("Updating Dropdown - " + title + " - with values " + printArray(values))
-      break
-      case FormApp.ItemType.MULTIPLE_CHOICE:
-      updateMultipleChoiceByTitle(title, values)
-      Logger.log("Updating Multiple Choice - " + title + " - with values " + printArray(values))
-      break
-      case FormApp.ItemType.CHECKBOX:
-      updateCheckboxByTitle(title, values)
-      Logger.log("Updating Checkbox - " + title + " - with values " + printArray(values))
-      break
-      default:
-      return
-  }
-}
-
 /*--------------------------*/
 /* Private Helper Functions */
 /*--------------------------*/
 
-//update a dropdown given the dropdown's title and new values
-function updateDropdownByTitle(title, values){
-  var item = getFormItemByTitle(title)
+//update a dropdown given with new values
+function updateDropdown(item, values){
   item.asListItem().setChoiceValues(values)
 }
 
-//update a multiple choice item given the multiple choice item's title and new values
-function updateMultipleChoiceByTitle(title, values){
-  var item = getFormItemByTitle(title)
+//update a multiple choice with new values
+function updateMultipleChoice(item, values){
   item.asMultipleChoiceItem().setChoiceValues(values).showOtherOption(true)
-}
-
-//update a checkbox item given the checkbox item's title and new values
-function updateCheckboxByTitle(title, values){
-  var item = getFormItemByTitle(title)
-  item.asCheckboxItem().setChoiceValues(values)
 }
 
 function getFormItemByTitle(titleToSearch){
@@ -195,11 +183,6 @@ function getFormItemByTitle(titleToSearch){
 
   var index = itemTitles.indexOf(titleToSearch)
   return items[index]
-}
-
-function updateDropdown(id, values){
-  var item = form.getItemById(id)
-  item.asListItem().setChoiceValues(values)
 }
 
 function addOptionToDropdown(dropdownId, newOption){
@@ -252,7 +235,7 @@ function doesNotContain(values, valueToScan) {
 }
 
 
-function printArray(array){
+function arrayToString(array){
   var str = "["
   for(var i=0; i<array.length; i++){
     str += array[i]
