@@ -39,7 +39,7 @@ function updateDropdownForColumn(col){
   //2. Get all the values (options) for this column
   var values = getValuesForColumn(optionsWorksheet, col)
   //3. Update the corresponding dropdown with the same title
-  Logger.log("Updating dropdown for column " + col + ": " + dropdownTitle)
+  Logger.log("Updating dropdown column " + col + " - " + dropdownTitle + " with values " + printArray(values))
   updateDropdownByTitle(dropdownTitle, values)
 }
 
@@ -109,4 +109,16 @@ function getValuesForColumn(sheet, column){
   }
 
   return values
+}
+
+function printArray(array){
+  var str = "["
+  for(var i=0; i<array.length; i++){
+    str += array[i]
+    if (i != array.length - 1) {
+      str += ", "
+    }
+  }
+  str += "]"
+  return str
 }
