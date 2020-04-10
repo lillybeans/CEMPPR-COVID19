@@ -46,15 +46,15 @@ function updateOptionsForColumn(col){
       updateDropdown(item, values)
       Logger.log("Updating Dropdown column - " + title + " - with values " + printArray(values))
       break
-    case FormApp.ItemType.MULTIPLE_CHOICE:
+      case FormApp.ItemType.MULTIPLE_CHOICE:
       updateMultipleChoice(item, values)
       Logger.log("Updating Multiple Choice column - " + title + " - with values " + printArray(values))
       break
-    case FormApp.ItemType.CHECKBOX:
+      case FormApp.ItemType.CHECKBOX:
       updateCheckbox(item, values)
       Logger.log("Updating Checkbox column - " + title + " - with values " + printArray(values))
       break
-    default:
+      default:
       return
   }
 }
@@ -79,12 +79,11 @@ function updateCheckbox(item, values){
 }
 
 function getFormItemByTitle(titleToSearch){
-  var itemTitles = formItems.map(function(item){
-    return item.getTitle()
-  })
-
-  var index = itemTitles.indexOf(titleToSearch)
-  return formItems[index]
+  for(var i in formItems){
+    if(formItems[i].getTitle() == titleToSearch){
+      return formItems[i]
+    }
+  }
 }
 
 function addOptionToDropdown(dropdownId, newOption){
