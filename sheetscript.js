@@ -54,12 +54,15 @@ function updateOptionsForColumn(col){
     case "Dropdown":
       updateDropdownByTitle(title, values)
       Logger.log("Updating Dropdown column " + col + " - " + title + " - with values " + printArray(values))
+      break
     case "Multiple Choice":
       updateMultipleChoiceByTitle(title, values)
       Logger.log("Updating Multiple Choice column " + col + " - " + title + " - with values " + printArray(values))
+      break
     case "Checkbox":
       updateCheckboxByTitle(title, values)
       Logger.log("Updating Checkbox column " + col + " - " + title + " - with values " + printArray(values))
+      break
     default:
       return
   }
