@@ -20,7 +20,6 @@ var keywordsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("K
 
 var lastResponseRow = responseWorksheet.getLastRow() //get the last response's row
 var currentQuestionId = 252 + lastResponseRow - 1 //we had 252 old records before this, -1 because of the header
-var headers = sheet.getRange(1,1,1,sheet.getLastColumn()).getValues()[0]; //all column headers
 
 //Survey Entry Google Form
 var form = FormApp.openById(formId);
