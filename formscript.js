@@ -13,7 +13,7 @@ var formId = "1manXOOsXt0VRXnODhRHKBTm4GXpsUkkB1dSik5d5LtU"; //Google Form: COVI
 var spreadsheetId = "1-FCuugGS9MTJvT9uCZiIVLhPTRMzdiSckEHveXRs-Vg"; //Google Sheet: Form Responses
 
 //Google Sheets
-var responseWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheets()[0]
+var responseWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Questions_N (Form Responses)")
 var formItemsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Form Items")
 var optionsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Options_N")
 var keywordsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Keywords_N")
@@ -123,8 +123,6 @@ function copyDataFromExistingSurvey(){
 }
 
 function isExistingSurvey(){
-
-
   //worksheet: find the answer to "Is this question for an existing survey?" for the last submitted response
   var isExistingColumn = getColumnFromName(responseWorksheet, IS_EXISTING)
   var isExistingAnswer = responseWorksheet.getRange(lastResponseRow, isExistingColumn).getValue()
