@@ -35,6 +35,8 @@ const SURVEY_ITEM = "Survey Item #"
 const EXISTING_SURVEY_ITEM = "Existing Survey Item #"
 const POLLING_GROUP = "Polling Group"
 const QUESTION_ID = "Question_ID"
+const OPTION_A = "Option A"
+const OPTION_I = "Option I"
 
 /*----------------*/
 /* Event Triggers */
@@ -74,11 +76,11 @@ function updateItemOptionsByTitle(title, values){
       updateDropdown(item, values)
       //Logger.log("Updating Dropdown - " + title + " - with values " + arrayToString(values))
       break
-    case FormApp.ItemType.MULTIPLE_CHOICE:
+      case FormApp.ItemType.MULTIPLE_CHOICE:
       updateMultipleChoice(item, values)
       //Logger.log("Updating Multiple Choice - " + title + " - with values " + arrayToString(values))
       break
-    default: //we aren't updating any other data types
+      default: //we aren't updating any other data types
       return
   }
 }
@@ -188,28 +190,75 @@ function copySurveyMetadata(sourceRow, destinationRow){
 /*----------------------------*/
 
 function assignQuestionID(){
+  var questionIdColumn = getColumnFromName(responseWorksheet, QUESTION_ID)
   responseWorksheet.getRange(lastResponseRow, questionIdColumn).setValue(currentQuestionId)
 }
 
 function updateOptionsWorksheet(){
-  var lastRowOptionsWorksheet = optionsWorksheet.getLastRow()
-  var questionIdColumn = getColumnFromName(optionsWorksheet, QUESTION_ID)
-  optionsWorksheet.getRange(lastRowOptionsWorksheet,questionIdColumn).setValue(currentQuestionId)
+  var lastRowOptionsWorksheet = optionsWorksheet.getLastRow() //last row in the options worksheet
 
-  //loop through all the non-empty options in the response
-  //TODO
+  //loop through all the non-empty options from Option A to Option I in the response
+  var optionAColumn = getColumnFromName(responseWorksheet, OPTION_A)
+  var optionIColumn = getColumnFromName(responseWorksheet, OPTION_I)
+
+  var options = []
+  var optionPercentages = []
+
+  for(var col=optionAColumn; col<=optionIColumn; col=col+2){
+    //get the current option and %
+    var currentOption = responseWorksheet.getRange(lastResponseRow,col).getValue()
+    var currentPercentage = responseWorksheet.getRange(lastResponseRow,col+1).getValue()
+
+    if (currentOption != null && currentOption != ""){
+      options.push(currentOption)
+      optionPercentages.push(currentPercentage)
+    } else {
+      break
+    }
+  }
+
+  //now insert as many rows are there are options (i.e. if you have Option A, B, C, you will need to insert 3 rows after)
+  var numOptions = options.length
+  optionsWorksheet.insertRowsAfter(lastRowOptionsWorksheet, numOptions)
+
+  //get Quesition_ID from response worksheet
+  var questionIdColumn = getColumnFromName(optionsWorksheet, QUESTION_ID)
+  var optionColumn = questionIdColumn + 1
+  var percentageColumn = percentageColumn = questionIdColumn + 2
+
+  //fill in our options
+  var i = 0
+  for(var row=lastRowOptionsWorksheet+1; row<=lastRowOptionsWorksheet+numOptions; row++) {
+    optionsWorksheet.getRange(row, questionIdColumn).setValue(currentQuestionId) //Question_ID
+    optionsWorksheet.getRange(row, optionColumn).setValue(options[i]) //Option
+    optionsWorksheet.getRange(row, percentageColumn).setValue(optionPercentages[i]) //%
+    i++
+  }
 }
 
 function updateKeywordsWorksheet(){
-  var lastRowKeywordsWorksheet = optionsWorksheet.getLastRow()
-  var questionIdColumn = getColumnFromName(keywordsWorksheet, QUESTION_ID)
-  keywordsWorksheet.getRange(lastRowKeywordsWorksheet,questionIdColumn).setValue(currentQuestionId)
+  var lastRowKeywordsWorksheet = keywordsWorksheet.getLastRow()
 
   //get the keyword in the response, then split it by comma.
   var keywordColumn = getColumnFromName(responseWorksheet, KEYWORDS)
-  var keywords = responseWorksheet.getRange(lastResponseRow,keywordColumn).getValue().toString().split(",")
+  var keywords = responseWorksheet.getRange(lastResponseRow,keywordColumn).getValue().toString().split(",") //comma separated array
 
-  //TODO
+  //now insert as many rows are there are keywords
+  var numKeywords = keywords.length
+  keywordsWorksheet.insertRowsAfter(lastRowKeywordsWorksheet, numKeywords)
+
+  //Get question ID column
+  var questionIdColumn = getColumnFromName(keywordsWorksheet, QUESTION_ID)
+  var keywordColumn = questionIdColumn + 1
+
+  //fill in our keywords
+  var i = 0
+  for(var row=lastRowKeywordsWorksheet+1; row<=lastRowKeywordsWorksheet+numKeywords; row++) {
+    keywordsWorksheet.getRange(row, questionIdColumn).setValue(currentQuestionId) //Question_ID
+    keywordsWorksheet.getRange(row, keywordColumn).setValue(keywords[i].trim())
+    i++
+  }
+
 }
 
 /*--------------------------*/
