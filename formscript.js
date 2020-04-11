@@ -14,9 +14,13 @@ var spreadsheetId = "1-FCuugGS9MTJvT9uCZiIVLhPTRMzdiSckEHveXRs-Vg"; //Google She
 
 //Google Sheets
 var responseWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheets()[0]
-var optionsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Options")
+var formItemsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Form Items")
+var optionsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Options_N")
+var keywordsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Keywords_N")
 
 var lastResponseRow = responseWorksheet.getLastRow() //get the last response's row
+var currentQuestionId = 252 + lastResponseRow - 1 //we had 252 old records before this, -1 because of the header
+var headers = sheet.getRange(1,1,1,sheet.getLastColumn()).getValues()[0]; //all column headers
 
 //Survey Entry Google Form
 var form = FormApp.openById(formId);
@@ -26,10 +30,12 @@ var formItems = form.getItems()
 const TIMESTAMP = "Timestamp"
 const IS_EXISTING = "Is this question for an existing survey?"
 const INITIAL = "Your Initial"
+const KEYWORDS = "Keywords"
 const QUESTION = "Question"
 const SURVEY_ITEM = "Survey Item #"
 const EXISTING_SURVEY_ITEM = "Existing Survey Item #"
 const POLLING_GROUP = "Polling Group"
+const QUESTION_ID = "Question_ID"
 
 /*----------------*/
 /* Event Triggers */
@@ -39,11 +45,16 @@ function onSubmit(){
   if(isExistingSurvey()){
     copyDataFromExistingSurvey()
   } else {
-    updateOptions(EXISTING_SURVEY_ITEM, SURVEY_ITEM)
-    updateOptions(POLLING_GROUP)
+    updateFormItem(EXISTING_SURVEY_ITEM, SURVEY_ITEM)
+    updateFormItem(POLLING_GROUP)
   }
 
   updateFormDescription()
+  assignQuestionID()
+
+  //Update the two other relational worksheets
+  updateOptionsWorksheet()
+  updateKeywordsWorksheet()
 }
 
 /*-------------------------*/
@@ -125,14 +136,14 @@ function isExistingSurvey(){
 }
 
 /**
-* Given an itemName (i.e. "Polling Group") in the form, this function updates the Options worksheet by copying over the last entered value for this item in the Response worksheet.
+* Given an itemName (i.e. "Polling Group") in the form, this function updates the Form Items worksheet by copying over the last entered value for this item in the Response worksheet.
 *
-* @param {string} itemName: The item name in the Options worksheet.
+* @param {string} itemName: The item name in the Form Items worksheet.
 * @param {string} itemNameInResponse: (optional) do not set this value unless copying from a different item in the Response worksheet.
 *  currently, we are only using this when copying "Survey Item #" into "Existing Survey Item #"
 */
 
-function updateOptions(itemName, itemNameInResponse = itemName){
+function updateFormItem(itemName, itemNameInResponse = itemName){
   if(lastResponseRow < 2) { //No responses
     return
   }
@@ -141,21 +152,21 @@ function updateOptions(itemName, itemNameInResponse = itemName){
   var itemColumn = getColumnFromName(responseWorksheet, itemNameInResponse)
   var newItemValue = responseWorksheet.getRange(lastResponseRow, itemColumn).getValue() //get newly added item value
 
-  //Options Worksheet - Existing Item column
-  var existingItemOptionsColumn = getColumnFromName(optionsWorksheet, itemName)
-  var existingItemOptionValues = getValuesForColumnWithName(optionsWorksheet, itemName)
+  //Form Items worksheet - Existing Item column
+  var existingItemOptionsColumn = getColumnFromName(formItemsWorksheet, itemName)
+  var existingItemOptionValues = getValuesForColumnWithName(formItemsWorksheet, itemName)
 
   if(existingItemOptionValues.length > 0) { //If there are existing survey item #s
     if (doesNotContain(existingItemOptionValues, newItemValue)){ //Check for dups
       var lastItemOptionRow = existingItemOptionValues.length + 1 // +1 because of header
-      optionsWorksheet.getRange(lastItemOptionRow + 1, existingItemOptionsColumn).setValue(newItemValue) //append new value to the Item Options
-      Logger.log("Options Worksheet - " + itemName + " : Added New Value - " + newItemValue)
+      formItemsWorksheet.getRange(lastItemOptionRow + 1, existingItemOptionsColumn).setValue(newItemValue) //append new value to the Item Options
+      Logger.log("Form Items worksheet - " + itemName + " : Added New Value - " + newItemValue)
       existingItemOptionValues.push(newItemValue)
       updateItemOptionsByTitle(itemName,existingItemOptionValues) //update form
     }
   } else { //add our first survey item number
-    optionsWorksheet.getRange(2, existingItemOptionsColumn).setValue(newItemValue) //second row is first entry
-    Logger.log("Options Worksheet - " + itemName + " : Added First Value - " + newItemValue)
+    formItemsWorksheet.getRange(2, existingItemOptionsColumn).setValue(newItemValue) //second row is first entry
+    Logger.log("Form Items worksheet - " + itemName + " : Added First Value - " + newItemValue)
     updateItemOptionsByTitle(itemName,[newItemValue]) //update form
   }
 
@@ -171,6 +182,35 @@ function copySurveyMetadata(sourceRow, destinationRow){
     var destinationCell = responseWorksheet.getRange(destinationRow, i)
     destinationCell.setValue(sourceCell.getValue())
   }
+}
+
+/*----------------------------*/
+/* Relational Data Management */
+/*----------------------------*/
+
+function assignQuestionID(){
+  responseWorksheet.getRange(lastResponseRow, questionIdColumn).setValue(currentQuestionId)
+}
+
+function updateOptionsWorksheet(){
+  var lastRowOptionsWorksheet = optionsWorksheet.getLastRow()
+  var questionIdColumn = getColumnFromName(optionsWorksheet, QUESTION_ID)
+  optionsWorksheet.getRange(lastRowOptionsWorksheet,questionIdColumn).setValue(currentQuestionId)
+
+  //loop through all the non-empty options in the response
+  //TODO
+}
+
+function updateKeywordsWorksheet(){
+  var lastRowKeywordsWorksheet = optionsWorksheet.getLastRow()
+  var questionIdColumn = getColumnFromName(keywordsWorksheet, QUESTION_ID)
+  keywordsWorksheet.getRange(lastRowKeywordsWorksheet,questionIdColumn).setValue(currentQuestionId)
+
+  //get the keyword in the response, then split it by comma.
+  var keywordColumn = getColumnFromName(responseWorksheet, KEYWORDS)
+  var keywords = responseWorksheet.getRange(lastResponseRow,keywordColumn).getValue().toString().split(",")
+
+  //TODO
 }
 
 /*--------------------------*/
