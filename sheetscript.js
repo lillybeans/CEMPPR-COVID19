@@ -12,8 +12,13 @@ Author: Lilly Tong
 var formId = "1manXOOsXt0VRXnODhRHKBTm4GXpsUkkB1dSik5d5LtU"; //Google Form: COVID-19 Survey Entry
 var spreadsheetId = "1-FCuugGS9MTJvT9uCZiIVLhPTRMzdiSckEHveXRs-Vg"; //Google Sheet: Form Responses
 
+//Worksheet names
+const FORM_ITEMS = "Form Items"
+const QID_N = "QID_N"
+
 //Google Sheets
-var optionsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Options")
+var formItemsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName(FORM_ITEMS)
+var qidWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName(QID_N)
 
 //Survey Entry Google Form
 var form = FormApp.openById(formId);
@@ -23,10 +28,16 @@ var formItems = form.getItems()
 /* Event Triggers */
 /*----------------*/
 
+function onChange(e){
+  if(e.changeType == "REMOVE_ROW"){
+    //go to keywords worksheet, and find which QID is now missing in the response worksheet. That is the deleted record.
+  }
+}
+
 //This is called by our Installable Trigger - onEdit()
 function installableOnEdit(e){
   //First make sure this was triggered from the Options worksheet
-  if (e.range.getSheet().getName() != "Options"){
+  if (e.range.getSheet().getName() != FORM_ITEMS){
     return
   }
   var col = e.range.getColumn() //find out which column was edited
@@ -35,9 +46,9 @@ function installableOnEdit(e){
 
 function updateOptionsForColumn(col){
   //1. Find the column header given the column number (i.e. find out which dropdown this is for)
-  var title = getHeaderFromColumn(optionsWorksheet, col)
+  var title = getHeaderFromColumn(formItemsWorksheet, col)
   //2. Get all the values (options) for this column
-  var values = getValuesForColumn(optionsWorksheet, col)
+  var values = getValuesForColumn(formItemsWorksheet, col)
   //3. Find out what type the item is, then update the item
   var item = getFormItemByTitle(title)
 
