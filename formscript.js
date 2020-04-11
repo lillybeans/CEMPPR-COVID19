@@ -17,9 +17,9 @@ var responseWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Q
 var formItemsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Form Items")
 var optionsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Options_N")
 var keywordsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Keywords_N")
+var qidWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("QID_N") //hidden worksheet to keep track of all unique question numbers
 
 var lastResponseRow = responseWorksheet.getLastRow() //get the last response's row
-var currentQuestionId = 252 + lastResponseRow - 1 //we had 252 old records before this, -1 because of the header
 
 //Survey Entry Google Form
 var form = FormApp.openById(formId);
@@ -37,6 +37,8 @@ const POLLING_GROUP = "Polling Group"
 const QUESTION_ID = "Question_ID"
 const OPTION_A = "Option A"
 const OPTION_I = "Option I"
+
+const QUESTION_ID_OFFSET = 253 //the first QID in the new records
 
 /*----------------*/
 /* Event Triggers */
@@ -189,7 +191,21 @@ function copySurveyMetadata(sourceRow, destinationRow){
 
 function assignQuestionID(){
   var questionIdColumn = getColumnFromName(responseWorksheet, QUESTION_ID)
+
+  var currentQuestionId = 0
+  if(lastResponseRow <= 2){ //this is our first question entry, since first row is header
+    currentQuestionId = QUESTION_ID_OFFSET
+  } else { //ID = prev + 1
+    var secondLastResponseRow = lastResponseRow - 1
+    var prevQuestionId = responseWorksheet.getRange(secondLastResponseRow, questionIdColumn).getValue()
+    currentQuestionId = prevQuestionId + 1
+  }
+
+  //1. Update response worksheet
   responseWorksheet.getRange(lastResponseRow, questionIdColumn).setValue(currentQuestionId)
+  //2. Update QID_N worksheet (our hidden sheet)
+  qidLastRow = qidWorksheet.getLastRow() //if no rows, this will return 0
+  qidWorksheet.getRange(qidLastRow + 1, 1).setValue(currentQuestionId)
 }
 
 function updateOptionsWorksheet(){
