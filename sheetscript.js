@@ -67,6 +67,13 @@ function installableOnChange(e){
     }
 
     if (deletedQid == -1) { //we didn't find any matches
+      if(qids.length - qidsInResponse.length == 1) { //if qids is exactly one more than qidsInResponse
+        deletedQid = qids[qids.length - 1] //last number in the array is the difference, which means we deleted the last row in the response
+      }
+    }
+
+    //If we still didn't set the deletedQid, means we don't have a match
+    if (deletedQid == -1){
       return
     }
 
