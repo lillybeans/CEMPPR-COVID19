@@ -45,6 +45,13 @@ const QUESTION_ID_OFFSET = 253 //the first QID in the new records
 /*----------------*/
 
 function onSubmit(){
+  //Update form description. isProcessingComplete = false
+  updateFormDescription(false)
+
+  //1. Assign new question ID
+  assignQuestionID()
+
+  //2. Copy Data from Existing Survey, or Update Form Item options and automatically append new entries
   if(isExistingSurvey()){
     copyDataFromExistingSurvey()
   } else {
@@ -52,15 +59,12 @@ function onSubmit(){
     updateFormItem(POLLING_GROUP)
   }
 
-  //assign new question ID
-  assignQuestionID()
-
-  //Update the two other relational worksheets
+  //3. Update the two other relational worksheets
   updateOptionsWorksheet()
   updateKeywordsWorksheet()
 
-  //Lastly, update form description
-  updateFormDescription()
+  //Update form description. isProcessingComplete = true
+  updateFormDescription(true)
 }
 
 /*-------------------------*/
@@ -91,9 +95,18 @@ function updateItemOptionsByTitle(title, values){
 }
 
 /**
-* Updates the form description to show last submitted response
+* Updates the form description
+* if isProcessingComplete = false, show that form is processing
+* if isProcessingComplete = true, show last submitted response
 */
-function updateFormDescription(){
+function updateFormDescription(isProcessingComplete){
+  if (!isProcessingComplete) {
+    var processingDescription = "Status: Processing\n--------------------------------------------\nPLEASE DO NOT SUBMIT ANY NEW RESPONSES UNTIL PROCESSING IS COMPLETE! Refresh this page in a few seconds to check for any status updates."
+    form.setDescription(processingDescription)
+    return
+  }
+
+  //Else if complete
   var questionColumn = getColumnFromName(responseWorksheet, QUESTION)
   var lastQuestion = responseWorksheet.getRange(lastResponseRow, questionColumn).getValue()
 
@@ -104,7 +117,7 @@ function updateFormDescription(){
   var initialColumn = getColumnFromName(responseWorksheet, INITIAL)
   var lastInitial = responseWorksheet.getRange(lastResponseRow, initialColumn).getValue()
 
-  var description = "Last Submitted by: " + lastInitial + "\n" + lastQuestion + "\n" + lastTimestampFormatted
+  var description = "Status: Ready for submission\n--------------------------------------------\nLast Submitted by: " + lastInitial + "\n" + lastQuestion + "\n" + lastTimestampFormatted
 
   form.setDescription(description)
 }
