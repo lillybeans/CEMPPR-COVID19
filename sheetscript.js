@@ -80,6 +80,11 @@ function installableOnChange(e){
     deleteOptions(deletedQid)
     deleteKeywords(deletedQid)
     deleteQID(deletedQid) //finally, remove the QID from our QID worksheet
+
+    var lastResponseRow = responseWorksheet.getLastRow()
+    if (lastResponseRow < 2) { //no responses
+      form.setDescription("Status: Ready for submission\n--------------------------------------------\nNo Entries")
+    }
   }
 }
 
