@@ -52,12 +52,15 @@ function onSubmit(){
     updateFormItem(POLLING_GROUP)
   }
 
-  updateFormDescription()
+  //assign new question ID
   assignQuestionID()
 
   //Update the two other relational worksheets
   updateOptionsWorksheet()
   updateKeywordsWorksheet()
+
+  //Lastly, update form description
+  updateFormDescription()
 }
 
 /*-------------------------*/
@@ -204,7 +207,7 @@ function assignQuestionID(){
   //1. Update response worksheet
   responseWorksheet.getRange(lastResponseRow, questionIdColumn).setValue(currentQuestionId)
   //2. Update QID_N worksheet (our hidden sheet)
-  qidLastRow = qidWorksheet.getLastRow() //if no rows, this will return 0
+  var qidLastRow = qidWorksheet.getLastRow() //if no rows, this will return 0
   qidWorksheet.getRange(qidLastRow + 1, 1).setValue(currentQuestionId)
 }
 
@@ -235,6 +238,10 @@ function updateOptionsWorksheet(){
   var numOptions = options.length
   optionsWorksheet.insertRowsAfter(lastRowOptionsWorksheet, numOptions)
 
+  //get currentQuestionId
+  var qidLastRow = qidWorksheet.getLastRow()
+  var currentQuestionId = qidWorksheet.getRange(qidLastRow, 1).getValue()
+
   //get Quesition_ID from response worksheet
   var questionIdColumn = getColumnFromName(optionsWorksheet, QUESTION_ID)
   var optionColumn = questionIdColumn + 1
@@ -260,6 +267,10 @@ function updateKeywordsWorksheet(){
   //now insert as many rows are there are keywords
   var numKeywords = keywords.length
   keywordsWorksheet.insertRowsAfter(lastRowKeywordsWorksheet, numKeywords)
+
+  //get currentQuestionId
+  var qidLastRow = qidWorksheet.getLastRow()
+  var currentQuestionId = qidWorksheet.getRange(qidLastRow, 1).getValue()
 
   //Get question ID column
   var questionIdColumn = getColumnFromName(keywordsWorksheet, QUESTION_ID)
