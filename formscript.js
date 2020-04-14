@@ -31,9 +31,12 @@ const IS_EXISTING = "Is this question for an existing survey?"
 const INITIAL = "Your Initial"
 const KEYWORDS = "Keywords"
 const QUESTION = "Question"
-const SURVEY_ITEM = "Survey Item #"
-const EXISTING_SURVEY_ITEM = "Existing Survey Item #"
+const POLL_NAME = "Poll Name"
+const EXISTING_SURVEY_POLL_NAME = "Existing Survey's Poll Name"
 const POLLING_GROUP = "Polling Group"
+const URL_OF_SURVEY = "URL of Survey"
+const SAMPLE_SIZE = "Sample Size"
+const USE_SAME_SAMPLE_SIZE = "Use the same sample size?"
 const QUESTION_ID = "Question_ID"
 const OPTION_A = "Option A"
 const OPTION_I = "Option I"
@@ -55,7 +58,7 @@ function onSubmit(){
   if(isExistingSurvey()){
     copyDataFromExistingSurvey()
   } else {
-    updateFormItem(EXISTING_SURVEY_ITEM, SURVEY_ITEM)
+    updateFormItem(EXISTING_SURVEY_POLL_NAME, POLL_NAME)
     updateFormItem(POLLING_GROUP)
   }
 
@@ -124,16 +127,16 @@ function updateFormDescription(isProcessingComplete){
 
 function copyDataFromExistingSurvey(){
   //Grab the "Existing Survey Item #" answer entered by the user
-  var existingSurveyItemColumn = getColumnFromName(responseWorksheet, EXISTING_SURVEY_ITEM)
-  var existingSurveyItemAnswer = responseWorksheet.getRange(lastResponseRow, existingSurveyItemColumn).getValue() //get the existing survey item #
+  var existingSurveyPollNameColumn = getColumnFromName(responseWorksheet, EXISTING_SURVEY_POLL_NAME)
+  var existingSurveyPollNameAnswer = responseWorksheet.getRange(lastResponseRow, existingSurveyPollNameColumn).getValue() //get the existing survey item #
 
   //Loop through the column "Survey Item #", and Find first row where "Survey Item #" matches existingSurveyItemAnswer
-  var surveyItemColumn = getColumnFromName(responseWorksheet, SURVEY_ITEM)
-  var surveyItemColumnValues = responseWorksheet.getRange(1, surveyItemColumn, lastResponseRow, 1).getValues() //start_row, start_col, num_rows, num_cols
+  var pollNameColumn = getColumnFromName(responseWorksheet, POLL_NAME)
+  var pollNameColumnValues = responseWorksheet.getRange(1, pollNameColumn, lastResponseRow, 1).getValues() //start_row, start_col, num_rows, num_cols
 
   for (var row = 2; row < lastResponseRow; row++) { //first response is at row=2
-    var surveyItemValue = responseWorksheet.getRange(row, surveyItemColumn).getValue()
-    if(surveyItemValue == existingSurveyItemAnswer) { //found a response whose survey item # matches ours
+    var pollNameValue = responseWorksheet.getRange(row, pollNameColumn).getValue()
+    if(pollNameValue == existingSurveyPollNameAnswer) { //found a response whose survey item # matches ours
       copySurveyMetadata(row, lastResponseRow)
       break
     }
@@ -191,14 +194,26 @@ function updateFormItem(itemName, itemNameInResponse = itemName){
 
 //Copy survey metadata from source row to destination row
 function copySurveyMetadata(sourceRow, destinationRow){
-  //copy every column from Polling Group up to (but not including) Question
+  //copy every column from Polling Group up to URL
   var pollingGroupColumn = getColumnFromName(responseWorksheet, POLLING_GROUP)
-  var questionColumn = getColumnFromName(responseWorksheet, QUESTION)
-  for (var i = pollingGroupColumn; i < questionColumn; i++) {
+  var urlColumn = getColumnFromName(responseWorksheet, URL_OF_SURVEY)
+  for (var i = pollingGroupColumn; i <= urlColumn; i++) {
     var sourceCell = responseWorksheet.getRange(sourceRow, i)
     var destinationCell = responseWorksheet.getRange(destinationRow, i)
     destinationCell.setValue(sourceCell.getValue())
   }
+
+  //Check if user wants to use the same sample size. if so, copy over the value
+  var useSameSampleSizeColumn = getColumnFromName(responseWorksheet, USE_SAME_SAMPLE_SIZE)
+  var useSameSampleValue = responseWorksheet.getRange(destinationRow, useSameSampleSizeColumn).getValue()
+
+  var sampleSizeColumn = getColumnFromName(responseWorksheet, SAMPLE_SIZE)
+
+  //if user specified a specific sample size value
+  if (useSameSampleValue != null && useSameSampleValue != ""){
+    responseWorksheet.getRange(destinationRow, sampleSizeColumn).setValue(useSameSampleValue) //copy it into "Sample Size"
+  }
+  // else: do nothing. We already copied over the sample size
 }
 
 /*----------------------------*/
