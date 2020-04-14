@@ -210,8 +210,8 @@ function copySurveyMetadata(sourceRow, destinationRow){
   var sampleSizeColumn = getColumnFromName(responseWorksheet, SAMPLE_SIZE)
 
   //if user specified a specific sample size value
-  if (useSameSampleValue != null && useSameSampleValue != ""){
-    responseWorksheet.getRange(destinationRow, sampleSizeColumn).setValue(useSameSampleValue) //copy it into "Sample Size"
+  if (useSameSampleValue != null && useSameSampleValue != "Yes"){ //if user did not answer "Yes"
+    responseWorksheet.getRange(destinationRow, sampleSizeColumn).setValue(useSameSampleValue) //copy user-entered value into "Sample Size"
   }
   // else: do nothing. We already copied over the sample size
 }
