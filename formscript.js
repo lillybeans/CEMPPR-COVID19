@@ -19,8 +19,6 @@ var optionsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Op
 var keywordsWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("Keywords_N")
 var qidWorksheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName("QID_N") //hidden worksheet to keep track of all unique question numbers
 
-var lastResponseRow = responseWorksheet.getLastRow() //get the last response's row
-
 //Survey Entry Google Form
 var form = FormApp.openById(formId);
 var formItems = form.getItems()
@@ -48,6 +46,15 @@ const QUESTION_ID_OFFSET = 253 //the first QID in the new records
 /*----------------*/
 
 function onSubmit(){
+  //Concurrency programming - multiple people could potentiall submit the form at the same time!
+  var lock = LockService.getScriptLock()
+  try {
+    lock.waitLock(30000)  // Wait for up to 30 seconds for another form to be processed
+  }catch(e) {
+    // Handle lock exception
+    Logger.log('Could not obtain lock after 30 seconds.')
+  }
+
   //Update form description. isProcessingComplete = false
   updateFormDescription(false)
 
@@ -68,6 +75,8 @@ function onSubmit(){
 
   //Update form description. isProcessingComplete = true
   updateFormDescription(true)
+
+  lock.releaseLock()
 }
 
 /*-------------------------*/
@@ -109,6 +118,8 @@ function updateFormDescription(isProcessingComplete){
     return
   }
 
+  var lastResponseRow = responseWorksheet.getLastRow() //get the last response's row
+
   //Else if complete
   var questionColumn = getColumnFromName(responseWorksheet, QUESTION)
   var lastQuestion = responseWorksheet.getRange(lastResponseRow, questionColumn).getValue()
@@ -126,6 +137,8 @@ function updateFormDescription(isProcessingComplete){
 }
 
 function copyDataFromExistingSurvey(){
+  var lastResponseRow = responseWorksheet.getLastRow() //get the last response's row
+
   //Grab the "Existing Survey Item #" answer entered by the user
   var existingSurveyPollNameColumn = getColumnFromName(responseWorksheet, EXISTING_SURVEY_POLL_NAME)
   var existingSurveyPollNameAnswer = responseWorksheet.getRange(lastResponseRow, existingSurveyPollNameColumn).getValue() //get the existing survey item #
@@ -144,6 +157,8 @@ function copyDataFromExistingSurvey(){
 }
 
 function isExistingSurvey(){
+  var lastResponseRow = responseWorksheet.getLastRow() //get the last response's row
+
   //worksheet: find the answer to "Is this question for an existing survey?" for the last submitted response
   var isExistingColumn = getColumnFromName(responseWorksheet, IS_EXISTING)
   var isExistingAnswer = responseWorksheet.getRange(lastResponseRow, isExistingColumn).getValue()
@@ -164,6 +179,7 @@ function isExistingSurvey(){
 */
 
 function updateFormItem(itemName, itemNameInResponse = itemName){
+  var lastResponseRow = responseWorksheet.getLastRow() //get the last response's row
   if(lastResponseRow < 2) { //No responses
     return
   }
@@ -221,6 +237,7 @@ function copySurveyMetadata(sourceRow, destinationRow){
 /*----------------------------*/
 
 function assignQuestionID(){
+  var lastResponseRow = responseWorksheet.getLastRow() //get the last response's row
   var questionIdColumn = getColumnFromName(responseWorksheet, QUESTION_ID)
 
   var currentQuestionId = 0
@@ -240,6 +257,7 @@ function assignQuestionID(){
 }
 
 function updateOptionsWorksheet(){
+  var lastResponseRow = responseWorksheet.getLastRow() //get the last response's row
   var lastRowOptionsWorksheet = optionsWorksheet.getLastRow() //last row in the options worksheet
 
   //loop through all the non-empty options from Option A to Option I in the response
@@ -286,6 +304,7 @@ function updateOptionsWorksheet(){
 }
 
 function updateKeywordsWorksheet(){
+  var lastResponseRow = responseWorksheet.getLastRow() //get the last response's row
   var lastRowKeywordsWorksheet = keywordsWorksheet.getLastRow()
 
   //get the keyword in the response, then split it by comma.
