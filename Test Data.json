@@ -1,0 +1,19 @@
+[
+{
+"Question": "As you may know, many people in Asia have recently died from a new disease known as the Coronavirus. How worried are you that you or someone in your family will be exposed to Coronavirus – very worried, somewhat worried, not too worried, or not worried at all?",
+"Response":[{"Very worried": 12},
+          {"Somewhat worried": 24},
+          {"Not too worried":37},
+          {"Not worried at all":28}],
+"Keywords":["Fear","Pandemic"]
+},
+{
+"Question": "How confident are you that the federal government will be able to handle an outbreak of the Coronavirus in this country – very confident, somewhat confident, not too confident or not confident at all?",
+"Response":[{"Very confident":31},
+            {"Somewhat confident":46},
+            {"Not too confident":16},
+            {"Not at all confident":6},
+            {"No opinion":0}],
+"Keywords":["Trust"]
+}
+]
