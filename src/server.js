@@ -1,29 +1,33 @@
 //Import Express, BodyParser, Handlebars
 const express = require("express")
 const bodyParser = require("body-parser")
-const exphbs = require("express-handlebars")
-
 //Import our custom files/dependencies: MySQL, our routes
 const mysqlConnection = require("./connection")
 
-const IndexRoute = require("./routes/index.js")
 const QuestionRoutes = require("./routes/questions")
 
 var app = express()
-app.engine(".hbs", exphbs({extname: '.hbs'})) //modify handlebars extension to be ".hbs"
-app.set("view engine", ".hbs")
 
 app.use(bodyParser.json())
-app.use(express.static((__dirname + '/public'))); //static files
+app.use(express.static("public")); //static files
 
 //Define our Routes:
-app.use("/", function (req,res){
-  res.render("home")
-})
 
-app.use("/submit", function (req,res){
-  res.render("submit")
-})
+// get an instance of router
+var router = express.Router();
+
+// home page route (http://localhost:8080)
+router.get('/home', function(req, res) {
+    res.sendFile(__dirname + "/public/" + "home.html")
+});
+
+// about page route (http://localhost:8080/about)
+router.get('/about', function(req, res) {
+    res.send('im the about page!');
+});
+
+// apply the routes to our application
+app.use('/', router);
 
 app.use("/questions", QuestionRoutes) //use "/questions" instead of "/routes/questions" in the browser
 
