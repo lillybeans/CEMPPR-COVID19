@@ -1,0 +1,36 @@
+<div class="form-group">
+  <label for="is_existing_survey">
+    <h5>Is this for an existing survey?</h5>
+  </label>
+  <div id="is_existing_survey">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="form-check col align-middle">
+          <input class="form-check-input align-middle" type="radio" name="is_existing" id="q1yes" value="yes" checked>
+          <label class="form-check-label align-middle" for="yes">
+            Yes
+          </label>
+        </div>
+
+        <div class="col-md-10">
+          <select class="form-control-sm" name="select_existing_survey" id="select_existing_survey">
+            <option value="none">Select Existing Survey</option>
+            <option value="1">survey 1</option>
+            <option value="2">survey 2</option>
+            <option value="3">survey 3</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="is_existing" id="q1no" value="no">
+          <label class="form-check-label" for="no">
+            No
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{> questions/didSampleSizeChange }}
