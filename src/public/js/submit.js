@@ -13,9 +13,9 @@ $(function() {
     var dropdown = $(this);
     if (dropdown.val() != "none") {
       //ask if sample size change
-
+      $('#haha').removeClass("d-none")
     } else {
-      console.log("None!")
+      $('#haha').addClass("d-none")
     }
   });
 });
