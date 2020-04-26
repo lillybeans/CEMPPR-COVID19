@@ -2,50 +2,74 @@ $(function() {
 
   //if "Is this an existing survey" is answered
   $('input[name="is_existing"]').click(function() {
-    var radio = $(this);
-    var dropdown = $('select[name="select_existing_survey"]')
-    if (radio.val() == "yes") {
-      dropdown.fadeIn("fast") //prompt user to select existing survey
+    var isExistingRadio = $(this);
+    if (isExistingRadio.val() == "yes") {
+      showSelectExistingSurveyDropdown() //prompt user to select existing survey
       hideNewSurvey()
     } else {
-      dropdown.fadeOut("fast")
-      hideDidSampleSizeChange()
+      hideSelectExistingSurveyDropdown()
+      hideUseSameSampleSize()
       showNewSurvey()
     }
   });
 
-// Toggling "Select Existing Survey" dropdown
+// Toggling the option from the "Select Existing Survey" dropdown
   $('#select_existing_survey').change(function() {
     var dropdown = $(this);
     if (dropdown.val() != "") { //if user selected an existing survey
-      showDidSampleSizeChange()
+      showUseSameSampleSize()
     } else {
-      hideDidSampleSizeChange()
+      hideUseSameSampleSize()
       hideNewSurvey()
     }
   });
 
-  // If answered "Did sample size change for this question"
-  $('input[name="did_ss_change"]').click(function() {
+  // If answered "Use same sample size for this question?"
+  $('input[name="use_same_sample_size"]').click(function() {
     var radio = $(this);
     var textbox = $('#sample_size_textbox')
     showQuestionDetails()
     if (radio.val() == "yes") {
+      textbox.prop("required",true)
       textbox.fadeIn("fast") //show sample size textbox
     } else {
+      textbox.prop("required",false)
       textbox.fadeOut("fast") //hide textbox
     }
   });
 });
 
-function showDidSampleSizeChange(){
-  $('#did_sample_size_change').slideDown("fast") //show "Did Sample Size change"
+$(function() {
+  $('form').submit( function(){
+    var form = $(this)
+    console.log("Submitted!")
+    console.log(form.serialize())
+  })
+
+});
+
+function showSelectExistingSurveyDropdown(){
+  var dropdown = $('select[name="select_existing_survey"]')
+  //add 'required' to dropdown
+  dropdown.prop("required", true)
+  dropdown.fadeIn("fast")
+}
+
+function hideSelectExistingSurveyDropdown(){
+  var dropdown = $('select[name="select_existing_survey"]')
+  //remove 'requied' on dropdown
+  dropdown.prop("required", false)
+  dropdown.fadeOut("fast")
+}
+
+function showUseSameSampleSize(){
+  $('#use_same_sample_size').slideDown("fast") //show "Did Sample Size change"
   $('#q2no').prop('checked', false);
   $('#q2yes').prop('checked', false);
 }
 
-function hideDidSampleSizeChange(){
-  $('#did_sample_size_change').slideUp("fast")
+function hideUseSameSampleSize(){
+  $('#use_same_sample_size').slideUp("fast")
 }
 
 function showNewSurvey(){
