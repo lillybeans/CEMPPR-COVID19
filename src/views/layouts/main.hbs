@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <title>Example App</title>
+  <meta charset="utf-8">
+  <title>Example App</title>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+  <link rel="stylesheet" type="text/css" href="/css/custom.css">
 </head>
+
 <body>
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
@@ -24,13 +26,19 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
+        <li class="nav-item {{#if active.home}}active{{/if}}">
           <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/submit">Submit</a>
+        <li class="nav-item dropdown {{#if active.submit}}active{{/if}}">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Submit
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/submit/survey">New Survey</a>
+            <a class="dropdown-item" href="/submit/question">New Question</a>
+          </div>
         </li>
-        <li class="nav-item">
+        <li class="nav-item {{#if active.about}}active{{/if}}">
           <a class="nav-link" href="/about">About</a>
         </li>
       </ul>
@@ -39,10 +47,11 @@
       © 2020 CEMPPR Lab
     </span>
   </nav>
-<!-- This file is a template container file, meaning it is used to render every webpage you have -->
-<!-- This is where every view's content will go -->
-    <div class="container">
+  <!-- This file is a template container file, meaning it is used to render every webpage you have -->
+  <!-- This is where every view's content will go -->
+  <div class="container">
     {{{body}}}
-    </div>
+  </div>
 </body>
+
 </html>

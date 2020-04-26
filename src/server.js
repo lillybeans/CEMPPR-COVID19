@@ -20,15 +20,19 @@ var indexRouter = express.Router();
 
 // home page route
 indexRouter.get('/', function(req, res) {
-    res.render("home");
+    res.render("home", {active: { home: true }});
 })
 
-indexRouter.get('/submit', function(req, res) {
-    res.render("submit")
+indexRouter.get('/submit/question', function(req, res) {
+    res.render("submit/question", {active: { submit: true }})
+})
+
+indexRouter.get('/submit/survey', function(req, res) {
+    res.render("submit/survey", {active: { submit: true }})
 })
 
 indexRouter.get('/about', function(req, res) {
-    res.render("about")
+    res.render("about", {active: { about: true }})
 })
 
 app.use('/', indexRouter)
