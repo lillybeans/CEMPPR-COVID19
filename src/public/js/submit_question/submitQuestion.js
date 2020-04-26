@@ -15,7 +15,7 @@ $(function() {
   $('input[name="use_same_sample_size"]').click(function() {
     var radio = $(this);
     var textbox = $('#sample_size_textbox')
-    showQuestionDetails()
+    showQuestionInfo()
     if (radio.val() == "no") {
       textbox.prop("required",true)
       textbox.fadeIn("fast") //show sample size textbox
@@ -68,6 +68,14 @@ function showNewSurvey(){
 function hideNewSurvey(){
   $('#new_survey').slideUp("fast")
   hideQuestionDetails()
+}
+
+function showQuestionInfo(){
+  $('#question_info').slideDown("fast")
+}
+
+function hideQuestionInfo(){
+  $('#question_info').slideUp("fast")
 }
 
 function showQuestionDetails(){
