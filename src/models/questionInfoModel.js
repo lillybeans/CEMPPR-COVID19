@@ -6,23 +6,27 @@ var themeOptions = ["Theme1", "Theme2", "Theme3"]
 var questionInfoModel = {
   "formItems": [
     {
+      "name": "survey_item",
       "title":"Survey Item #",
       "description": "Ex. STGVTCV1",
       "type":"text"
     },
     {
+      "name": "group",
       "title":"Group",
       "description": "Group description goes here",
       "type":"dropdown",
       "options": groupOptions
     },
     {
-      "theme":"Theme",
+      "name": "theme",
+      "title":"Theme",
       "description": "Theme description goes here",
       "type":"dropdown",
       "options": themeOptions
     },
     {
+      "name": "keywords",
       "title":"Keywords",
       "description": "Keywords description goes here",
       "type":"checkbox",

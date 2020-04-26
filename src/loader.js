@@ -1,15 +1,17 @@
 const mysqlConnection = require("./connection")
 
 function fetchSurveys(callback){
-  mysqlConnection.query("SELECT survey from Responses", (error, rows, fields) => {
+  mysqlConnection.query("SELECT DISTINCT Poll_Name from Responses", (error, rows, fields) => {
     if(error) {
       console.log(error)
       return
     }
 
-    const allSurveys = rows.map(row => row.survey)
-    callback(allSurveys)
+    const pollNames = rows.map(row => row.Poll_Name)
+    callback(pollNames)
   })
 }
 
-module.exports = this
+module.exports = {
+  fetchSurveys: fetchSurveys
+}

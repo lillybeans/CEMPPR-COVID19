@@ -1,0 +1,30 @@
+<div class="card bg-light mb-3 hide" id="question_info">
+  <h5 class="card-header text-white bg-purple">Question Info</h5>
+  <div class="card-body">
+
+
+
+      {{#each questionInfoModel.formItems }}
+      <div class="form-group">
+        <label for={{ name }} class="font-weight-bold">
+          {{ title }}
+        </label>
+        <div>
+        {{#ifEquals type "dropdown"}}
+          <select class="form-control-sm" name="group" id="group" required>
+            <option value="">Select</option>
+
+            {{#each ../surveys}}
+              <option value={{ this }}>{{ this }}</option>
+            {{/each}}
+
+          </select>
+          <br />
+        {{/ifEquals}}
+        </div>
+        </div>
+      {{/each}}
+
+
+  </div>
+</div>
