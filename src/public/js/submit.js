@@ -29,7 +29,7 @@ $(function() {
     var radio = $(this);
     var textbox = $('#sample_size_textbox')
     showQuestionDetails()
-    if (radio.val() == "yes") {
+    if (radio.val() == "no") {
       textbox.prop("required",true)
       textbox.fadeIn("fast") //show sample size textbox
     } else {
