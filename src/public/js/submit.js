@@ -69,6 +69,7 @@ function showUseSameSampleSize(){
 }
 
 function hideUseSameSampleSize(){
+  $('#sample_size_textbox').prop("required",false) //make sure we remove this property
   $('#use_same_sample_size').slideUp("fast")
 }
 
