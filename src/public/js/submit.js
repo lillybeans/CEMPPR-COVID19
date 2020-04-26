@@ -6,11 +6,11 @@ $(function() {
     var dropdown = $('select[name="select_existing_survey"]')
     if (radio.val() == "yes") {
       dropdown.fadeIn("fast") //prompt user to select existing survey
-      $('#new_survey').slideUp("fast")
+      hideNewSurvey()
     } else {
       dropdown.fadeOut("fast")
-      $('#did_sample_size_change').slideUp("fast") //hide sample size question
-      $('#new_survey').slideDown("fast")
+      hideDidSampleSizeChange()
+      showNewSurvey()
     }
   });
 
@@ -18,11 +18,10 @@ $(function() {
   $('#select_existing_survey').change(function() {
     var dropdown = $(this);
     if (dropdown.val() != "") { //if user selected an existing survey
-      //ask if sample size change
-      $('#did_sample_size_change').slideDown("fast") //show "Did Sample Size change"
+      showDidSampleSizeChange()
     } else {
-      $('#did_sample_size_change').slideUp("fast")
-      $('#new_survey').slideUp("fast")
+      hideDidSampleSizeChange()
+      hideNewSurvey()
     }
   });
 
@@ -30,11 +29,39 @@ $(function() {
   $('input[name="did_ss_change"]').click(function() {
     var radio = $(this);
     var textbox = $('#sample_size_textbox')
-    $('#new_survey').slideDown()
+    showQuestionDetails()
     if (radio.val() == "yes") {
-      textbox.fadeIn("fast")
+      textbox.fadeIn("fast") //show sample size textbox
     } else {
-      textbox.fadeOut("fast")
+      textbox.fadeOut("fast") //hide textbox
     }
   });
 });
+
+function showDidSampleSizeChange(){
+  $('#did_sample_size_change').slideDown("fast") //show "Did Sample Size change"
+  $('#q2no').prop('checked', false);
+  $('#q2yes').prop('checked', false);
+}
+
+function hideDidSampleSizeChange(){
+  $('#did_sample_size_change').slideUp("fast")
+}
+
+function showNewSurvey(){
+  $('#new_survey').slideDown("fast")
+  hideQuestionDetails()
+}
+
+function hideNewSurvey(){
+  $('#new_survey').slideUp("fast")
+  hideQuestionDetails()
+}
+
+function showQuestionDetails(){
+  $('#question_details').slideDown("fast")
+}
+
+function hideQuestionDetails(){
+  $('#question_details').slideUp("fast")
+}
