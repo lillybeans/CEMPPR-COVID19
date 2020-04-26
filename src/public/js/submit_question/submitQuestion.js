@@ -1,22 +1,9 @@
 $(function() {
 
-  //if "Is this an existing survey" is answered
-  $('input[name="is_existing"]').click(function() {
-    var isExistingRadio = $(this);
-    if (isExistingRadio.val() == "yes") {
-      showSelectExistingSurveyDropdown() //prompt user to select existing survey
-      hideNewSurvey()
-    } else {
-      hideSelectExistingSurveyDropdown()
-      hideUseSameSampleSize()
-      showNewSurvey()
-    }
-  });
-
-// Toggling the option from the "Select Existing Survey" dropdown
-  $('#select_existing_survey').change(function() {
+// Toggling the option from the "Select Survey" dropdown
+  $('#select_survey').change(function() {
     var dropdown = $(this);
-    if (dropdown.val() != "") { //if user selected an existing survey
+    if (dropdown.val() != "") { //if user selected a survey
       showUseSameSampleSize()
     } else {
       hideUseSameSampleSize()
@@ -48,15 +35,15 @@ $(function() {
 
 });
 
-function showSelectExistingSurveyDropdown(){
-  var dropdown = $('select[name="select_existing_survey"]')
+function showSelectSurveyDropdown(){
+  var dropdown = $('select[name="select_survey"]')
   //add 'required' to dropdown
   dropdown.prop("required", true)
   dropdown.fadeIn("fast")
 }
 
-function hideSelectExistingSurveyDropdown(){
-  var dropdown = $('select[name="select_existing_survey"]')
+function hideSelectSurveyDropdown(){
+  var dropdown = $('select[name="select_survey"]')
   //remove 'requied' on dropdown
   dropdown.prop("required", false)
   dropdown.fadeOut("fast")
