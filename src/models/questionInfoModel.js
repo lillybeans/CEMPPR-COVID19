@@ -8,7 +8,7 @@ var questionInfoModel = {
     {
       "name": "survey_item",
       "title":"Survey Item #",
-      "description": "Ex.STGVTCV1",
+      "description": "Minimum 3 characters",
       "type":"text",
       "placeholder": "Ex.STGVTCV1"
     },

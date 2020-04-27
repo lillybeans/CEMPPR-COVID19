@@ -89,3 +89,7 @@ function showQuestionDetails(){
 function hideQuestionDetails(){
   $('#question_details').slideUp("fast")
 }
+
+function textChanged(text){
+  console.log("Text changed!" + text)
+}
