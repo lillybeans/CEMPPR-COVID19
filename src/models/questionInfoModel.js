@@ -8,8 +8,9 @@ var questionInfoModel = {
     {
       "name": "survey_item",
       "title":"Survey Item #",
-      "description": "Ex. STGVTCV1",
-      "type":"text"
+      "description": "Ex.STGVTCV1",
+      "type":"text",
+      "placeholder": "Ex.STGVTCV1"
     },
     {
       "name": "group",
