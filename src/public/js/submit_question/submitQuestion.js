@@ -8,6 +8,7 @@ $(function() {
     } else {
       hideUseSameSampleSize()
       hideNewSurvey()
+      hideQuestionInfo()
     }
   });
 
@@ -24,6 +25,9 @@ $(function() {
       textbox.fadeOut("fast") //hide textbox
     }
   });
+
+  $('.last-in-questionInfo')
+
 });
 
 $(function() {

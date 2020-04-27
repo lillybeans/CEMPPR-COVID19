@@ -1,13 +1,13 @@
-<div class="card bg-light mb-3" id="question_info">
+<div class="card bg-light mb-3 hide" id="question_info">
   <h5 class="card-header text-white bg-purple">Question Info</h5>
   <div class="card-body">
 
     {{#each questionInfoModel.formItems }}
-      <div class="form-group">
+      <div class="form-group {{#if @last}}last-in-questionInfo{{/if}}">
         <label for={{ name }} class="font-weight-bold">
           {{ title }}
         </label>
-        <div>
+
 
           {{#ifEquals type "dropdown"}}
             <div>
@@ -24,7 +24,7 @@
 
           {{#ifEquals type "text"}}
             <div class="input-group-sm">
-              <input class="form-control col-md-3" type="text" id={{name}} placeholder={{placeholder}}>
+              <input class="form-control col-md-3" type="text" id={{name}} placeholder={{placeholder}} required>
             </div>
           {{/ifEquals}}
 
@@ -40,7 +40,7 @@
 
           {{/ifEquals}}
 
-        </div>
+
       </div>
     {{/each}}
 
