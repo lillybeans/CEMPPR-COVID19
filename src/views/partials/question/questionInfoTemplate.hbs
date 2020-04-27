@@ -1,6 +1,5 @@
-<div class="card bg-light mb-3 hide" id="question_info">
-  <h5 class="card-header text-white bg-purple">Question Info</h5>
-  <div class="card-body">
+<div class="col-md-3 hide" id="question_info">
+  <h1 class="font-weight-light mb-3"><span class="bg-dark rounded px-2 py-0.5 text-white">2</span> Question Info</h1>
 
     {{#each questionInfoModel.formItems }}
       <div class="form-group {{#if @first}}{{else}}hide{{/if}} {{#if @last}}last-questionInfo{{/if}}" id="questionInfo_{{@index}}">
@@ -10,7 +9,7 @@
 
         {{#ifEquals type "text"}}
         <div>
-          <input class="form-control col-md-3" type="text" name={{name}} id={{name}} placeholder={{placeholder}} onInput="textChanged(this)" required>
+          <input class="form-control col-10" type="text" name={{name}} id={{name}} placeholder={{placeholder}} onInput="textChanged(this)" required>
           <small id="description" class="form-text text-muted">{{description}}</small>
         </div>
         {{/ifEquals}}
@@ -41,5 +40,5 @@
 
       </div>
     {{/each}}
-  </div>
+
 </div>

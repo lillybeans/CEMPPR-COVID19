@@ -48,7 +48,7 @@
   </nav>
   <!-- This file is a template container file, meaning it is used to render every webpage you have -->
   <!-- This is where every view's content will go -->
-  <div class="container">
+  <div class="{{#if active.submit}}container-fluid{{else}}container{{/if}}">
     {{{body}}}
   </div>
 </body>
