@@ -1,11 +1,13 @@
-<div class="col-md-6" id="question_details">
-  <h1 class="font-weight-light mb-3"><span class="bg-dark rounded px-2 py-0.5 text-white">3</span> Questions</h1>
+<div class="questions">
+  <h1 class="font-weight-light mb-3">
+    <span class="bg-dark rounded px-2 py-0.5 text-white">3</span> Questions
+  </h1>
 
-  <div class="form-group question border border-dark rounded p-4" id="question_1">
+  <div class="form-group question border border-dark rounded p-4">
     <label class="font-weight-bold">
       Question
     </label>
-    <textarea class="form-control" id="question1" rows="3"></textarea>
+    <textarea class="form-control" id="question1" rows="2"></textarea>
     <br>
     <label class="font-weight-bold">
       Answers
@@ -13,19 +15,20 @@
 
     <div class="answer">
       <div class="form-row my-2">
-        <div class="col-9">
+        <div class="col-10">
           <input class="form-control" type="text" placeholder="Option">
         </div>
-        <div class="col-2">
+        <div class="col-1">
           <input class="form-control" type="text" placeholder="%">
         </div>
         <div class="col-1">
-          <button class="btn btn-dark pb-1" onclick=addAnswer(this)><ion-icon name="add-outline"></ion-icon></button>
+          <button type="button" tabindex=-1 class="btn btn-dark pb-1" onclick=addAnswer(this)>
+            <ion-icon name="add-outline"></ion-icon>
+          </button>
         </div>
       </div>
     </div>
-
   </div>
+</div>
 
-</div>
-</div>
+<div><button>Add Question</button></div>

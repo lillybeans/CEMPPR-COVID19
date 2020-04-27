@@ -19,7 +19,7 @@ function showNext(currentElement){
   //first check if current parent div is the last one in the section
   if ($(currentParent).hasClass("last-questionInfo")){
     //show Question Details Section
-    $('#question_details').slideDown("fast")
+    $('#questions_container').slideDown("fast")
     return
   }
 

@@ -10,7 +10,6 @@ function addAnswer(lastAddButton){
 
   var questionForm = $(lastAnswer).parent()
   $(questionForm).append(nextAnswerHtml)
-  console.log("next html is: "+ nextAnswerHtml)
 }
 
 function removeAnswer(removeButton){

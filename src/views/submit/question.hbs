@@ -5,10 +5,16 @@
 <div class="row mx-5 my-5">
 <form>
 
+<div class="col-md-3">
 {{> question/chooseSurvey }}
+<br>
 {{> question/questionInfoTemplate }}
+</div>
+
+<div class="col-md-9 questions_container hide" id="questions_container">
 {{> question/questions}}
+</div>
 
   <button type="submit" class="btn btn-purple-dark hide">Submit</button>
-</div>
 </form>
+</div>
