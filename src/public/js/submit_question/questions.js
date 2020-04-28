@@ -1,6 +1,6 @@
 $(function() {
 
-$('#questions_container').on("keydown", "input.percentage", function (e) {
+$('#questions_container').on("keydown", "input.tapToAdd", function (e) {
   var inputValue = $(this).val();
   if(e.keyCode == 9) { //tab pressed
     var lastAnswer = $(this).closest('.answer')
@@ -13,6 +13,8 @@ $('#questions_container').on("keydown", "input.percentage", function (e) {
 function addAnswer(lastAnswer) {
   var lastAnswerHtml = $(lastAnswer).html()
   var nextAnswerHtml = "<div class='answer'>" + lastAnswerHtml + "</div>"
+
+  $(lastAnswer).find('input.percentage').removeClass('tapToAdd')
 
   var questionForm = $(lastAnswer).parent()
   $(questionForm).append(nextAnswerHtml)
