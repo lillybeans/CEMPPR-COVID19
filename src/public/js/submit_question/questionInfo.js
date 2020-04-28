@@ -20,6 +20,7 @@ function showNext(currentElement){
   if ($(currentParent).hasClass("last-questionInfo")){
     //show Question Details Section
     $('#questions_container').slideDown("fast")
+    $('#submit_button').show()
     return
   }
 
