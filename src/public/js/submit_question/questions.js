@@ -17,14 +17,16 @@ function addAnswer(lastAnswer) {
   var questionForm = $(lastAnswer).parent()
   $(questionForm).append(nextAnswerHtml)
 
-  console.log("next html is "+nextAnswerHtml)
-
-  var removeButtonHtml = "<button type='button' tabindex=-1 class='btn btn-dark pb-1' onclick='removeAnswer(this)'>\n"+
-                      "<ion-icon name='remove-outline'></ion-icon></button>"
-  $(questionForm).children('.answer').last().find('.button_container').html(removeButtonHtml)
+  $(questionForm).children('.answer').last().find('.removeButton').show()
 }
 
 function removeAnswer(removeButton) {
   var answer = $(removeButton).closest('.answer')
   $(answer).remove()
+}
+
+function addQuestion(){
+  var question = $('#questions').find('.question-template').first().html()
+  var questionTemplate ="<div class='form-group question border border-dark rounded p-4'>\n" + question + "\n</div>"
+  $('#questions').append(questionTemplate)
 }

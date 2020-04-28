@@ -1,0 +1,27 @@
+<div class="form-group question border border-dark rounded p-4 {{#if hide}}hide question-template{{/if}}">
+  <label class="font-weight-bold">
+    Question
+  </label>
+  <textarea class="form-control" id="question1" rows="2"></textarea>
+  <br>
+  <label class="font-weight-bold">
+    Answers
+  </label>
+  <small id="description" class="form-text text-muted">Press tab to add more options</small>
+
+  <div class="answer">
+    <div class="form-row my-2 option">
+      <div class="col-10">
+        <input class="form-control" type="text" placeholder="Option">
+      </div>
+      <div class="col-1">
+        <input class="form-control percentage" type="text" placeholder="%">
+      </div>
+      <div class="col-1 button_container">
+        <button type='button' tabindex=-1 class='btn btn-dark removeButton pb-1 hide' onclick='removeAnswer(this)'>
+            <ion-icon name='remove-outline'></ion-icon>
+          </button>
+      </div>
+    </div>
+  </div>
+</div>
