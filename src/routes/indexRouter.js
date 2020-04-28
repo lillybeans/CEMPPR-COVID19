@@ -18,16 +18,15 @@ indexRouter.get('/', function(req, res) {
 })
 
 indexRouter.get('/submit/question', function(req, res) {
-  loader.fetchSurveys(surveys => {
+  loader.fetchPollNamesPromise().then( pollNames => {
     res.render("submit/question", {
       active: {
         submit: true
       },
       questionInfoModel: questionInfoModel,
-      surveys: surveys
+      surveys: pollNames
     })
   })
-
 })
 
 indexRouter.get('/submit/survey', function(req, res) {
