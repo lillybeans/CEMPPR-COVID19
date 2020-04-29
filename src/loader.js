@@ -44,10 +44,9 @@ function closePromise() {
 function fetchSubmitQuestionDataPromise() {
   //1. Section 1: Choose Survey - fetch surveys for dropdown
   //2. Section 2: Group, Theme, Keywords
-  let pollNames, groups, themes, keywords
-  return queryPromise("SELECT DISTINCT Poll_Name FROM Responses").then(rows => {
-      pollNames = rows.map(row => row.Poll_Name)
-      return PollNames
+  let dict
+  return fetchPollNamesPromise().then(pollNames => {
+      dict["pollNames"] = pollNames
       //return queryPromise( 'SELECT * FROM Group' );
     })
     // .then( rows => {

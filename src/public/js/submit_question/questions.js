@@ -24,7 +24,12 @@ function addAnswer(lastAnswer) {
 
 function removeAnswer(removeButton) {
   var answer = $(removeButton).closest('.answer')
+  var questionForm = $(answer).parent()
   $(answer).remove()
+
+  //add back the "tapToAdd" class to the new last answer
+  $(questionForm).children('.answer').last().find('input.percentage').addClass('tapToAdd')
+
 }
 
 function addQuestion(){
