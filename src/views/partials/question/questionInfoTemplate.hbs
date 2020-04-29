@@ -2,7 +2,7 @@
   <h2 class="font-weight-light mb-3"><span class="bg-dark rounded px-2 py-0.5 text-white">2</span> Question Info</h2>
 
     {{#each questionInfoModel.formItems }}
-      <div class="form-group {{#if @first}}{{else}}hide{{/if}} {{#if @last}}last-questionInfo{{/if}}" id="questionInfo_{{@index}}">
+      <div class="form-group {{#if @last}}last-questionInfo{{/if}}" id="questionInfo_{{@index}}">
         <label for={{ name }} class="font-weight-bold">
           {{ title }}
         </label>

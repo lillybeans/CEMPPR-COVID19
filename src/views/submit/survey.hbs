@@ -1,9 +1,213 @@
 <script type="text/javascript" src="../js/submit_survey/submitSurvey.js"></script>
-<p>
-  <h2>Submit Survey</h2>
-</p>
-<form>
 
-  <button type="submit" class="btn btn-turquoise-dark hide">Submit</button>
+<div class="mx-5 my-4">
+  <h1 class="display-4 mx-3">Submit Survey</h1>
+  <hr class="mx-3 bg-dark">
+</div>
 
-</form>
+<div class="row mx-5 my-4">
+  <div class="col">
+
+      <div class="form-group" id="survey_0">
+        <label for="polling_group" class="font-weight-bold">
+          Polling Group
+        </label>
+
+          <div>
+            <input class="form-control col-8" type="text" name="polling_group" id="polling_group" placeholder="Ex: NPR" oninput="textChanged(this)" required="">
+            <small id="description" class="form-text text-muted"></small>
+          </div>
+
+      </div>
+
+      <div class="form-group" id="survey_1">
+        <label for="poll_name" class="font-weight-bold">
+          Poll Name
+        </label>
+
+          <div>
+            <input class="form-control col-8" type="text" name="poll_name" id="poll_name" placeholder="Ex: NPR_20200317" oninput="textChanged(this)" required="">
+            <small id="description" class="form-text text-muted"></small>
+          </div>
+
+      </div>
+
+      <div class="form-group" id="survey_2">
+        <label for="country" class="font-weight-bold">
+          Country
+        </label>
+
+          <div>
+            <select class="form-control-sm" name="country" id="country" onchange="dropdownChanged(this)" required="">
+              <option value="">Select</option>
+
+                <option value="United" states="">United States</option>
+                <option value="Canada">Canada</option>
+                <option value="Italy">Italy</option>
+
+            </select>
+          </div>
+
+
+      </div>
+
+      <div class="form-group" id="survey_3">
+        <label for="subnational" class="font-weight-bold">
+          Sub-national
+        </label>
+
+          <div>
+            <input class="form-control col-8" type="text" name="subnational" id="subnational" placeholder="Ex: Chicago" oninput="textChanged(this)" required="">
+            <small id="description" class="form-text text-muted"></small>
+          </div>
+
+      </div>
+
+      <div class="form-group" id="survey_4">
+        <label for="population" class="font-weight-bold">
+          Population
+        </label>
+
+          <div>
+            <select class="form-control-sm" name="population" id="population" onchange="dropdownChanged(this)" required="">
+              <option value="">Select</option>
+
+                <option value="Population" 1="">Population 1</option>
+                <option value="Population" 2="">Population 2</option>
+                <option value="Population" 3="">Population 3</option>
+
+            </select>
+          </div>
+
+
+      </div>
+</div>
+
+<div class="col">
+
+      <div class="form-group" id="survey_8">
+        <label for="sample_size" class="font-weight-bold">
+          Sample Size
+        </label>
+
+          <div>
+            <input class="form-control col-8" type="text" name="sample_size" id="sample_size" placeholder="Ex: 1800" oninput="textChanged(this)" required="">
+            <small id="description" class="form-text text-muted"></small>
+          </div>
+
+      </div>
+
+      <div class="form-group" id="survey_9">
+        <label for="sample_method" class="font-weight-bold">
+          Sample Method
+        </label>
+
+
+
+          <div>
+            <select class="form-control-sm" name="sample_method" id="sample_method" onchange="dropdownChanged(this)" required="">
+              <option value="">Select</option>
+
+                <option value="Method" 1="">Method 1</option>
+                <option value="Method" 2="">Method 2</option>
+                <option value="Method" 3="">Method 3</option>
+
+            </select>
+          </div>
+
+
+      </div>
+
+      <div class="form-group" id="survey_10">
+        <label for="type_of_study" class="font-weight-bold">
+          Type of Study
+        </label>
+
+          <div>
+            <select class="form-control-sm" name="type_of_study" id="type_of_study" onchange="dropdownChanged(this)" required="">
+              <option value="">Select</option>
+
+                <option value="One-time">One-time</option>
+                <option value="Longitudinal">Longitudinal</option>
+
+            </select>
+          </div>
+
+      </div>
+
+      <div class="form-group" id="survey_11">
+        <label for="url" class="font-weight-bold">
+          URL
+        </label>
+
+          <div>
+            <input class="form-control col-8" type="text" name="url" id="url" placeholder="Ex: https://samplesurvey.com/someSurvey" oninput="textChanged(this)" required="">
+            <small id="description" class="form-text text-muted"></small>
+          </div>
+
+
+      </div>
+
+      <div class="form-group" id="survey_12">
+        <label for="initial" class="font-weight-bold">
+          Your Initial
+        </label>
+
+          <div>
+            <input class="form-control col-8" type="text" name="initial" id="initial" placeholder="Ex: SK" oninput="textChanged(this)" required="">
+            <small id="description" class="form-text text-muted"></small>
+          </div>
+
+
+      </div>
+    </div>
+    <div class="col">
+          <div class="form-group" id="survey_5">
+            <label for="publication_date" class="font-weight-bold">
+              Publication Date
+            </label>
+
+
+              <div>
+                <input class="form-control col-8" type="date" name="publication_date" id="publication_date" placeholder="Ex:" 2020="" 03="" 01="">
+                <small id="description" class="form-text text-muted"></small>
+              </div>
+
+
+
+          </div>
+
+          <div class="form-group" id="survey_6">
+            <label for="start_date" class="font-weight-bold">
+              Start Date
+            </label>
+
+
+              <div>
+                <input class="form-control col-8" type="date" name="start_date" id="start_date" placeholder="Ex:" 2020="" 02="" 01="">
+                <small id="description" class="form-text text-muted"></small>
+              </div>
+
+          </div>
+
+          <div class="form-group" id="survey_7">
+            <label for="end_date" class="font-weight-bold">
+              End Date
+            </label>
+
+
+              <div>
+                <input class="form-control col-8" type="date" name="end_date" id="end_date" placeholder="Ex:" 2020="" 02="">
+                <small id="description" class="form-text text-muted"></small>
+              </div>
+
+          </div>
+    </div>
+    </div>
+
+    <div class="mx-5 my-4">
+
+      <button type="submit" class="btn btn-dark mx-3" id="submit_button">Submit</button>
+    </div>
+
+</div>
