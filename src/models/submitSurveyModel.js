@@ -33,24 +33,6 @@ var submitSurveyModel = {
       "options": ["Population 1", "Population 2", "Population 3"]
     },
     {
-      "name": "publication_date",
-      "title":"Publication Date",
-      "type":"date",
-      "placeholder": "Ex: 2020/03/01"
-    },
-    {
-      "name": "start_date",
-      "title":"Start Date",
-      "type":"date",
-      "placeholder": "Ex: 2020/02/01"
-    },
-    {
-      "name": "end_date",
-      "title":"End Date",
-      "type":"date",
-      "placeholder": "Ex: 2020/02/02"
-    },
-    {
       "name": "sample_size",
       "title":"Sample Size",
       "type":"text",
@@ -79,7 +61,25 @@ var submitSurveyModel = {
       "title":"Your Initial",
       "type":"text",
       "placeholder": "Ex: SK"
-    }
+    },
+    {
+      "name": "publication_date",
+      "title":"Publication Date",
+      "type":"date",
+      "placeholder": "Ex: 2020/03/01"
+    },
+    {
+      "name": "start_date",
+      "title":"Start Date",
+      "type":"date",
+      "placeholder": "Ex: 2020/02/01"
+    },
+    {
+      "name": "end_date",
+      "title":"End Date",
+      "type":"date",
+      "placeholder": "Ex: 2020/02/02"
+    },
   ]
 }
 
