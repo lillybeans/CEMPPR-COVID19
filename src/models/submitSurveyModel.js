@@ -38,6 +38,13 @@ var submitSurveyModel = {
       "required": true
     },
     {
+      "name": "language",
+      "title":"Language",
+      "type":"dropdown",
+      "options": ["Language 1", "Language 2", "Language 3"],
+      "required": true
+    },
+    {
       "type": "column_break"
     },
     {

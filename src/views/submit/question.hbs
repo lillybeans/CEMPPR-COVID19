@@ -1,5 +1,4 @@
 <script type="text/javascript" src="../js/submit_question/chooseSurvey.js"></script>
-<script type="text/javascript" src="../js/submit_question/questionInfo.js"></script>
 <script type="text/javascript" src="../js/submit_question/questions.js"></script>
 
 <div class="mx-5 my-4">
@@ -17,7 +16,7 @@
       {{> question/questionInfoTemplate }}
     </div>
 
-    <div class="col-md-6 hide" id="questions_container">
+    <div class="col-md-6" id="questions_container">
       {{> question/questions}}
 
       <div class="form-group">
@@ -29,7 +28,7 @@
         </div>
       </div>
 
-      <button type="submit" class="btn btn-dark hide" id="submit_button">Submit</button>
+      <button type="submit" class="btn btn-dark" id="submit_button">Submit</button>
     </div>
 
   </div>
