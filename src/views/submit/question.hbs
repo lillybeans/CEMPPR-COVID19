@@ -3,24 +3,34 @@
 <script type="text/javascript" src="../js/submit_question/questions.js"></script>
 
 <div class="mx-5 my-4">
-<h1 class="display-4 mx-3">Submit Question</h1>
-<hr class="mx-3 bg-dark">
+  <h1 class="display-4 mx-3">Submit Question</h1>
+  <hr class="mx-3 bg-dark">
 </div>
 
 <form>
-<div class="row mx-5 my-5">
+  <div class="row mx-5 my-5">
 
-<div class="col-md-3">
-{{> question/chooseSurvey }}
-</div>
-<div class="col-md-3">
-{{> question/questionInfoTemplate }}
-</div>
+    <div class="col-md-3">
+      {{> question/chooseSurvey }}
+    </div>
+    <div class="col-md-3">
+      {{> question/questionInfoTemplate }}
+    </div>
 
-<div class="col-md-6 hide" id="questions_container">
-{{> question/questions}}
-<button type="submit" class="btn btn-dark hide" id="submit_button">Submit</button>
-</div>
+    <div class="col-md-6 hide" id="questions_container">
+      {{> question/questions}}
 
-</div>
+      <div class="form-group">
+        <label for="initial" class="font-weight-bold">
+          Your Initial
+        </label>
+        <div>
+          <input class="form-control col-3" type="text" name="initial" id="initial" placeholder="SK" onInput="textChanged(this)" required>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-dark hide" id="submit_button">Submit</button>
+    </div>
+
+  </div>
 </form>

@@ -6,14 +6,14 @@ var submitSurveyModel = {
       "name": "polling_group",
       "title":"Polling Group",
       "type":"text",
-      "placeholder": "Ex: NPR",
+      "placeholder": "NPR",
       "required": true
     },
     {
       "name": "poll_name",
       "title":"Poll Name",
       "type":"text",
-      "placeholder": "Ex: NPR_20200317",
+      "placeholder": "NPR_20200317",
       "required": true
     },
     {
@@ -27,7 +27,7 @@ var submitSurveyModel = {
       "name": "subnational",
       "title":"Sub-national",
       "type":"text",
-      "placeholder": "Ex: Chicago",
+      "placeholder": "New York",
       "required": false
     },
     {
@@ -44,7 +44,7 @@ var submitSurveyModel = {
       "name": "sample_size",
       "title":"Sample Size",
       "type":"text",
-      "placeholder": "Ex: 1800",
+      "placeholder": "1800",
       "required": false
     },
     {
@@ -65,15 +65,16 @@ var submitSurveyModel = {
       "name": "url",
       "title":"URL",
       "type":"text",
-      "placeholder": "Ex: https://samplesurvey.com/someSurvey",
+      "placeholder": "https://samplesurvey.com/survey1",
       "required": true
     },
     {
       "name": "initial",
       "title":"Your Initial",
       "type":"text",
-      "placeholder": "Ex: SK",
-      "required": true
+      "placeholder": "SK",
+      "required": true,
+      "italic": true
     },
     {
       "type": "column_break"
