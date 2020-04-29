@@ -6,31 +6,36 @@ var submitSurveyModel = {
       "name": "polling_group",
       "title":"Polling Group",
       "type":"text",
-      "placeholder": "Ex: NPR"
+      "placeholder": "Ex: NPR",
+      "required": true
     },
     {
       "name": "poll_name",
       "title":"Poll Name",
       "type":"text",
-      "placeholder": "Ex: NPR_20200317"
+      "placeholder": "Ex: NPR_20200317",
+      "required": true
     },
     {
       "name": "country",
       "title":"Country",
       "type":"dropdown",
-      "options": ["United States", "Canada", "Italy"]
+      "options": ["United States", "Canada", "Italy"],
+      "required": true
     },
     {
       "name": "subnational",
       "title":"Sub-national",
       "type":"text",
-      "placeholder": "Ex: Chicago"
+      "placeholder": "Ex: Chicago",
+      "required": false
     },
     {
       "name": "population",
       "title":"Population",
       "type":"dropdown",
-      "options": ["Population 1", "Population 2", "Population 3"]
+      "options": ["Population 1", "Population 2", "Population 3"],
+      "required": true
     },
     {
       "type": "column_break"
@@ -39,31 +44,36 @@ var submitSurveyModel = {
       "name": "sample_size",
       "title":"Sample Size",
       "type":"text",
-      "placeholder": "Ex: 1800"
+      "placeholder": "Ex: 1800",
+      "required": false
     },
     {
       "name": "sample_method",
       "title":"Sample Method",
       "type":"dropdown",
-      "options": ["Method 1", "Method 2", "Method 3"]
+      "options": ["Method 1", "Method 2", "Method 3"],
+      "required": false
     },
     {
       "name": "type_of_study",
       "title":"Type of Study",
       "type":"dropdown",
-      "options": ["One-time", "Longitudinal"]
+      "options": ["One-time", "Longitudinal"],
+      "required": true
     },
     {
       "name": "url",
       "title":"URL",
       "type":"text",
-      "placeholder": "Ex: https://samplesurvey.com/someSurvey"
+      "placeholder": "Ex: https://samplesurvey.com/someSurvey",
+      "required": true
     },
     {
       "name": "initial",
       "title":"Your Initial",
       "type":"text",
-      "placeholder": "Ex: SK"
+      "placeholder": "Ex: SK",
+      "required": true
     },
     {
       "type": "column_break"
@@ -72,19 +82,22 @@ var submitSurveyModel = {
       "name": "publication_date",
       "title":"Publication Date",
       "type":"date",
-      "placeholder": "Ex: 2020/03/01"
+      "placeholder": "Ex: 2020/03/01",
+      "required": false
     },
     {
       "name": "start_date",
       "title":"Start Date",
       "type":"date",
-      "placeholder": "Ex: 2020/02/01"
+      "placeholder": "Ex: 2020/02/01",
+      "required": false
     },
     {
       "name": "end_date",
       "title":"End Date",
       "type":"date",
-      "placeholder": "Ex: 2020/02/02"
+      "placeholder": "Ex: 2020/02/02",
+      "required": false
     },
   ]
 }

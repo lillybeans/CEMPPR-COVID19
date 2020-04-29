@@ -5,6 +5,8 @@
   <hr class="mx-3 bg-dark">
 </div>
 
+<form>
+
 <div class="row mx-5 my-4">
   <div class="col">
     {{#each submitSurveyModel.formItems }}
@@ -20,21 +22,21 @@
 
         {{#ifEquals type "text"}}
           <div>
-            <input class="form-control col-8" type="text" name={{name}} id={{name}} placeholder={{placeholder}} onInput="textChanged(this)" required>
+            <input class="form-control col-8" type="text" name={{name}} id={{name}} placeholder={{placeholder}} onInput="textChanged(this)" {{#if required}} required {{/if}}>
             <small id="description" class="form-text text-muted">{{description}}</small>
           </div>
         {{/ifEquals}}
 
         {{#ifEquals type "date"}}
           <div>
-            <input class="form-control col-8" type="date" name={{name}} id={{name}}>
+            <input class="form-control col-8" type="date" name={{name}} id={{name}} {{#if required}} required {{/if}}>
             <small id="description" class="form-text text-muted">{{description}}</small>
           </div>
         {{/ifEquals}}
 
         {{#ifEquals type "dropdown"}}
           <div>
-            <select class="form-control-sm" name={{name}} id={{name}} onchange="dropdownChanged(this)" required>
+            <select class="form-control-sm" name={{name}} id={{name}} onchange="dropdownChanged(this)" {{#if required}} required {{/if}}>
               <option value="">Select</option>
 
               {{#each options}}
@@ -48,7 +50,7 @@
         {{#ifEquals type "checkbox"}}
           {{#each options}}
             <div class="form-check mb-1">
-              <input class="form-check-input" type="checkbox" value={{this}} onclick="checkboxClicked(this)" id={{name}}>
+              <input class="form-check-input" type="checkbox" value={{this}} onclick="checkboxClicked(this)" id={{name}} {{#if required}} required {{/if}}>
               <label class="form-check-label" for={{this}}>
                 {{this}}
               </label>
@@ -67,3 +69,5 @@
 </div>
 </div>
 </div>
+
+</form>
