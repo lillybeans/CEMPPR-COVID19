@@ -10,7 +10,7 @@ var questionInfoModel = {
       "title":"Survey Item #",
       "description": "Minimum 3 characters",
       "type":"text",
-      "placeholder": "Ex:STGVTCV1"
+      "placeholder": "STGVTCV1"
     },
     {
       "name": "group",

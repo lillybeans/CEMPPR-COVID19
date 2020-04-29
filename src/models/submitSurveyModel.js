@@ -33,6 +33,9 @@ var submitSurveyModel = {
       "options": ["Population 1", "Population 2", "Population 3"]
     },
     {
+      "type": "column_break"
+    },
+    {
       "name": "sample_size",
       "title":"Sample Size",
       "type":"text",
@@ -61,6 +64,9 @@ var submitSurveyModel = {
       "title":"Your Initial",
       "type":"text",
       "placeholder": "Ex: SK"
+    },
+    {
+      "type": "column_break"
     },
     {
       "name": "publication_date",
