@@ -8207,7 +8207,7 @@ a.text-tuorqoise-dark:hover, a.text-tuorqoise-dark:focus {
 html, body {
   height: 100%; }
 
-ion-icon {
+ion-icon.white {
   color: white; }
 
 /*# sourceMappingURL=custom.css.map */

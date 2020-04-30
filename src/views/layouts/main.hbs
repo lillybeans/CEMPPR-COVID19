@@ -40,6 +40,20 @@
         <li class="nav-item {{#if active.about}}active{{/if}}">
           <a class="nav-link" href="/about">About</a>
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Admin
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li class="nav-header mx-2 my-1 font-weight-bold">Database</li>
+            <li><a class="dropdown-item" href="/admin/database/surveys">Surveys</a></li>
+            <li><a class="dropdown-item" href="/admin/database/questions">Questions</a></li>
+            <li><a class="dropdown-item" href="/admin/database/parameters">Parameters</a></li>
+            <li class="nav-header mx-2 my-1 font-weight-bold">Pending</li>
+            <li><a class="dropdown-item" href="/admin/pending/surveys">Surveys</a></li>
+            <li><a class="dropdown-item" href="/admin/pending/questions">Questions</a></li>
+          </ul>
+        </li>
       </ul>
     </div>
     <span class="navbar-text">
@@ -48,7 +62,7 @@
   </nav>
   <!-- This file is a template container file, meaning it is used to render every webpage you have -->
   <!-- This is where every view's content will go -->
-  <div class="{{#if active.submit}}container-fluid{{else}}container{{/if}}">
+  <div class="{{#if active.home}}container{{else}}container-fluid{{/if}}">
     {{{body}}}
   </div>
 </body>

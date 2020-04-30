@@ -15,7 +15,19 @@ adminRouter.get('/', function(req, res) {
   });
 })
 
-adminRouter.get('/approve/surveys', function(req, res) {
+adminRouter.get('/database/surveys', function(req, res) {
+  res.render("admin/database/surveys")
+})
+
+adminRouter.get('/database/questions', function(req, res) {
+  res.render("admin/database/questions")
+})
+
+adminRouter.get('/database/parameters', function(req, res) {
+  res.render("admin/database/parameters")
+})
+
+adminRouter.get('/pending/surveys', function(req, res) {
   // loader.fetchPollNamesPromise().then( pollNames => {
   //   res.render("submit/question", {
   //     active: {
@@ -25,11 +37,10 @@ adminRouter.get('/approve/surveys', function(req, res) {
   //     surveys: pollNames
   //   })
   // })
-  res.render("admin/approve/surveys")
+  res.render("admin/pending/surveys")
 })
 
-
-adminRouter.get('/approve/questions', function(req, res) {
+adminRouter.get('/pending/questions', function(req, res) {
   // loader.fetchPollNamesPromise().then( pollNames => {
   //   res.render("submit/question", {
   //     active: {
@@ -39,46 +50,9 @@ adminRouter.get('/approve/questions', function(req, res) {
   //     surveys: pollNames
   //   })
   // })
-  res.render("admin/approve/questions")
+  res.render("admin/pending/questions")
 })
 
-adminRouter.get('/manage/surveys', function(req, res) {
-  // loader.fetchPollNamesPromise().then( pollNames => {
-  //   res.render("submit/question", {
-  //     active: {
-  //       submit: true
-  //     },
-  //     questionInfoModel: questionInfoModel,
-  //     surveys: pollNames
-  //   })
-  // })
-  res.render("admin/manage/surveys")
-})
 
-adminRouter.get('/manage/questions', function(req, res) {
-  // loader.fetchPollNamesPromise().then( pollNames => {
-  //   res.render("submit/question", {
-  //     active: {
-  //       submit: true
-  //     },
-  //     questionInfoModel: questionInfoModel,
-  //     surveys: pollNames
-  //   })
-  // })
-  res.render("admin/manage/questions")
-})
-
-adminRouter.get('/manage/parameters', function(req, res) {
-  // loader.fetchPollNamesPromise().then( pollNames => {
-  //   res.render("submit/question", {
-  //     active: {
-  //       submit: true
-  //     },
-  //     questionInfoModel: questionInfoModel,
-  //     surveys: pollNames
-  //   })
-  // })
-  res.render("admin/manage/parameters")
-})
 
 module.exports = adminRouter
