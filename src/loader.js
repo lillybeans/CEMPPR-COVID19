@@ -21,16 +21,6 @@ function queryPromise(sql) {
   });
 }
 
-function fetchPollNamesPromise(){
-  return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT DISTINCT Poll_Name FROM Responses", (err, rows) => {
-      if (err)
-        return reject(err);
-      resolve(rows.map(row => row.Poll_Name));
-    });
-  });
-}
-
 function fetchNumberOfSurveysPromise(){
   return new Promise((resolve, reject) => {
     mysqlConnection.query("SELECT COUNT(*) AS count FROM Surveys", (err, rows) => {
@@ -48,6 +38,58 @@ function fetchSurveysByPagePromise(page){
       if (err)
         return reject(err);
       resolve(rows);
+    });
+  });
+}
+
+/** Survey Parameters **/
+
+function fetchCountries(){
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("SELECT * FROM Countries", (err, rows) => {
+      if (err)
+        return reject(err);
+      resolve(rows.map(row => row.name));
+    });
+  });
+}
+
+function fetchPopulations(){
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("SELECT * FROM Population", (err, rows) => {
+      if (err)
+        return reject(err);
+      resolve(rows.map(row => row.name));
+    });
+  });
+}
+
+function fetchLanguages(){
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("SELECT * FROM Language", (err, rows) => {
+      if (err)
+        return reject(err);
+      resolve(rows.map(row => row.name));
+    });
+  });
+}
+
+function fetchSampleMethods(){
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("SELECT * FROM SampleMethods", (err, rows) => {
+      if (err)
+        return reject(err);
+      resolve(rows.map(row => row.name));
+    });
+  });
+}
+
+function fetchTypeofStudies(){
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("SELECT * FROM TypeOfStudy", (err, rows) => {
+      if (err)
+        return reject(err);
+      resolve(rows.map(row => row.name));
     });
   });
 }
@@ -88,4 +130,9 @@ function fetchSubmitQuestionDataPromise() {
 module.exports = {
   fetchNumberOfSurveysPromise: fetchNumberOfSurveysPromise,
   fetchSurveysByPagePromise: fetchSurveysByPagePromise,
+  fetchCountries: fetchCountries,
+  fetchPopulations: fetchPopulations,
+  fetchLanguages: fetchLanguages,
+  fetchSampleMethods: fetchSampleMethods,
+  fetchTypeofStudies: fetchTypeofStudies
 }
