@@ -19,3 +19,15 @@ html, body {
 ion-icon.white {
   color:white;
 }
+
+/* Database */
+
+.panel-heading[aria-expanded="true"] .icon-arrow-up,
+.panel-heading[aria-expanded="false"] .icon-arrow-down {
+    display: inline-block;
+}
+
+.panel-heading[aria-expanded="true"] .icon-arrow-down,
+.panel-heading[aria-expanded="false"] .icon-arrow-up {
+    display: none;
+}

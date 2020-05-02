@@ -31,9 +31,20 @@ function fetchPollNamesPromise(){
   });
 }
 
-function fetchAllSurveysPromise(){
+function fetchNumberOfSurveysPromise(){
   return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT * FROM Surveys", (err, rows) => {
+    mysqlConnection.query("SELECT COUNT(*) AS count FROM Surveys", (err, rows) => {
+      if (err)
+        return reject(err);
+      resolve(rows[0].count);
+    });
+  });
+}
+
+function fetchSurveysByPagePromise(page){
+  var rowsOffset = (page - 1)*10
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("SELECT * FROM Surveys LIMIT 10 OFFSET " + rowsOffset, (err, rows) => {
       if (err)
         return reject(err);
       resolve(rows);
@@ -75,6 +86,6 @@ function fetchSubmitQuestionDataPromise() {
 }
 
 module.exports = {
-  fetchPollNamesPromise: fetchPollNamesPromise,
-  fetchAllSurveysPromise: fetchAllSurveysPromise
+  fetchNumberOfSurveysPromise: fetchNumberOfSurveysPromise,
+  fetchSurveysByPagePromise: fetchSurveysByPagePromise,
 }

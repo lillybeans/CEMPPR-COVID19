@@ -1,13 +1,4 @@
-<script type="text/javascript" src="../js/submit_survey/submitSurvey.js"></script>
-
-<div class="mx-5 my-4">
-  <h1 class="display-4 mx-3">Submit Survey</h1>
-  <hr class="mx-3 bg-dark">
-</div>
-
-<form>
-
-<div class="row mx-5 my-4">
+<div class="row mx-2 my-4">
   <div class="col">
     {{#each surveyModel.formItems }}
 
@@ -22,21 +13,21 @@
 
         {{#ifEquals type "text"}}
           <div>
-            <input class="form-control col-8" type="text" name={{name}} id={{name}} placeholder="{{placeholder}}" onInput="textChanged(this)" {{#if required}} required {{/if}}>
+            <input class="form-control col-8" type="text" name={{name}} id={{name}} value="{{lookup ../survey name}}" placeholder="{{placeholder}}" onInput="textChanged(this)" {{#if required}} required {{/if}} readonly>
             <small id="description" class="form-text text-muted">{{description}}</small>
           </div>
         {{/ifEquals}}
 
         {{#ifEquals type "date"}}
           <div>
-            <input class="form-control col-8" type="date" name={{name}} id={{name}} {{#if required}} required {{/if}}>
+            <input class="form-control col-8" type="date" name={{name}} id={{name}} value="{{lookup ../survey name}}" {{#if required}} required {{/if}}>
             <small id="description" class="form-text text-muted">{{description}}</small>
           </div>
         {{/ifEquals}}
 
         {{#ifEquals type "dropdown"}}
           <div>
-            <select class="form-control-sm" name={{name}} id={{name}} onchange="dropdownChanged(this)" {{#if required}} required {{/if}}>
+            <select class="form-control-sm" name={{name}} id={{name}} value="{{lookup ../survey name}}" onchange="dropdownChanged(this)" {{#if required}} required {{/if}}>
               <option value="">Select</option>
 
               {{#each options}}
@@ -64,10 +55,3 @@
 
   </div>
 </div>
-<div class="mx-5 my-4">
-  <button type="submit" class="btn btn-dark mx-3" id="submit_button">Submit</button>
-</div>
-</div>
-</div>
-
-</form>

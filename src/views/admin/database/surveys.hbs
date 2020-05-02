@@ -2,63 +2,41 @@
   <h1 class="display-4 mx-3">👩‍💼 All Surveys</h1>
   <hr class="mx-3 bg-dark">
 
-<div class="row">
-<div class="col font-weight-bold">
-  Polling Group
-</div>
-<div class="col font-weight-bold">
-  Poll Name
-</div>
-<div class="col font-weight-bold">
-  Country
-</div>
-<div class="col font-weight-bold">
-  Subnational
-</div>
-<div class="col font-weight-bold">
-  Population
-</div>
-<div class="col font-weight-bold">
-  Language
-</div>
-<div class="col font-weight-bold">
-  Sample Size
-</div>
-<div class="col font-weight-bold">
-  Sample Method
-</div>
-<div class="col font-weight-bold">
-  Type of Study
-</div>
-</div>
+  <nav class="m-3">
+  <ul class="pagination">
+    <li class="page-item {{#ifEquals active 1}}disabled{{/ifEquals}}">
+      <a class="page-link" href="./{{minus active 1}}">Previous</a>
+    </li>
+    {{#each pages}}
+    <li class="page-item {{#ifEquals ../active this}}active{{/ifEquals}}"><a class="page-link" href="./{{this}}">{{this}}</a></li>
+    {{/each}}
+    <li class="page-item {{#ifEquals active pages.length}}disabled{{/ifEquals}}">
+      <a class="page-link" href="./{{add active 1}}" tabindex="-1">Next</a>
+    </li>
+  </ul>
+</nav>
 
-{{#each surveys}}
-<div class="row">
-<div class="col">
-  {{polling_group}}
-</div>
-<div class="col">
-  {{poll_name}}
-</div>
-<div class="col">
-  {{country}}
-</div>
-<div class="col">
-  {{subnational}}
-</div>
-<div class="col">
-  {{population}}
-</div>
-<div class="col">
-  {{sample_size}}
-</div>
-<div class="col">
-  {{sample_method}}
-</div>
-<div class="col">
-  {{type_of_study}}
-</div>
-</div>
-{{/each}}
+  <div class="accordion m-3" id="surveyList">
+    {{#each surveys}}
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h4 class="mb-0">
+            <div class="panel-heading" data-toggle="collapse" data-target="#collapse{{@index}}" aria-expanded="false" aria-controls="collapse{{@index}}">
+              {{poll_name}}
+              <ion-icon class="float-right icon-arrow-down" name="chevron-down-outline"></ion-icon>
+              <ion-icon class="float-right icon-arrow-up" name="chevron-up-outline"></ion-icon>
+            </div>
+          </h4>
+        </div>
 
+        <div id="collapse{{@index}}" class="collapse" aria-labelledby="heading{{@index}}" data-parent="#surveyList">
+          <div class="card-body">
+
+            {{> survey/editSurvey surveyModel=../surveyModel survey=this }}
+
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
 </div>

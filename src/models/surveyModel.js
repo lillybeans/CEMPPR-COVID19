@@ -1,6 +1,6 @@
 //THIS IS BACKEND CODE
 
-var submitSurveyModel = {
+var surveyModel = {
   "formItems": [
     {
       "name": "polling_group",
@@ -76,7 +76,7 @@ var submitSurveyModel = {
       "required": true
     },
     {
-      "name": "initial",
+      "name": "created_by",
       "title":"Your Initial",
       "type":"text",
       "placeholder": "SK",
@@ -110,4 +110,4 @@ var submitSurveyModel = {
   ]
 }
 
-module.exports = submitSurveyModel // alt: {questionInfoModel: questionInfoModel, key: value}
+module.exports = surveyModel // alt: {questionInfoModel: questionInfoModel, key: value}

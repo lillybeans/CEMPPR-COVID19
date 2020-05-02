@@ -6,6 +6,8 @@ const loader = require("../loader")
 const adminRouter = express.Router();
 const util = require("util")
 
+const surveyModel = require("../models/surveyModel")
+
 // home page route
 adminRouter.get('/', function(req, res) {
   res.render("home", {
@@ -15,10 +17,44 @@ adminRouter.get('/', function(req, res) {
   });
 })
 
+/** Database: Surveys **/
 adminRouter.get('/database/surveys', function(req, res) {
-  loader.fetchAllSurveysPromise().then( surveys => {
+  var pages = []
+  var numberOfRecords = 0
+  loader.fetchNumberOfSurveysPromise().then( records => {
+    numberOfRecords = records
+    numPages = Math.ceil(numberOfRecords/10)
+    for (var i=1; i<= numPages; i++){
+      pages.push(i)
+    }
+    return loader.fetchSurveysByPagePromise(1)
+  }).then( rows => {
     res.render("admin/database/surveys", {
-      surveys: surveys
+      surveys: rows,
+      surveyModel: surveyModel,
+      pages: pages,
+      active: 1
+    })
+  })
+})
+
+adminRouter.get('/database/surveys/:page', function(req, res) {
+  const page = req.params.page
+  var pages = []
+  var numberOfRecords = 0
+  loader.fetchNumberOfSurveysPromise().then( records => {
+    numberOfRecords = records
+    numPages = Math.ceil(numberOfRecords/10)
+    for (var i=1; i<= numPages; i++){
+      pages.push(i)
+    }
+    return loader.fetchSurveysByPagePromise(page)
+  }).then( rows => {
+    res.render("admin/database/surveys", {
+      surveys: rows,
+      surveyModel: surveyModel,
+      pages: pages,
+      active: page
     })
   })
 })
