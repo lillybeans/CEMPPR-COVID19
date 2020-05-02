@@ -16,7 +16,11 @@ adminRouter.get('/', function(req, res) {
 })
 
 adminRouter.get('/database/surveys', function(req, res) {
-  res.render("admin/database/surveys")
+  loader.fetchAllSurveysPromise().then( surveys => {
+    res.render("admin/database/surveys", {
+      surveys: surveys
+    })
+  })
 })
 
 adminRouter.get('/database/questions', function(req, res) {

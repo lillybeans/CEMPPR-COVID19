@@ -1,4 +1,64 @@
 <div class="mx-5 my-4">
   <h1 class="display-4 mx-3">👩‍💼 All Surveys</h1>
   <hr class="mx-3 bg-dark">
+
+<div class="row">
+<div class="col font-weight-bold">
+  Polling Group
+</div>
+<div class="col font-weight-bold">
+  Poll Name
+</div>
+<div class="col font-weight-bold">
+  Country
+</div>
+<div class="col font-weight-bold">
+  Subnational
+</div>
+<div class="col font-weight-bold">
+  Population
+</div>
+<div class="col font-weight-bold">
+  Language
+</div>
+<div class="col font-weight-bold">
+  Sample Size
+</div>
+<div class="col font-weight-bold">
+  Sample Method
+</div>
+<div class="col font-weight-bold">
+  Type of Study
+</div>
+</div>
+
+{{#each surveys}}
+<div class="row">
+<div class="col">
+  {{polling_group}}
+</div>
+<div class="col">
+  {{poll_name}}
+</div>
+<div class="col">
+  {{country}}
+</div>
+<div class="col">
+  {{subnational}}
+</div>
+<div class="col">
+  {{population}}
+</div>
+<div class="col">
+  {{sample_size}}
+</div>
+<div class="col">
+  {{sample_method}}
+</div>
+<div class="col">
+  {{type_of_study}}
+</div>
+</div>
+{{/each}}
+
 </div>

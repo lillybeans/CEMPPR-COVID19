@@ -1,0 +1,529 @@
+Question_ID	Keyword
+253	Family
+253	Fear
+253	Illness
+253	Spread
+254	Fear
+254	Trust
+255	Illness
+256	Illness
+256	Testing
+258	Family
+258	Hygiene
+258	Physical Distancing
+258	Self-isolation
+259	Laws
+260	Food
+260	Travel
+261	Economics
+261	Employment
+261	Family
+262	Economics
+262	Employment
+263	Laws
+263	News
+263	Politics
+263	Trust
+264	Laws
+264	Politics
+264	Trust
+265	Laws
+265	Politics
+265	Trust
+266	Employment
+266	Trust
+267	Laws
+267	Politics
+267	Travel
+267	Trust
+268	Laws
+268	Politics
+268	Travel
+268	Trust
+269	Laws
+269	Politics
+269	Travel
+269	Trust
+270	Fear
+270	Return to Normal
+271	Fear
+271	Illness
+272	Family
+272	Food
+272	Illness
+272	Spread
+273	Fear
+273	Trust
+274	Illness
+275	Illness
+275	Testing
+278	Healthcare
+278	Illness
+279	Family
+280	Economics
+280	Employment
+281	Healthcare
+281	Hygiene
+281	Illness
+282	Family
+282	Hygiene
+282	Physical Distancing
+282	Self-isolation
+282	Travel
+283	Laws
+284	Food
+284	Travel
+285	Economics
+285	Employment
+285	Family
+286	Economics
+286	Employment
+287	Employment
+287	Laws
+287	News
+287	Politics
+287	Trust
+288	Laws
+288	Politics
+288	Travel
+288	Trust
+289	Fear
+289	Return to Normal
+290	Illness
+290	Spread
+291	Fear
+291	Illness
+292	Family
+292	Fear
+292	Illness
+293	Employment
+293	Fear
+293	Illness
+294	Self-isolation
+295	Hygiene
+295	Physical Distancing
+295	Self-isolation
+296	Hygiene
+296	Physical Distancing
+296	Self-isolation
+297	Hygiene
+297	Physical Distancing
+297	Self-isolation
+298	Hygiene
+298	Physical Distancing
+298	Self-isolation
+299	Hygiene
+299	Illness
+299	Physical Distancing
+300	Laws
+300	Physical Distancing
+300	Self-isolation
+300	Travel
+301	Physical Distancing
+301	Self-isolation
+302	Employment
+303	Economics
+303	Family
+304	Employment
+304	Family
+305	Economics
+305	Politics
+306	Illness
+307	Family
+307	Illness
+307	Spread
+308	Illness
+308	Spread
+309	Economics
+309	Employment
+310	Hygiene
+310	Self-isolation
+310	Spread
+311	School
+311	Spread
+312	Hygiene
+312	Illness
+313	Employment
+313	Hygiene
+313	Illness
+314	Family
+314	Illness
+314	Physical Distancing
+315	Food
+316	Physical Distancing
+316	Self-isolation
+317	Mental Health
+318	Mental Health
+319	Healthcare
+320	Employment
+320	School
+321	Food
+323	Mental Health
+324	Spread
+325	Fear
+325	Food
+326	Economics
+326	Fear
+327	Employment
+327	Fear
+328	Fear
+328	Illness
+328	Spread
+329	Physical Distancing
+330	Politics
+331	News
+332	Family
+332	Illness
+333	Employment
+334	Family
+335	Housing
+336	Fear
+336	Housing
+337	Family
+337	News
+338	Illness
+339	News
+339	Social Media
+340	Social Media
+341	Social Media
+342	Spread
+343	Healthcare
+343	Social Media
+344	Family
+344	Illness
+344	Spread
+345	Food
+345	Hygiene
+346	Economics
+346	Food
+346	Hygiene
+347	News
+347	Social Media
+348	Food
+351	Illness
+351	Spread
+352	Fear
+352	Food
+354	Employment
+354	Fear
+355	Family
+355	Fear
+355	Illness
+356	Physical Distancing
+356	Self-isolation
+357	Response
+358	News
+359	Illness
+360	Economics
+360	Fear
+361	Economics
+361	Fear
+362	Fear
+362	Healthcare
+362	Illness
+362	Mental Health
+363	Employment
+363	Fear
+364	Fear
+365	Economics
+366	Travel
+367	Economics
+368	News
+368	Social Media
+369	Healthcare
+369	News
+369	Social Media
+369	Spread
+370	Healthcare
+370	Physical Distancing
+370	Return to Normal
+370	Self-isolation
+370	Spread
+371	Healthcare
+371	Hospitals
+371	Spread
+372	Economics
+372	Employment
+372	Politics
+373	Economics
+373	Employment
+373	Politics
+374	Economics
+374	Politics
+374	Trust
+375	Economics
+376	Economics
+376	Politics
+377	Economics
+377	Politics
+377	Trust
+378	Politics
+378	Trust
+379	Fear
+379	Response
+380	Fear
+380	News
+380	Response
+381	Food
+381	Response
+381	Self-isolation
+382	Food
+383	Travel
+384	News
+385	Fear
+386	Family
+386	Illness
+386	Spread
+387	Spread
+388	Return to Normal
+389	Fear
+389	Mental Health
+390	Fear
+390	Healthcare
+390	Hospitals
+391	Fear
+391	Healthcare
+391	Hospitals
+392	Fear
+392	Food
+393	
+394	News
+394	Social Media
+395	News
+396	Healthcare
+397	Healthcare
+398	Healthcare
+398	Hospitals
+399	Healthcare
+399	Hospitals
+400	Self-isolation
+401	Self-isolation
+402	Fear
+403	Fear
+403	Politics
+404	Economics
+404	Fear
+405	Economics
+405	Fear
+405	Politics
+406	Fear
+407	Laws
+407	Politics
+407	Self-isolation
+407	Travel
+408	Laws
+408	Politics
+408	Self-isolation
+408	Travel
+409	Laws
+409	Politics
+409	Travel
+410	Healthcare
+410	Illness
+410	Laws
+410	Politics
+411	Economics
+411	Employment
+411	Laws
+411	Politics
+412	Healthcare
+412	Laws
+412	Politics
+412	Testing
+413	Laws
+413	Politics
+413	Travel
+414	Laws
+414	Politics
+414	Travel
+415	Laws
+415	Physical Distancing
+415	Politics
+415	Response
+415	Spread
+416	Economics
+416	Laws
+416	Politics
+417	Laws
+417	Physical Distancing
+417	Politics
+417	Spread
+418	Illness
+418	Return to Normal
+418	Spread
+419	Return to Normal
+420	Response
+422	Illness
+422	Response
+423	Response
+424	Response
+425	Family
+425	Response
+425	Social Media
+426	Illness
+426	Response
+426	Spread
+427	Family
+427	Response
+427	Social Media
+428	Economics
+428	Response
+429	Economics
+429	Response
+430	Illness
+430	Response
+431	Response
+432	Response
+433	Family
+433	Response
+433	Social Media
+434	Illness
+434	Response
+434	Spread
+435	Family
+435	Response
+435	Social Media
+436	Return to Normal
+437	Economics
+437	Illness
+437	Politics
+437	Spread
+438	Economics
+438	Politics
+438	Spread
+439	Economics
+439	Illness
+440	Economics
+440	Healthcare
+440	Illness
+440	Trust
+441	Economics
+441	Illness
+441	Spread
+442	Fear
+442	Illness
+442	Spread
+443	Spread
+444	Economics
+444	Healthcare
+444	Illness
+444	Politics
+444	Trust
+445	Illness
+445	Spread
+446	Fear
+446	Illness
+446	Spread
+447	Economics
+447	Illness
+447	Politics
+447	Trust
+449	Politics
+449	Trust
+450	Politics
+450	Response
+450	Return to Normal
+450	Trust
+451	Politics
+451	Response
+451	Trust
+452	Politics
+452	Response
+452	Trust
+453	Politics
+453	Response
+453	Trust
+454	Fear
+455	Family
+455	Physical Distancing
+455	Travel
+456	Family
+456	Physical Distancing
+456	Travel
+458	Hygiene
+458	Return to Normal
+459	Return to Normal
+460	Return to Normal
+461	Return to Normal
+462	Return to Normal
+463	Return to Normal
+464	Employment
+464	Return to Normal
+465	Return to Normal
+466	Hospitals
+467	Healthcare
+468	Family
+468	Return to Normal
+469	Return to Normal
+470	Illness
+471	Illness
+472	Spread
+474	Healthcare
+474	Laws
+474	Politics
+474	Science
+474	Vaccine
+475	Laws
+475	Politics
+475	Response
+477	Economics
+477	Employment
+477	Laws
+477	Politics
+477	Response
+478	Economics
+478	Laws
+478	Politics
+478	Response
+479	Laws
+479	Politics
+479	Response
+479	Testing
+480	Economics
+480	Politics
+480	Response
+481	Return to Normal
+482	Family
+482	Return to Normal
+484	Spread
+486	Fear
+486	News
+487	Fear
+488	Fear
+488	Trust
+489	Fear
+489	Travel
+490	Politics
+490	Response
+491	Illness
+492	Illness
+492	Spread
+493	Response
+495	Food
+496	Food
+497	Food
+498	
+499	News
+499	Social Media
+499	Spread
+500	Fear
+500	News
+500	Politics
+500	Trust
+502	Employment
+502	Politics
+502	Trust
+503	Employment
+503	Response
+503	Trust
+504	News
+504	Social Media
+504	Trust
+505	Politics
+505	Spread
+505	Trust
+506	Employment
+506	Response
+506	Spread
+506	Trust
+507	Food

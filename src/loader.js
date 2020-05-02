@@ -31,6 +31,16 @@ function fetchPollNamesPromise(){
   });
 }
 
+function fetchAllSurveysPromise(){
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("SELECT * FROM Surveys", (err, rows) => {
+      if (err)
+        return reject(err);
+      resolve(rows);
+    });
+  });
+}
+
 function closePromise() {
   return new Promise((resolve, reject) => {
     mysqlConnection.end(err => {
@@ -65,5 +75,6 @@ function fetchSubmitQuestionDataPromise() {
 }
 
 module.exports = {
-  fetchPollNamesPromise: fetchPollNamesPromise
+  fetchPollNamesPromise: fetchPollNamesPromise,
+  fetchAllSurveysPromise: fetchAllSurveysPromise
 }

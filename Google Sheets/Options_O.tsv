@@ -1,0 +1,955 @@
+Question_ID	Option	%
+1	Very worried	12
+1	Somewhat worried	24
+1	Not too worried	37
+1	Not worried at all	28
+2	Very confident	31
+2	Somewhat confident	46
+2	Not too confident	16
+2	Not at all confident	6
+2	No opinion	1
+3	Very negative effect	16
+3	Somewhat negative effect	49
+3	Not a negative effect	34
+3	No opinion	1
+4	I know a lot about Coronavirus	33.7
+4	I know somewhat Coronavirus	51.3
+4	I know very little about Coronavirus	15
+5	Very high	29.8
+5	High	30.5
+5	Low	38.5
+5	Very low	21.3
+6	Yes	26.7
+6	No	52.1
+6	Don't	21.1
+7	Yes	85.9
+7	No	14.1
+8	The CDC	26.2
+8	WHO	15.1
+8	Trump	6.7
+8	Television	29
+8	Print News	4.9
+8	Social	7.4
+8	Family and friends	4.5
+8	Somewhere else	6.2
+9	0 times a day	45.2
+9	1-5 times a day	39.5
+9	6-10 times a day	6.2
+9	More than 10 times a day	5.3
+10	Yes	15.2
+10	No	35.9
+10	Missing... System	48.9
+11	Other	16.1
+11	My friends	25.9
+11	Government authorities	19.6
+11	News organizations	34.6
+12	Call a doctor	46
+12	Go to a doctor	10
+12	Call my local health department	9
+12	Go to the ER	7
+12	Go to an urgent care clinic	4
+12	Just stay home	20
+12	Unsure	5
+13	Yes	39
+13	No	62
+14	Yes	57
+14	No	43
+15	Yes	40
+15	No	60
+16	Yes	24
+16	No	76
+17	Yes	64
+17	No	36
+18	Yes	88
+18	No	12
+19	Yes	33
+19	No	67
+20	Helpful in containing	69
+20	Not helpful	11
+20	Don't know	20
+21	Helpful in containing	71
+21	Not helpful	9
+21	Don't know	20
+22	Helpful in containing	68
+22	Not helpful	15
+22	Don't know	17
+23	I know a lot about Coronavirus	33.1
+23	I know somewhat Coronavirus	51.1
+23	I know very little about Coronavirus	15.8
+24	Very high	12.3
+24	High	28.9
+24	Low	38.2
+24	Very low	20.6
+25	Yes	26.2
+25	No	55.4
+25	Don't	18.4
+26	Yes	82.1
+26	No	17.9
+27	The CDC	27.8
+27	WHO	18.7
+27	Trump	4.4
+27	Television	26.2
+27	Print News	4.4
+27	Social	9.8
+27	Family and friends	4.8
+27	Somewhere else	3.9
+28	0 times a day	35.4
+28	1-5 times a day	49.8
+28	6-10 times a day	6.6
+28	More than 10 times a day	6.7
+29	Yes	19.6
+29	No	43.5
+29	Missing... System	36.9
+30	Other	9
+30	My friends	31.8
+30	Government authorities	17.6
+30	News organizations	40.2
+31	Call a doctor	34.7
+31	Go to a doctor	12.9
+31	Call my local health department	9
+31	Go to the ER	9.6
+31	Go to an urgent care clinic	3.2
+31	Just stay home	26.8
+31	Unsure	3.7
+32	Yes	49.2
+32	No	50.8
+33	Yes	63.1
+33	No	36.9
+34	Yes	41.6
+34	No	58.4
+35	Yes	23.9
+35	No	76.1
+36	Yes	62.2
+36	No	37.8
+37	Yes	89.8
+37	No	10.2
+38	Yes	34.1
+38	No	65.9
+39	Helpful in containing	62.2
+39	Not helpful	15.6
+39	Don't know	22.2
+40	Helpful in containing	69.3
+40	Not helpful	8.2
+40	Don't know	22.6
+41	Helpful in containing	67.4
+41	Not helpful	12.2
+41	Don't know	20.4
+42	Extremely concerned	17
+42	Very concerned	45
+42	Not very concerned	31
+42	Not at all concerned	5
+42	Don't know	2
+43	Personal economic issue	23
+43	Personal health issues	21
+43	Both economic and health issues	52
+43	DNK	4
+43	Refusal	1
+44	Yes	42
+44	No	37
+44	Don't know	20
+45	Yes	37
+45	No	62
+45	Refusal	1
+46	Yes, if testing were available for the coronavirus	61
+46	Yes, only if you might have been exposed to the coronavrius	26
+46	No, would not want to get tested	12
+47	Very important	37
+47	Somewhat important	31
+47	Not that important	16
+47	Not important at all	14
+48	Completely trust	46
+48	Mostly trust	13
+48	Somewhat trust	16
+48	trust a little	13
+48	Not at all	40
+49	Completely trust	13
+49	Mostly trust	13
+49	Somewhat trust	22
+49	Trust a little	18
+49	Not at all	31
+50	Completely trust	12
+50	Mostly trust	24
+50	Somewhat trust	34
+50	Trust a little	16
+50	Not at all	12
+51	Completely trust	20
+51	Mostly trust	32
+51	Somewhat trust	27
+51	Trust a little	11
+51	Not at all	8
+52	Completely trust	45
+52	Mostly trust	32
+52	Somewhat trust	16
+52	Trust a little	4
+52	Not at all	2
+53	Very Confident	19
+53	Somewhat confident	44
+53	Not that confident	16
+53	Not at all confident	17
+54	Very Confident	21
+54	Somewhat confident	29
+54	Not that confident	16
+54	Not at all confident	30
+55	Approve	44
+55	Disapprove	49
+55	Unsure	7
+56	Very concerned	31
+56	Concerned	29
+56	Not very concerned	21
+56	Not concerned at all	9
+56	Unsure	<1
+57	Doing enough	46
+57	Not doing enough	44
+57	Unsure	10
+58	Doing enough	65
+58	Not doing enough	23
+58	Unsure	12
+59	Yes	2
+59	No	97
+59	Unsure	1
+60	Yes	46
+60	No	53
+60	Unsure	1
+61	Yes	42
+61	No	58
+61	Unsure	<1
+62	Yes	30
+62	No	69
+62	Unsure	1
+63	Yes	48
+63	No	52
+63	Unsure	<1
+64	Yes	33
+64	No	66
+64	Unsure	<1
+65	Yes	18
+65	No	82
+65	Unsure	<1
+66	A great deal	16
+66	A good amount	21
+66	Not very much	24
+66	Not at all	36
+66	Unsure	3
+67	A great deal	15
+67	A good amount	35
+67	Not very much	28
+67	Not at all	19
+67	Unsure	3
+68	A great deal	27
+68	A good amount	45
+68	Not very much	16
+68	Not at all	8
+68	Unsure	3
+69	A great deal	43
+69	A good amount	41
+69	Not very much	9
+69	Not at all	4
+69	Unsure	3
+70	A real threat	56
+70	Blown out of proportion	38
+70	Unsure	6
+71	Very afraid	16
+71	Somewhat afraid	41
+71	Not very afraid	29
+71	Not afraid at all	12
+72	Very afraid	26
+72	Somewhat afraid	44
+72	Not very afraid	21
+72	Not afraid at all	6
+72	They already have the virus	>0
+72	Don't know/Refuse	2
+73	Being blown way out of proportion	4
+73	Partly blown out of proportion	16
+73	Partly correct level of response to this real threat	19
+73	Correct Level of response to this very real threat	58
+73	I don't know	2
+74	Yes	2
+74	No	98
+75	Yes	13
+75	No	87
+76	Yes	10
+76	No	90
+77	Yes	4
+77	No	96
+78	Yes	4
+78	No	95
+78	Don't know	2
+79	Yes	83
+79	No	17
+80	Yes	79
+80	No	21
+81	Yes	47
+81	No	53
+82	Yes	84
+82	No	16
+83	Yes	56
+83	No	44
+84	Yes	54
+84	No	46
+85	Self-isolcate for 14 days	64
+85	will not self-isolate	7
+85	will self-isolate but only in part	29
+86	Yes	38
+86	No	62
+87	Yes	16
+87	No	84
+88	Yes	27
+88	No	73
+89	Yes	21
+89	No	79
+90	Yes	48
+90	No	52
+91	Yes	35
+91	No	65
+92	Very satisfied	39
+92	Somewhat satisfied	40
+92	Somewhat dissatisfied	10
+92	Very dissatisfied	6
+92	Don't know/Refuse	5
+93	A few days	2
+93	A few weeks	23
+93	A few months	63
+93	More than a year	12
+94	Yes	9
+94	No	80
+94	Don't know	11
+95	Grocery shopping	60
+95	Get take-out food from a resturant	19
+95	Get food delivered to your home or business	15
+95	Go to a convenience store	14
+95	Go to a liquor store	11
+95	Grocery shopping online with pick-up	9
+95	Visit friends	5
+95	Eat out at a resutrant/bar	2
+95	None of the above	23
+96	Very well	13
+96	Somewhat well	30
+96	somwehat badly	32
+96	Very badly	25
+97	A crisis	13
+97	A very serious problem, but not a crisis	32
+97	A somewhat serious problem	11
+97	Not much of a problem	6
+98	Very good	28
+98	Somewhat good	25
+98	Somewhat bad	15
+98	Very bad	32
+99	Very good	9
+99	Somewhat good	43
+99	Somewhat bad	30
+99	Very bad	18
+100	Approve	85
+100	Disapprove	15
+101	Prepared to deal with this outbreak as it was starting	34
+101	Unprepared to deal with this outbreak as it was starting	66
+102	Overreacting	45
+102	About right	47
+102	Not taking it seriously enough	8
+103	Overreacting	6
+103	About right	51
+103	Not taking it seriously enough	43
+104	Overreacting	8
+104	About right	85
+104	Not taking it seriously enough	7
+105	Overreacting	17
+105	About right	68
+105	Not taking it seriously enough	15
+106	Overreacting	15
+106	About right	67
+106	Not taking it seriously enough	18
+107	All the time	13
+107	Pretty often	41
+107	Once in a while	34
+107	Not at all	13
+108	All the time	8
+108	Pretty often	17
+108	Once in a while	37
+108	Not at all	38
+109	All the time	12
+109	Pretty often	23
+109	Once in a while	39
+109	Not at all	27
+110	All the time	17
+110	Pretty often	26
+110	Once in a while	35
+110	Not at all	21
+111	All the time	19
+111	Pretty often	43
+111	Once in a while	27
+111	Not at all	11
+112	All the time	21
+112	Pretty often	34
+112	Once in a while	31
+112	Not at all	14
+113	All the time	10
+113	Pretty often	15
+113	Once in a while	25
+113	Not at all	50
+114	All the time	7
+114	Pretty often	19
+114	Once in a while	39
+114	Not at all	35
+115	Disbelief that it is really happening	23
+115	Anger that it as happened	21
+115	Determination to fight it	28
+115	Accepting it and just doing what I can to stay safe	65
+115	Hopeful it will be contained	44
+116	Optimistic	54
+116	Pessimistic	46
+117	Optimistic	82
+117	Pessimistic	18
+118	Optimistic	65
+118	Pessimistic	35
+119	Optimistic	59
+119	Pessimistic	41
+120	Trust	44
+120	Don't trust	56
+121	Trust	66
+121	Don't trust	34
+122	Trust	51
+122	Don't trust	49
+123	Trust	82
+123	Don't trust	18
+124	Trust	88
+124	Don't trust	12
+125	Trust	43
+125	Don't trust	57
+126	Trust	23
+126	Don't trust	77
+127	Trust	73
+127	Don't trust	27
+128	More	36
+128	Same	49
+128	Less	15
+129	More	22
+129	Same	61
+129	Less	18
+130	More	36
+130	Same	54
+130	Less	10
+131	More	29
+131	Same	61
+131	Less	10
+132	Very concerned	30
+132	Somewhat concerned	41
+132	Not very concerned	20
+132	Not at all concerned	9
+133	Living normally, coming and going as usual	10
+133	Still going out, but being careful when I do"	23
+133	Only going out when I absolutely have to	55
+133	Not leaving home	12
+134	It is already	4
+134	In the next few weeks	23
+134	In the next few months	47
+134	In the next year	17
+134	Longer than that	5
+134	Never	3
+135	It was a defining event that changed the country and a generation forever	40
+135	It was a big challenge that changed things for a while, but not permanently for most people	44
+135	It was just one of many challenges that America faced, not one that changed the country	15
+136	Yes, I would	57
+136	No, I wouldn't	43
+137	Yes	31
+137	No	69
+138	Doing remote learning	68
+138	Not doing remote learning	32
+139	Able to work from home or remotely, and doing so	18
+139	Able to work from home or remotely, but choosing not to	4
+139	Not able to work from home, and still going to work	16
+139	Not able to work from home, and not going to work	13
+139	Was not working outside the home before / am retired	36
+139	Something else	13
+140	A lot	12
+140	Some	30
+140	Not Much	25
+140	Nothing at all	33
+141	A lot	35
+141	Some	44
+141	Not Much	13
+141	Nothing at all	9
+142	A lot	43
+142	Some	33
+142	Not Much	12
+142	Nothing at all	13
+143	A lot	30
+143	Some	39
+143	Not Much	16
+143	Nothing at all	15
+144	A lot	24
+144	Some	31
+144	Not Much	18
+144	Nothing at all	27
+145	Very concerned	53
+145	Somewhat concerned	36
+145	Not very concerned	7
+145	Not at all concerned	3
+145	Don't Know / No Opinion	1
+146	Very Disruptive	35
+146	Somewhat disruptive	43
+146	Not that disruptive	17
+146	Not disruptive at all	4
+147	Yes, a major impact	24
+147	Yes, a minor impact	21
+147	No, no impact at all	55
+148	Excellent	25
+148	Good	17
+148	Just Fair	13
+148	Poor	39
+148	Don't Know / No Opinion	5
+149	Excellent	21
+149	Good	21
+149	Just Fair	17
+149	Poor	26
+149	Don't Know / No Opinion	14
+150	Excellent	6
+150	Good	29
+150	Just Fair	35
+150	Poor	15
+150	Don't Know / No Opinion	16
+151	Excellent	10
+151	Good	25
+151	Just Fair	27
+151	Poor	21
+151	Don't Know / No Opinion	17
+152	Excellent	11
+152	Good	26
+152	Just Fair	23
+152	Poor	24
+152	Don't Know / No Opinion	17
+153	Excellent	9
+153	Good	26
+153	Just Fair	27
+153	Poor	21
+153	Don't Know / No Opinion	17
+154	Excellent	11
+154	Good	25
+154	Just Fair	22
+154	Poor	25
+154	Don't Know / No Opinion	17
+155	Excellent	9
+155	Good	26
+155	Just Fair	27
+155	Poor	21
+155	Don't Know / No Opinion	18
+156	Excellent	12
+156	Good	24
+156	Just Fair	23
+156	Poor	25
+156	Don't Know / No Opinion	16
+157	Excellent	21
+157	Good	37
+157	Just Fair	19
+157	Poor	9
+157	Don't Know / No Opinion	14
+158	Excellent	28
+158	Good	41
+158	Just Fair	17
+158	Poor	7
+158	Don't Know / No Opinion	7
+159	Excellent	9
+159	Good	22
+159	Just Fair	24
+159	Poor	38
+159	Don't Know / No Opinion	6
+160	Excellent	13
+160	Good	27
+160	Just Fair	25
+160	Poor	30
+160	Don't Know / No Opinion	6
+161	Excellent	12
+161	Good	24
+161	Just Fair	26
+161	Poor	27
+161	Don't Know / No Opinion	11
+162	Excellent	11
+162	Good	25
+162	Just Fair	26
+162	Poor	26
+162	Don't Know / No Opinion	12
+163	Excellent	13
+163	Good	22
+163	Just Fair	24
+163	Poor	34
+163	Don't Know / No Opinion	7
+164	Excellent	15
+164	Good	28
+164	Just Fair	24
+164	Poor	24
+164	Don't Know / No Opinion	10
+165	The Trump Administration is doing too much in response to the coronavirus outbreak	3
+165	The Trump Administration is doing the right amount in response to the coronavirus outbreak	41
+165	The Trump Administration is not doing enough in response to the coronavirus outbreak	45
+165	Don't Know / No Opinion	11
+166	In the next two weeks	6
+166	In the next month	20
+166	In the next two months	27
+166	In the next three months	18
+166	In the next six months	9
+166	More than six months from now	7
+166	Don't Know / No Opinion	13
+167	A lot	14
+167	Some	28
+167	Not Much	36
+167	None at all	15
+167	Don't Know / No Opinion	6
+168	Strongly support	40
+168	Somewhat support	34
+168	Somewhat oppose	11
+168	Strongly oppose	8
+168	Don't Know / No Opinion	7
+169	Strongly approve	27
+169	Somewhat approve	22
+169	Somewhat disapprove	11
+169	Strongly disapprove	31
+169	Don't Know / No Opinion	8
+170	Strongly approve	14
+170	Somewhat approve	38
+170	Somewhat disapprove	20
+170	Strongly disapprove	13
+170	Don't Know / No Opinion	15
+171	Strongly approve	13
+171	Somewhat approve	35
+171	Somewhat disapprove	13
+171	Strongly disapprove	9
+171	Don't Know / No Opinion	30
+172	Strongly approve	13
+172	Somewhat approve	26
+172	Somewhat disapprove	11
+172	Strongly disapprove	13
+172	Don't Know / No Opinion	36
+173	Strongly approve	9
+173	Somewhat approve	39
+173	Somewhat disapprove	21
+173	Strongly disapprove	11
+173	Don't Know / No Opinion	20
+174	Strongly support	19
+174	Somewhat support	32
+174	Somewhat oppose	20
+174	Strongly oppose	19
+174	Don't Know / No Opinion	11
+175	Strongly support	23
+175	Somewhat support	33
+175	Somewhat oppose	17
+175	Strongly oppose	15
+175	Don't Know / No Opinion	12
+176	Strongly support	40
+176	Somewhat support	39
+176	Somewhat oppose	9
+176	Strongly oppose	3
+176	Don't Know / No Opinion	9
+177	Strongly support	55
+177	Somewhat support	31
+177	Somewhat oppose	5
+177	Strongly oppose	2
+177	Don't Know / No Opinion	7
+178	Strongly support	13
+178	Somewhat support	33
+178	Somewhat oppose	24
+178	Strongly oppose	16
+178	Don't Know / No Opinion	14
+179	Strongly support	17
+179	Somewhat support	34
+179	Somewhat oppose	22
+179	Strongly oppose	13
+179	Don't Know / No Opinion	14
+180	Strongly support	36
+180	Somewhat support	39
+180	Somewhat oppose	10
+180	Strongly oppose	4
+180	Don't Know / No Opinion	11
+181	Strongly support	17
+181	Somewhat support	34
+181	Somewhat oppose	22
+181	Strongly oppose	13
+181	Don't Know / No Opinion	14
+182	Strongly support	18
+182	Somewhat support	41
+182	Somewhat oppose	19
+182	Strongly oppose	9
+182	Don't Know / No Opinion	12
+183	Strongly support	29
+183	Somewhat support	42
+183	Somewhat oppose	14
+183	Strongly oppose	6
+183	Don't Know / No Opinion	10
+184	Strongly support	15
+184	Somewhat support	29
+184	Somewhat oppose	21
+184	Strongly oppose	22
+184	Don't Know / No Opinion	13
+185	Strongly support	9
+185	Somewhat support	19
+185	Somewhat oppose	24
+185	Strongly oppose	37
+185	Don't Know / No Opinion"	11
+186	Strongly support	17
+186	Somewhat support	27
+186	Somewhat oppose	23
+186	Strongly oppose	19
+186	Don't Know / No Opinion	14
+187	Strongly support	19
+187	Somewhat support	35
+187	Somewhat oppose	17
+187	Strongly oppose	16
+187	Don't Know / No Opinion	13
+188	Strongly support	34
+188	Somewhat support	42
+188	Somewhat oppose	9
+188	Strongly oppose	5
+188	Don't Know / No Opinion	10
+189	Strongly support	49
+189	Somewhat support	33
+189	Somewhat oppose	4
+189	Strongly oppose	4
+189	Don't Know / No Opinion	10
+190	Strongly support	12
+190	Somewhat support	30
+190	Somewhat oppose	26
+190	Strongly oppose	16
+190	Don't Know / No Opinion	16
+191	Strongly support	15
+191	Somewhat support	31
+191	Somewhat oppose	23
+191	Strongly oppose	15
+191	Don't Know / No Opinion	16
+192	Strongly support	30
+192	Somewhat support	39
+192	Somewhat oppose	11
+192	Strongly oppose	8
+192	Don't Know / No Opinion	12
+193	Strongly support	15
+193	Somewhat support	33
+193	Somewhat oppose	21
+193	Strongly oppose	15
+193	Don't Know / No Opinion	15
+194	Strongly support	17
+194	Somewhat support	37
+194	Somewhat oppose	19
+194	Strongly oppose	12
+194	Don't Know / No Opinion	15
+195	Strongly support	23
+195	Somewhat support	45
+195	Somewhat oppose	13
+195	Strongly oppose	7
+195	Don't Know / No Opinion	13
+196	Strongly support	13
+196	Somewhat support	27
+196	Somewhat oppose	21
+196	Strongly oppose	24
+196	Don't Know / No Opinion	15
+197	Strongly support	10
+197	Somewhat support	14
+197	Somewhat oppose	24
+197	Strongly oppose	37
+197	Don't Know / No Opinion	14
+198	Strongly support	61
+198	Somewhat support	24
+198	Somewhat oppose	6
+198	Strongly oppose	3
+198	Don't Know / No Opinion	7
+199	Strongly support	16
+199	Somewhat support	27
+199	Somewhat oppose	22
+199	Strongly oppose	21
+199	Don't Know / No Opinion	14
+200	Strongly support	39
+200	Somewhat support	38
+200	Somewhat oppose	8
+200	Strongly oppose	3
+200	Don't Know / No Opinion	12
+201	Strongly support	48
+201	Somewhat support	35
+201	Somewhat oppose	5
+201	Strongly oppose	2
+201	Don't Know / No Opinion	10
+202	Strongly support	63
+202	Somewhat support	23
+202	Somewhat oppose	4
+202	Strongly oppose	2
+202	Don't Know / No Opinion	8
+203	Strongly support	35
+203	Somewhat support	34
+203	Somewhat oppose	12
+203	Strongly oppose	4
+203	Don't Know / No Opinion	15
+204	Government should provide financial assistance to businesses during the coronavirus pandemic, because  individual Americans will benefit from the economic activity	15
+204	Government should provide financial assistance to individual Americans during the coronavirus pandemic, because businesses will benefit from the economic activity	73
+204	Don't Know / No Opinion	12
+205	Very high	11.8
+205	High	26.3
+205	Low	39.7
+205	Very low	22.2
+206	Yes 	0.6
+206	No	99.4
+207	Yes 	8.9
+207	No	91.9
+208	The CDC	28.1
+208	WHO	10.6
+208	Trump	13.2
+208	Television	30.4
+208	Print News	5
+208	Social 	5.1
+208	Family and friends	2.4
+208	Somewhere else	5.3
+209	Yes 	11.4
+209	No	88.6
+210	Yes 	71.2
+210	No	28.8
+211	Yes 	28.2
+211	No	71.8
+212	Yes 	74.3
+212	No	25.7
+213	Yes 	27.6
+213	No	72.3
+214	Yes 	81.4
+214	No	6.8
+214	Don't know	11.8
+215	Yes 	81.6
+215	No	10.1
+215	Don't know	8.3
+216	Yes 	66.6
+216	No	21.4
+216	Don't know	12
+217	Reduced ability a lot	17.8
+217	Reduced ability somewhat	32.2
+217	Reduced ability only a little	29.2
+217	Not reduced ability at all	14.1
+217	Made it easier to get the food we need 	6.6
+218	Yes 	25.7
+218	No	68.1
+218	Not sure	6.2
+219	Very high	12.4
+219	High	26.6
+219	Low 	38.3
+219	Very low	22.7
+220	Yes 	1.3
+220	No	98.7
+221	Yes 	13.8
+221	No	86.2
+222	The CDC	25.2
+222	WHO	11.8
+222	Trump	10.3
+222	Television	34.6
+222	Print News	6.9
+222	Social	4.5
+222	Family and friends	3
+222	Somewhere else	3.7
+223	Yes 	15.2
+223	No	84.8
+224	Yes 	71.2
+224	No	28.8
+225	Yes 	27.6
+225	No	72.4
+226	Yes 	71.8
+226	No	28.2
+227	Yes 	33.6
+227	No	66.4
+228	Yes 	80.1
+228	No	5.9
+228	Don't know	14
+229	Yes 	88.3
+229	No	8.6
+229	Don't know	8.1
+230	Yes 	68..8
+230	No	19
+230	Don't know	12.2
+231	Reduced ability a lot	21.5
+231	Reduced ability somewhat	30.4
+231	Reduced ability only a little 	27.6
+231	Not reduced ability at all	12.8
+231	Made it easier to get the food we need 	7.7
+232	Yes 	25.7
+232	No	68.1
+232	Not sure	6.2
+233	Extremely concerned	43
+233	Moderately concerned	34
+233	A little concerned	17
+233	Not concerned at all	5
+233	Unsure	0
+234	Completely satisfied	23
+234	Mostly satisfied	23
+234	Not very satisfied	20
+234	not satisfied at all	32
+234	unsure	2
+235	Completely satisfied	20
+235	Mostly satisfied	50
+235	Not very satisfied	18
+235	not satisfied at all	9
+235	unsure	2
+236	Approve	4400%
+236	Disapprove	5100%
+236	Neither approve nor dissapprove	5
+237	It acted too slowly to respond	57
+237	It acted in a timely and responsible way	35
+237	It is overreacting to the outbreak	6
+237	Unsure	2
+238	Coronavirus has already been reported in my local area	55
+238	Very likely	16
+238	Moderatly likely	15
+238	A little likely	9
+238	Not likely at all	3
+238	Unsure	1
+239	I/Someone I know has coronavirus	13
+239	Forced me to change plans	52
+239	Taking precautions/Changed habits	25
+239	Hasn't affected me in any way	9
+239	Unsure	1
+240	Extremely worried	19
+240	Somewhat worried	41
+240	Not too worried	27
+240	Not worried at all	11
+240	Unsure	1
+241	Very confident	11
+241	Moderatly confident	21
+241	Not very confident	26
+241	Not confident at all	35
+241	Unsure	8
+242	The impact on health, safety, and the medical system	53
+242	The impact on jobs, income, and the economy	42
+242	Neither approve nor dissapprove	1
+242	Unsure	3
+243	Yes	82
+243	No	17
+243	Unsure	0
+244	Less than two weeks (by Easter)	3
+244	 Up to a month (end of April)	17
+244	Two to three months (end of June)	36
+244	Six months or more (September or later)	0.3
+244	Things will never get back to normal	8
+244	Nothing has changed for me	0
+244	Unsure	6
+245	Support	69
+245	Oppose	15
+245	I don't know enough to say	16
+246	A real threat	74
+246	Blown out of proportion	20
+246	Unsure	6
+247	Television news	35
+247	Online news sites	30
+247	Government websites	15
+247	Social media	5
+247	My doctor	3
+247	Newspapers	2
+247	Family and friends	2
+247	Other	8
+247	Unsure	1
+248	Making the outbreak sound worse than it actually is	38
+248	Giving an accurate picture of the outbreak	40
+248	Not fully reporting the seriousness of the outbreak	12
+248	Unsure	10
+249	Yes	94
+249	No	5
+249	Unsure	1
+250	I am mostly concerned about the health threat of the coronavirus (COVID-19)	65
+250	I am most concerned about the financial threat to my own well being due to the coronavirus (COVID-19)	24
+250	Neither	12
+251	We should stay the course-keep things locked down as much as possible with government financial support until we get a medical solution so people won't get the virus	44
+251	We should stay the course-keep things locked down as much as possible with government financial support until we get things manageable within our healthcare system	24
+251	We should start loosening up restrictions so we can start going back to work-as long as I, my colleagues, and every workplace practice proper hygiene and self distancing to reduce the chance of contracting or spreading the virus	7
+251	We should let people go back to work and get into some normal living-even though there will be the threat of people getting the virus and maybe even dying, then that is a risk we will all have to take	7
+252	Very Afraid	20
+252	Somewhat afraid	42
+252	Not very afraid	29
+252	Not afraid at all	8
+252	I already have or have been exposed to the virus	0
+252	Don't Know/Refuse	1
