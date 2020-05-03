@@ -74,7 +74,6 @@ adminRouter.get('/database/surveys/:page', function(req, res) {
     return loader.fetchSurveysByPagePromise(page)
   }).then( rows => {
     var populatedModel = populateModelWithData(editSurveyModel, countries, populations, languages, sampleMethods, typeOfStudies)
-    console.log("populated model is: "+util.inspect(populatedModel))
     res.render("admin/database/surveys", {
       surveys: rows,
       surveyModel: populatedModel,

@@ -48,8 +48,7 @@ var editSurveyModel = {
     {
       "name": "sample_size",
       "title":"Sample Size",
-      "type":"text",
-      "placeholder": "1800",
+      "type":"number",
       "required": false
     },
     {
@@ -87,7 +86,8 @@ var editSurveyModel = {
       "type":"date",
       "required": true,
       "special_font": true,
-      "disabled": true
+      "disabled": true,
+      "description": "Auto-generated field"
     },
     {
       "type": "column_break"
@@ -127,8 +127,9 @@ var editSurveyModel = {
       "name": "updated_at",
       "title":"Updated At",
       "type":"date",
-      "required": true,
-      "special_font": true
+      "special_font": true,
+      "disabled": true,
+      "description": "Auto-generated field"
     },
   ]
 }

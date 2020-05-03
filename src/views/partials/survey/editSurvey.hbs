@@ -1,7 +1,7 @@
-<div class="edit_survey">
+<form class="edit_survey">
   <div class="row float-right">
-    <button type="button" class="btn btn-dark mr-5 editButton" onClick="editSurvey()">Edit</button>
-    <button type="button" class="btn btn-dark mr-5 submitButton hide" onClick="saveSurvey()">Save</button>
+    <button type="button" class="btn btn-dark mr-5 editButton" onClick="editSurvey(this)">Edit</button>
+    <button type="submit" class="btn btn-dark mr-5 saveButton hide">Save</button>
   </div>
   <div class="row mx-2 my-4">
     <div class="col">
@@ -28,7 +28,15 @@
 
           {{#ifEquals type "text"}}
             <div>
-              <input class="form-control col-8" type="text" name={{name}} id={{name}} value="{{lookup ../survey name}}" placeholder="{{placeholder}}" onInput="textChanged(this)" {{#if required}} required {{/if}} readonly
+              <input class="form-control col-8" type="text" name={{name}} id={{name}} value="{{lookup ../survey name}}" placeholder="{{placeholder}}" {{#if required}} required {{/if}} readonly
+                {{#ifEquals disabled true}}disabled {{/ifEquals}}>
+              <small id="description" class="form-text text-muted">{{description}}</small>
+            </div>
+          {{/ifEquals}}
+
+          {{#ifEquals type "number"}}
+            <div>
+              <input class="form-control col-8" type="number" name={{name}} id={{name}} value="{{lookup ../survey name}}" placeholder="{{placeholder}}" {{#if required}} required {{/if}} readonly
                 {{#ifEquals disabled true}}disabled {{/ifEquals}}>
               <small id="description" class="form-text text-muted">{{description}}</small>
             </div>
@@ -36,14 +44,14 @@
 
           {{#ifEquals type "date"}}
             <div>
-              <input class="form-control col-8" type="date" name={{name}} id={{name}} value="{{formatDate (lookup ../survey name)}}" {{#if required}} required {{/if}} readonly>
+              <input class="form-control col-8" type="date" name={{name}} id={{name}} value="{{formatDate (lookup ../survey name)}}" {{#if required}} required {{/if}} readonly {{#ifEquals disabled true}}disabled {{/ifEquals}}>
               <small id="description" class="form-text text-muted">{{description}}</small>
             </div>
           {{/ifEquals}}
 
           {{#ifEquals type "dropdown"}}
             <div>
-              <select class="form-control-sm" name={{name}} id={{name}} onchange="dropdownChanged(this)" {{#if required}} required {{/if}}>
+              <select class="form-control-sm" name={{name}} id={{name}} {{#if required}} required {{/if}}>
 
                 {{#each options}}
                   <option value="{{this}}" {{#ifEquals this (lookup ../../survey ../name)}}selected {{else}} disabled{{/ifEquals}}>{{this}}</option>
@@ -56,7 +64,7 @@
           {{#ifEquals type "checkbox"}}
             {{#each options}}
               <div class="form-check mb-1">
-                <input class="form-check-input" type="checkbox" value={{this}} onclick="checkboxClicked(this)" id={{name}} {{#if required}} required {{/if}}>
+                <input class="form-check-input" type="checkbox" value={{this}} id={{name}} {{#if required}} required {{/if}}>
                 <label class="form-check-label" for={{this}}>
                   {{this}}
                 </label>
@@ -70,4 +78,4 @@
 
     </div>
   </div>
-</div>
+</form>
