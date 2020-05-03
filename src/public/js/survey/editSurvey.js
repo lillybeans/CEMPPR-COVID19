@@ -1,12 +1,38 @@
 function editSurvey(editButton){
   var saveButton = $(editButton).siblings('.saveButton').first()
+  var cancelButton = $(editButton).siblings('.cancelButton').first()
+
   $(saveButton).removeClass('hide')
+  $(cancelButton).removeClass('hide')
   $(editButton).addClass('hide')
   var form = $(editButton).parent().parent()
 
   //Change all inputs to be editable
   var inputs = $(form).find('input').removeAttr('readonly')
   var dropdowns = $(form).find('option').removeAttr('disabled')
+}
+
+function cancelEditSurvey(cancelButton){
+  var editButton = $(cancelButton).siblings('.editButton').first()
+  var saveButton = $(cancelButton).siblings('.saveButton').first()
+
+  $(editButton).removeClass('hide')
+  $(saveButton).addClass('hide')
+  $(cancelButton).addClass('hide')
+  var form = $(editButton).parent().parent()
+
+  //restore all values, and change to readonly
+  $(form).find('input').each(function(){
+    $(this).val($(this).attr('value'))
+    $(this).attr('readonly', true)
+  })
+
+  //Restore all dropdowns
+  $(form).find('option').attr('disabled', true)
+
+  $(form).find('select').each(function(){
+    $(this).html($(this).html())
+  })
 }
 
 function isValidForm(form){

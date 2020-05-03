@@ -1,8 +1,5 @@
 <form class="edit_survey">
-  <div class="row float-right">
-    <button type="button" class="btn btn-dark mr-5 editButton" onClick="editSurvey(this)">Edit</button>
-    <button type="submit" class="btn btn-dark mr-5 saveButton hide">Save</button>
-  </div>
+
   <div class="row mx-2 my-4">
     <div class="col">
       {{#each surveyModel.formItems }}
@@ -53,8 +50,13 @@
             <div>
               <select class="form-control-sm" name={{name}} id={{name}} {{#if required}} required {{/if}}>
 
+                <option value="{{lookup ../survey name}}" selected>{{lookup ../survey name}}</option>
+
                 {{#each options}}
-                  <option value="{{this}}" {{#ifEquals this (lookup ../../survey ../name)}}selected {{else}} disabled{{/ifEquals}}>{{this}}</option>
+                  {{#ifEquals this (lookup ../../survey ../name)}}
+                  {{else}}
+                  <option value="{{this}}" disabled>{{this}}</option>
+                  {{/ifEquals}}
                 {{/each}}
 
               </select>
@@ -76,6 +78,12 @@
         {{/ifEquals}}
         {{/each}}
 
+    </div>
+
+    <div class="col-1">
+      <button type="button" class="btn float-right btn-dark editButton btn-block" onClick="editSurvey(this)">Edit</button>
+      <button type="submit" class="btn float-right btn-dark my-2 saveButton btn-block hide">Save</button>
+      <button type="button" class="btn float-right btn-outline-dark cancelButton btn-block hide" onClick="cancelEditSurvey(this)">Cancel</button>
     </div>
   </div>
 </form>
