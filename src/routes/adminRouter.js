@@ -18,26 +18,6 @@ adminRouter.get('/', function(req, res) {
 })
 
 /** Database: Surveys **/
-adminRouter.get('/database/surveys', function(req, res) {
-  var pages = []
-  var numberOfRecords = 0
-  getService.fetchNumberOfSurveysPromise().then(records => {
-    numberOfRecords = records
-    numPages = Math.ceil(numberOfRecords / 10)
-    for (var i = 1; i <= numPages; i++) {
-      pages.push(i)
-    }
-    return getService.fetchSurveysByPagePromise(1)
-  }).then(rows => {
-    res.render("admin/database/surveys", {
-      surveys: rows,
-      surveyModel: editSurveyModel,
-      pages: pages,
-      active: 1
-    })
-  })
-})
-
 adminRouter.get('/database/surveys/:page', function(req, res) {
   const page = req.params.page
   var pages = []
@@ -76,6 +56,7 @@ adminRouter.get('/database/surveys/:page', function(req, res) {
     var populatedModel = populateModelWithData(editSurveyModel, countries, populations, languages, sampleMethods, typeOfStudies)
     res.render("admin/database/surveys", {
       surveys: rows,
+      numberOfRecords: numberOfRecords,
       surveyModel: populatedModel,
       pages: pages,
       active: page

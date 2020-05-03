@@ -11,6 +11,17 @@ function queryPromise(sql) {
   });
 }
 
+function fetchPollNamesPromise(){
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("SELECT poll_name FROM Surveys ORDER BY id DESC LIMIT 20", (err, rows) => {
+      if (err)
+        return reject(err);
+      resolve(rows.map(row => row.poll_name));
+    });
+  });
+}
+
+
 function fetchNumberOfSurveysPromise(){
   return new Promise((resolve, reject) => {
     mysqlConnection.query("SELECT COUNT(*) AS count FROM Surveys", (err, rows) => {
@@ -118,6 +129,7 @@ function fetchSubmitQuestionDataPromise() {
 }
 
 module.exports = {
+  fetchPollNamesPromise: fetchPollNamesPromise,
   fetchNumberOfSurveysPromise: fetchNumberOfSurveysPromise,
   fetchSurveysByPagePromise: fetchSurveysByPagePromise,
   fetchCountries: fetchCountries,

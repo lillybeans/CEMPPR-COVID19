@@ -10,6 +10,7 @@ const indexRouter = require("./routes/indexRouter")
 const questionsRouter = require("./routes/questionsRouter")
 const adminRouter = require("./routes/adminRouter")
 const updateRouter = require("./routes/updateRouter")
+const deleteRouter = require("./routes/deleteRouter")
 
 //const util = require("util"), util.inspect
 
@@ -36,5 +37,6 @@ app.use('/', indexRouter)
 app.use("/questions", questionsRouter) //use "/questions" instead of "/routes/questions" in the browser
 app.use("/admin", adminRouter)
 app.use("/update", updateRouter)
+app.use("/delete", deleteRouter)
 
 app.listen(3000) //listen to port 3000

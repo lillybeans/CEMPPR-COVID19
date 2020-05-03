@@ -27,6 +27,19 @@ function updateSurveyWithId(id, dict) {
   });
 }
 
+function deleteSurveyWithId(id) {
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("DELETE FROM Surveys WHERE id="+id, (err, res) => {
+      if (err) {
+        console.log("MYSQL Error:" +  err)
+        return reject(err);
+      }
+      resolve(res);
+    });
+  });
+}
+
 module.exports = {
   updateSurveyWithId: updateSurveyWithId,
+  deleteSurveyWithId: deleteSurveyWithId
 }

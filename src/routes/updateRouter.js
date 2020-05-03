@@ -6,8 +6,6 @@ const postService = require("../POSTService")
 const updateRouter = express.Router();
 const util = require("util")
 
-const editSurveyModel = require("../models/editSurveyModel")
-
 //Will send back a timestamp for updated at
 updateRouter.post('/survey/:surveyId', function(req, res) {
   const surveyId = req.params.surveyId

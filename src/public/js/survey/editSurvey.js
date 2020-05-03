@@ -1,10 +1,14 @@
 function editSurvey(editButton) {
   var saveButton = $(editButton).siblings('.saveButton').first()
   var cancelButton = $(editButton).siblings('.cancelButton').first()
+  var deleteButton = $(editButton).siblings('.deleteButton').first()
 
   $(saveButton).removeClass('hide')
   $(cancelButton).removeClass('hide')
+
+  //Hide these buttons
   $(editButton).addClass('hide')
+  $(deleteButton).addClass('hide')
   var form = $(editButton).parent().parent()
 
   //Change all inputs to be editable
@@ -17,11 +21,19 @@ function editSurvey(editButton) {
   var dropdowns = $(form).find('option').removeAttr('disabled')
 }
 
+function deleteSurvey(deleteButton) {
+
+}
+
 function cancelEditSurvey(cancelButton) {
   var editButton = $(cancelButton).siblings('.editButton').first()
   var saveButton = $(cancelButton).siblings('.saveButton').first()
+  var deleteButton = $(cancelButton).siblings('.deleteButton').first()
 
+  //Show these buttons
   $(editButton).removeClass('hide')
+  $(deleteButton).removeClass('hide')
+
   $(saveButton).addClass('hide')
   $(cancelButton).addClass('hide')
   var form = $(editButton).parent().parent()
@@ -40,9 +52,19 @@ function cancelEditSurvey(cancelButton) {
   })
 }
 
+function deleteSurveyWithId(id) {
+  $.post("/delete/survey/"+id)
+  .done( function(data) {
+    location.reload()
+  })
+  .fail( function() {
+    alert("Delete survey failed!")
+  })
+}
+
 $(function() {
 
-  //On submit: Submit Edit Survey
+  //On Save: Submit Edit Survey
   $('form.edit_survey').submit(function(event) {
     event.preventDefault()
 
@@ -50,6 +72,7 @@ $(function() {
     var formData = $(this).serialize()
     var editButton = $(this).find('.editButton').first()
     var saveButton = $(this).find('.saveButton').first()
+    var deleteButton = $(this).find('.deleteButton').first()
     var cancelButton = $(this).find('.cancelButton').first()
     var inputs = $(this).find('input')
     var options = $(this).find('option')
@@ -60,6 +83,8 @@ $(function() {
       console.log("update successful! updatedAt "+updatedAtTimestamp)
 
       $(editButton).removeClass('hide')
+      $(deleteButton).removeClass('hide')
+
       $(saveButton).addClass('hide')
       $(cancelButton).addClass('hide')
 
@@ -70,7 +95,7 @@ $(function() {
       $(options).attr('disabled', true)
     })
     .fail( function() {
-      alert("Survey update failed!")
+      alert("Update survey failed!")
     })
 
   })
