@@ -1,57 +1,73 @@
-<div class="row mx-2 my-4">
-  <div class="col">
-    {{#each surveyModel.formItems }}
-
-      {{#ifEquals type "column_break"}}
+<div class="edit_survey">
+  <div class="row float-right">
+    <button type="button" class="btn btn-dark mr-5 editButton" onClick="editSurvey()">Edit</button>
+    <button type="button" class="btn btn-dark mr-5 submitButton hide" onClick="saveSurvey()">Save</button>
   </div>
-  <div class="col">
-    {{else}}
-      <div class="form-group {{#if @last}}last-questionInfo{{/if}}" id="questionInfo_{{@index}}">
-        <label for={{ name }} class="font-weight-bold">
-          {{ title }}
-        </label>
+  <div class="row mx-2 my-4">
+    <div class="col">
+      {{#each surveyModel.formItems }}
 
-        {{#ifEquals type "text"}}
-          <div>
-            <input class="form-control col-8" type="text" name={{name}} id={{name}} value="{{lookup ../survey name}}" placeholder="{{placeholder}}" onInput="textChanged(this)" {{#if required}} required {{/if}} readonly>
-            <small id="description" class="form-text text-muted">{{description}}</small>
-          </div>
-        {{/ifEquals}}
+        {{#ifEquals type "column_break"}}
+    </div>
+    <div class="col">
+      {{else}}
+        <div class="form-group" id="surveyItem{{@index}}">
 
-        {{#ifEquals type "date"}}
-          <div>
-            <input class="form-control col-8" type="date" name={{name}} id={{name}} value="{{lookup ../survey name}}" {{#if required}} required {{/if}}>
-            <small id="description" class="form-text text-muted">{{description}}</small>
-          </div>
-        {{/ifEquals}}
-
-        {{#ifEquals type "dropdown"}}
-          <div>
-            <select class="form-control-sm" name={{name}} id={{name}} value="{{lookup ../survey name}}" onchange="dropdownChanged(this)" {{#if required}} required {{/if}}>
-              <option value="">Select</option>
-
-              {{#each options}}
-                <option value={{this}}>{{this}}</option>
-              {{/each}}
-
-            </select>
-          </div>
-        {{/ifEquals}}
-
-        {{#ifEquals type "checkbox"}}
-          {{#each options}}
-            <div class="form-check mb-1">
-              <input class="form-check-input" type="checkbox" value={{this}} onclick="checkboxClicked(this)" id={{name}} {{#if required}} required {{/if}}>
-              <label class="form-check-label" for={{this}}>
-                {{this}}
-              </label>
+          {{#ifEquals type "paragraph_break"}}
+            <div class style="height:55px">
             </div>
-          {{/each}}
+            {{else}}
+              <label for={{ name }} class="font-weight-bold">
+                {{#ifEquals special_font true}}
+                  <span class="text-primary">{{title}}</span>
+                  {{else}}
+                    {{title}}
+                {{/ifEquals}}
+              </label>
+          {{/ifEquals}}
+
+          {{#ifEquals type "text"}}
+            <div>
+              <input class="form-control col-8" type="text" name={{name}} id={{name}} value="{{lookup ../survey name}}" placeholder="{{placeholder}}" onInput="textChanged(this)" {{#if required}} required {{/if}} readonly
+                {{#ifEquals disabled true}}disabled {{/ifEquals}}>
+              <small id="description" class="form-text text-muted">{{description}}</small>
+            </div>
+          {{/ifEquals}}
+
+          {{#ifEquals type "date"}}
+            <div>
+              <input class="form-control col-8" type="date" name={{name}} id={{name}} value="{{formatDate (lookup ../survey name)}}" {{#if required}} required {{/if}} readonly>
+              <small id="description" class="form-text text-muted">{{description}}</small>
+            </div>
+          {{/ifEquals}}
+
+          {{#ifEquals type "dropdown"}}
+            <div>
+              <select class="form-control-sm" name={{name}} id={{name}} onchange="dropdownChanged(this)" {{#if required}} required {{/if}}>
+
+                {{#each options}}
+                  <option value="{{this}}" {{#ifEquals this (lookup ../../survey ../name)}}selected {{else}} disabled{{/ifEquals}}>{{this}}</option>
+                {{/each}}
+
+              </select>
+            </div>
+          {{/ifEquals}}
+
+          {{#ifEquals type "checkbox"}}
+            {{#each options}}
+              <div class="form-check mb-1">
+                <input class="form-check-input" type="checkbox" value={{this}} onclick="checkboxClicked(this)" id={{name}} {{#if required}} required {{/if}}>
+                <label class="form-check-label" for={{this}}>
+                  {{this}}
+                </label>
+              </div>
+            {{/each}}
+          {{/ifEquals}}
+
+        </div>
         {{/ifEquals}}
+        {{/each}}
 
-      </div>
-      {{/ifEquals}}
-      {{/each}}
-
+    </div>
   </div>
 </div>

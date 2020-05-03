@@ -17,7 +17,11 @@
     {{else}}
       <div class="form-group {{#if @last}}last-questionInfo{{/if}}" id="questionInfo_{{@index}}">
         <label for={{ name }} class="font-weight-bold">
-          {{ title }}
+          {{#ifEquals special_font true}}
+            <span class="text-primary">{{title}}</span>
+          {{else}}
+            {{title}}
+          {{/ifEquals}}
         </label>
 
         {{#ifEquals type "text"}}

@@ -5,7 +5,8 @@ var mysqlConnection = mysql.createConnection({
   user: "root",
   password: "cemppr",
   database: "COVID19PollTracker",
-  multipleStatements: true
+  multipleStatements: true,
+  dateStrings: true
 })
 
 mysqlConnection.connect( (error) => {

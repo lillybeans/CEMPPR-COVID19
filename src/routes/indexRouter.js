@@ -3,7 +3,7 @@ const router = express.Router()
 const loader = require("../loader")
 
 const questionInfoModel = require("../models/questionInfoModel")
-const surveyModel = require("../models/surveyModel")
+const submitSurveyModel = require("../models/submitSurveyModel")
 
 //Define our Routes:
 const indexRouter = express.Router();
@@ -35,7 +35,7 @@ indexRouter.get('/submit/survey', function(req, res) {
     active: {
       submit: true
     },
-    surveyModel: surveyModel
+    surveyModel: submitSurveyModel
   })
 })
 

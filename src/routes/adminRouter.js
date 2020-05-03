@@ -6,7 +6,7 @@ const loader = require("../loader")
 const adminRouter = express.Router();
 const util = require("util")
 
-const surveyModel = require("../models/surveyModel")
+const editSurveyModel = require("../models/editSurveyModel")
 
 // home page route
 adminRouter.get('/', function(req, res) {
@@ -31,7 +31,7 @@ adminRouter.get('/database/surveys', function(req, res) {
   }).then(rows => {
     res.render("admin/database/surveys", {
       surveys: rows,
-      surveyModel: surveyModel,
+      surveyModel: editSurveyModel,
       pages: pages,
       active: 1
     })
@@ -73,7 +73,7 @@ adminRouter.get('/database/surveys/:page', function(req, res) {
     typeOfStudies = typeOfStudiesRes
     return loader.fetchSurveysByPagePromise(page)
   }).then( rows => {
-    var populatedModel = populateModelWithData(surveyModel, countries, populations, languages, sampleMethods, typeOfStudies)
+    var populatedModel = populateModelWithData(editSurveyModel, countries, populations, languages, sampleMethods, typeOfStudies)
     console.log("populated model is: "+util.inspect(populatedModel))
     res.render("admin/database/surveys", {
       surveys: rows,
