@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const loader = require("../loader")
+const getService = require("../GETService")
 
 const questionInfoModel = require("../models/questionInfoModel")
 const submitSurveyModel = require("../models/submitSurveyModel")
@@ -19,7 +19,7 @@ indexRouter.get('/', function(req, res) {
 })
 
 indexRouter.get('/submit/question', function(req, res) {
-  loader.fetchPollNamesPromise().then( pollNames => {
+  getService.fetchPollNamesPromise().then( pollNames => {
     res.render("submit/question", {
       active: {
         submit: true

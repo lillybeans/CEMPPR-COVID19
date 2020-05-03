@@ -1,15 +1,5 @@
 const mysqlConnection = require("./connection")
 
-/**
-TODO:
-After data migration, setup separate tables for:
-- surveys
-- groups
-- themes
-- population
-- countries
-**/
-
 //Promisified MYSQL queries
 function queryPromise(sql) {
   return new Promise((resolve, reject) => {

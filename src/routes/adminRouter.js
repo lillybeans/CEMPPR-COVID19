@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const loader = require("../loader")
+const getService = require("../GETService")
 
 //Define our Routes:
 const adminRouter = express.Router();
@@ -21,13 +21,13 @@ adminRouter.get('/', function(req, res) {
 adminRouter.get('/database/surveys', function(req, res) {
   var pages = []
   var numberOfRecords = 0
-  loader.fetchNumberOfSurveysPromise().then(records => {
+  getService.fetchNumberOfSurveysPromise().then(records => {
     numberOfRecords = records
     numPages = Math.ceil(numberOfRecords / 10)
     for (var i = 1; i <= numPages; i++) {
       pages.push(i)
     }
-    return loader.fetchSurveysByPagePromise(1)
+    return getService.fetchSurveysByPagePromise(1)
   }).then(rows => {
     res.render("admin/database/surveys", {
       surveys: rows,
@@ -50,28 +50,28 @@ adminRouter.get('/database/surveys/:page', function(req, res) {
   var sampleMethods = []
   var typeOfStudies = []
 
-  loader.fetchNumberOfSurveysPromise().then(records => {
+  getService.fetchNumberOfSurveysPromise().then(records => {
     numberOfRecords = records
     numPages = Math.ceil(numberOfRecords / 10)
     for (var i = 1; i <= numPages; i++) {
       pages.push(i)
     }
-    return loader.fetchCountries()
+    return getService.fetchCountries()
   }).then(countriesRes => {
     countries = countriesRes
-    return loader.fetchPopulations()
+    return getService.fetchPopulations()
   }).then(populationsRes => {
     populations = populationsRes
-    return loader.fetchLanguages()
+    return getService.fetchLanguages()
   }).then(languagesRes => {
     languages = languagesRes
-    return loader.fetchSampleMethods()
+    return getService.fetchSampleMethods()
   }).then(sampleMethodsRes => {
     sampleMethods = sampleMethodsRes
-    return loader.fetchTypeofStudies()
+    return getService.fetchTypeofStudies()
   }).then(typeOfStudiesRes => {
     typeOfStudies = typeOfStudiesRes
-    return loader.fetchSurveysByPagePromise(page)
+    return getService.fetchSurveysByPagePromise(page)
   }).then( rows => {
     var populatedModel = populateModelWithData(editSurveyModel, countries, populations, languages, sampleMethods, typeOfStudies)
     res.render("admin/database/surveys", {
@@ -92,7 +92,7 @@ adminRouter.get('/database/parameters', function(req, res) {
 })
 
 adminRouter.get('/pending/surveys', function(req, res) {
-  // loader.fetchPollNamesPromise().then( pollNames => {
+  // getService.fetchPollNamesPromise().then( pollNames => {
   //   res.render("submit/question", {
   //     active: {
   //       submit: true
@@ -105,7 +105,7 @@ adminRouter.get('/pending/surveys', function(req, res) {
 })
 
 adminRouter.get('/pending/questions', function(req, res) {
-  // loader.fetchPollNamesPromise().then( pollNames => {
+  // getService.fetchPollNamesPromise().then( pollNames => {
   //   res.render("submit/question", {
   //     active: {
   //       submit: true

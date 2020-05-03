@@ -9,6 +9,7 @@ const helpers = require("./helpers") //handlebars helpers
 const indexRouter = require("./routes/indexRouter")
 const questionsRouter = require("./routes/questionsRouter")
 const adminRouter = require("./routes/adminRouter")
+const updateRouter = require("./routes/updateRouter")
 
 //const util = require("util"), util.inspect
 
@@ -18,18 +19,22 @@ var hbs = exphbs.create({
 })
 
 var app = express()
-app.engine("hbs", hbs.engine)
 
+//Handlebars
+app.engine("hbs", hbs.engine)
 app.set("view engine", "hbs")
 
+//Parsing form data
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
+//Static files
 app.use(express.static(__dirname + '/public')); //static files
 
+//Routers
 app.use('/', indexRouter)
-//other routers
 app.use("/questions", questionsRouter) //use "/questions" instead of "/routes/questions" in the browser
-
-//admin Routes
 app.use("/admin", adminRouter)
+app.use("/update", updateRouter)
 
 app.listen(3000) //listen to port 3000

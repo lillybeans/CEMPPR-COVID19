@@ -8207,6 +8207,10 @@ a.text-tuorqoise-dark:hover, a.text-tuorqoise-dark:focus {
 html, body {
   height: 100%; }
 
+.btn-outline-dark:hover {
+  background-color: inherit;
+  color: inherit; }
+
 ion-icon.white {
   color: white; }
 

@@ -1,4 +1,4 @@
-<form class="edit_survey">
+<form class="edit_survey" id="{{survey.id}}">
 
   <div class="row mx-2 my-4">
     <div class="col">
@@ -25,7 +25,7 @@
 
           {{#ifEquals type "text"}}
             <div>
-              <input class="form-control col-8" type="text" name={{name}} id={{name}} value="{{lookup ../survey name}}" placeholder="{{placeholder}}" {{#if required}} required {{/if}} readonly
+              <input class="form-control col-10" type="text" name={{name}} id={{name}} value="{{lookup ../survey name}}" placeholder="{{placeholder}}" {{#if required}} required {{/if}} readonly
                 {{#ifEquals disabled true}}disabled {{/ifEquals}}>
               <small id="description" class="form-text text-muted">{{description}}</small>
             </div>
@@ -33,7 +33,7 @@
 
           {{#ifEquals type "number"}}
             <div>
-              <input class="form-control col-8" type="number" name={{name}} id={{name}} value="{{lookup ../survey name}}" placeholder="{{placeholder}}" {{#if required}} required {{/if}} readonly
+              <input class="form-control col-10" type="number" name={{name}} id={{name}} value="{{lookup ../survey name}}" placeholder="{{placeholder}}" {{#if required}} required {{/if}} readonly
                 {{#ifEquals disabled true}}disabled {{/ifEquals}}>
               <small id="description" class="form-text text-muted">{{description}}</small>
             </div>
@@ -41,7 +41,7 @@
 
           {{#ifEquals type "date"}}
             <div>
-              <input class="form-control col-8" type="date" name={{name}} id={{name}} value="{{formatDate (lookup ../survey name)}}" {{#if required}} required {{/if}} readonly {{#ifEquals disabled true}}disabled {{/ifEquals}}>
+              <input class="form-control col-10" type="date" name={{name}} id={{name}} value="{{formatDate (lookup ../survey name)}}" {{#if required}} required {{/if}} readonly {{#ifEquals disabled true}}disabled {{/ifEquals}}>
               <small id="description" class="form-text text-muted">{{description}}</small>
             </div>
           {{/ifEquals}}
