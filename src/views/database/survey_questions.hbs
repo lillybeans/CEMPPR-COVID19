@@ -1,4 +1,24 @@
 <div class="mx-5 my-4">
-  <h1 class="display-4 mx-3">👩‍💼 Database: Surveys </h1>
-  <hr class="mx-3 bg-dark">
+  <div class="mx-3">
+  <h1 class="display-4">👩‍💼 {{survey.poll_name}} </h1>
+  <h3><a href="/database/surveys/1">Surveys</a> > Show Questions</h3>
+  <hr class="bg-dark">
+  <div class="questions_list">
+    {{#each questions}}
+      {{add @index 1}}. {{question}}
+      <ol>
+        {{#each options}}
+          <li>{{option}}, {{percentage}}</li>
+        {{/each}}
+      </ol>
+
+      <ul class="list-inline">
+        {{#each keywords}}
+          <li>{{this}}</li>
+        {{/each}}
+      </ul>
+      <br>
+    {{/each}}
+  </div>
+</div>
 </div>

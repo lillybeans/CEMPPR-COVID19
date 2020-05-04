@@ -1,4 +1,5 @@
 const mysqlConnection = require("./connection")
+const util = require("util")
 
 //Promisified MYSQL queries
 function queryPromise(sql) {
@@ -44,7 +45,7 @@ function fetchNumberOfSurveysPromise(){
 function fetchSurveysByPagePromise(page){
   var rowsOffset = (page - 1)*10
   return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT * FROM Surveys LIMIT 10 OFFSET " + rowsOffset, (err, rows) => {
+    mysqlConnection.query("SELECT * FROM Surveys ORDER BY created_at ASC LIMIT 10 OFFSET " + rowsOffset, (err, rows) => {
       if (err)
         return reject(err);
       resolve(rows);
@@ -72,6 +73,8 @@ function fetchOptionsAndKeywordsForQuestionWithId(questionId){
     mysqlConnection.query(optionsQuery + ";" + keywordsQuery, (err, results) => {
       if (err)
         return reject(err);
+      //console.log("\n\n\n" + questionId + ":fetchOptionsAndKeywordsForQuestionWithId results[0]:"+util.inspect(results[0]))
+      //console.log("\n" + questionId + ":fetchOptionsAndKeywordsForQuestionWithId results[1][0].keyword:"+util.inspect(results[1][0].keyword))
       resolve(results);
     });
   });

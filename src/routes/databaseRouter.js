@@ -73,34 +73,44 @@ databaseRouter.get('/surveys/:page', function(req, res) {
 databaseRouter.get('/surveys/:surveyId/questions/:page', function(req, res) {
   const surveyId = req.params.surveyId
   const page = req.params.page
-  var surveyName = ""
+  var survey = ""
   var questions = {}
-  console.log("getting this path")
-  res.render("database/survey_questions")
-  /**
-  getService.fetchSurveyWithId(surveyId).then(survey => {
-    surveyName = survey.poll_name
+
+  getService.fetchSurveyWithId(surveyId).then(surveyRes => {
+    survey = surveyRes
+    console.log("GOT - Survey pollname: " + survey.poll_name)
     return getService.fetchQuestionsForSurveyWithId(surveyId, page)
-  }).then(questionMetadata => {
-    questionMetadata.map(q => {
-      questions[q.id] = questionMetadata // { 1:md1, 2:md2, 3:md3}
+  }).then(questionsMetadata => {
+    //console.log("GOT - questionsMetadata: " + util.inspect(questionsMetadata))
+    questionsMetadata.map(qMetadata => {
+      questions[qMetadata.id] = qMetadata // { 1:{..,"options":__,"keywords":___}}, 2:md2, 3:md3}
     })
-    var promises = questions.map((question) => {
-      return fetchOptionsAndKeywordsForQuestionWithId(question.id)
+    let questionIds = Object.keys(questions)
+    var promises = questionIds.map(id => {
+      return getService.fetchOptionsAndKeywordsForQuestionWithId(id)
     })
     return Promise.all(promises)
   }).then(questionOptionsAndKeywords => {
-    var optionsResults = questionOptionsAndKeywords[0]
-    var keywordsResults = questionOptionsAndKeywords[1]
-    var questionId = optionsResults.question
-    questions[questionId]["options"] = optionsResults.map(res => { return {"option": res.option, "percentage": res.percentage}})
-    questions[questionId]["keywords"] = keywordsResults.map(res => res.keyword)
+    //questionOptionsAndKeywords is an ARRAY
+    //[firstQuestion, secondQuestion, thirdQuestion]
+    //firstQuestion:[options, keywords], secondQuestion:[options,keywords]
+
+    for (var q=0; q<questionOptionsAndKeywords.length; q++){
+      var question = questionOptionsAndKeywords[q]
+      var questionOptions = question[0]
+      var questionKeywords = question[1]
+      var questionId = questionOptions[0].question_id
+
+      questions[questionId]["options"] = questionOptions.map(row => { return {"option": row.option, "percentage": row.percentage}})
+      questions[questionId]["keywords"] = questionKeywords.map(row => row.keyword)
+    }
+
     res.render("database/survey_questions",{
-      surveyName: surveyName,
+      survey: survey,
       questions: questions
     })
   })
-  **/
+
 })
 
 databaseRouter.get('/questions', function(req, res) {
