@@ -1,4 +1,4 @@
-<script type="text/javascript" src="../../../js/survey/editSurvey.js"></script>
+<script type="text/javascript" src="../../../js/survey/surveyDetails.js"></script>
 
 <div class="mx-5 my-4">
   <h1 class="display-4 mx-3">👩‍💼 Surveys ({{numberOfRecords}})</h1>
@@ -35,7 +35,8 @@
           <div class="card-body form-container">
             <form class="edit_survey" id={{id}}>
               <div class="mx-4 my-2">
-                <a href="/database/surveys/{{id}}/questions/1">Show Questions</a>
+                <a class="active showSurveyLink" onClick="showSurveyMetadata(this)">Survey</a> <span class="mx-2">|</span>
+                <a class="showQuestionsLink" href="#" onClick="showSurveyQuestions(this)">Questions</a>
                 <div class="float-right">
                   <span class="mx-2 text-success saved-msg hide">Saved!</span>
                   <button type="button" class="btn btn-primary mx-1 editButton" onClick="editSurvey(this)">Edit</button>
@@ -46,6 +47,9 @@
                 </div>
               </div>
               {{> survey/editSurvey surveyModel=../surveyModel survey=this }}
+              <div class="showQuestions hide">
+                {{> survey/showQuestions }}
+              </div>
             </form>
           </div>
         </div>

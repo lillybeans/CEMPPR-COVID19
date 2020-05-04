@@ -105,7 +105,7 @@ databaseRouter.get('/surveys/:surveyId/questions/:page', function(req, res) {
       questions[questionId]["keywords"] = questionKeywords.map(row => row.keyword)
     }
 
-    res.render("database/survey_questions",{
+    res.send({
       survey: survey,
       questions: questions
     })

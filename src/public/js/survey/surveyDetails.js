@@ -21,6 +21,31 @@ function editSurvey(editButton) {
   var dropdowns = $(form).find('option').removeAttr('disabled')
 }
 
+function showSurveyMetadata(button){
+  console.log("show survey metadata")
+}
+
+function showSurveyQuestions(button){
+  var form = $(button).parentsUntil('.form-container').parent().find('form').first()
+  var surveyId = $(form).attr('id')
+  var data = ""
+
+  //GET questions
+  $.get("/database/surveys/"+surveyId+"/questions/1")
+  .then( function(response) {
+    data = response
+    return $.get("/dynamic_views/test.hbs")
+  }).then(function(src) {
+    console.log("data is: "+ data)
+    console.log("src is: " + src)
+    return Handlebars.compile(src)(data)
+  }).fail( function() {
+    alert("Show Questions failed!")
+  })
+
+}
+
+
 function cancelEditSurvey(cancelButton) {
   var editButton = $(cancelButton).siblings('.editButton').first()
   var saveButton = $(cancelButton).siblings('.saveButton').first()

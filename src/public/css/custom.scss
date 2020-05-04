@@ -12,6 +12,10 @@ $theme-colors: (
   display:none
 }
 
+a.active, a.active:hover{
+  color:black;
+}
+
 html, body {
   height: 100%;
 }

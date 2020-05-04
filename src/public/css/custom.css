@@ -8204,6 +8204,9 @@ a.text-tuorqoise-dark:hover, a.text-tuorqoise-dark:focus {
 .hide {
   display: none; }
 
+a.active, a.active:hover {
+  color: black; }
+
 html, body {
   height: 100%; }
 
