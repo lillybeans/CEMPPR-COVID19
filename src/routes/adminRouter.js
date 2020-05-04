@@ -64,6 +64,20 @@ adminRouter.get('/database/surveys/:page', function(req, res) {
   })
 })
 
+adminRouter.get('/database/surveys/:surveyId/questions', function(req, res) {
+  const surveyId = req.params.surveyId
+  var surveyName = ""
+  getService.fetchSurveyWithId(surveyId).then(survey => {
+    surveyName = survey.poll_name
+    return getService.fetchQuestionsForSurveyWithId(surveyId)
+  }).then(questions => {
+    res.render("admin/database/survey_questions",{
+      surveyName: surveyName,
+      questions: questions
+    })
+  })
+})
+
 adminRouter.get('/database/questions', function(req, res) {
   res.render("admin/database/questions")
 })

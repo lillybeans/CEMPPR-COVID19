@@ -21,6 +21,15 @@ function fetchPollNamesPromise(){
   });
 }
 
+function fetchSurveyWithId(surveyId){
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("SELECT * FROM Surveys WHERE id="+surveyId, (err, rows) => {
+      if (err)
+        return reject(err);
+      resolve(rows[0]);
+    });
+  });
+}
 
 function fetchNumberOfSurveysPromise(){
   return new Promise((resolve, reject) => {
@@ -39,6 +48,39 @@ function fetchSurveysByPagePromise(page){
       if (err)
         return reject(err);
       resolve(rows);
+    });
+  });
+}
+
+/** Questions **/
+
+function fetchQuestionsForSurveyWithId(surveyId, page){
+  var rowsOffset = (page - 1)*10
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("SELECT * FROM Questions WHERE survey_id=" + surveyId + " LIMIT 10 OFFSET " + rowsOffset, (err, rows) => {
+      if (err)
+        return reject(err);
+      resolve(rows);
+    });
+  });
+}
+
+function fetchOptionsForQuestionWithId(questionId){
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("SELECT * FROM Question_Options WHERE question_id=" + questionId, (err, rows) => {
+      if (err)
+        return reject(err);
+      resolve(rows);
+    });
+  });
+}
+
+function fetchKeywordsForQuestionWithId(questionId){
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("SELECT * FROM Question_Keywords WHERE question_id=" + questionId, (err, rows) => {
+      if (err)
+        return reject(err);
+      resolve(rows.map(row => row.keyword));
     });
   });
 }
@@ -128,7 +170,8 @@ function fetchSubmitQuestionDataPromise() {
     })
 }
 
-module.exports = {
+module.exports = {,
+  fetchSurveyWithId,fetchSurveyWithId,
   fetchPollNamesPromise: fetchPollNamesPromise,
   fetchNumberOfSurveysPromise: fetchNumberOfSurveysPromise,
   fetchSurveysByPagePromise: fetchSurveysByPagePromise,
@@ -136,5 +179,8 @@ module.exports = {
   fetchPopulations: fetchPopulations,
   fetchLanguages: fetchLanguages,
   fetchSampleMethods: fetchSampleMethods,
-  fetchTypeofStudies: fetchTypeofStudies
+  fetchTypeofStudies: fetchTypeofStudies,
+  fetchQuestionsForSurveyWithId,
+  fetchOptionsForQuestionWithId,
+  fetchKeywordsForQuestionWithId
 }

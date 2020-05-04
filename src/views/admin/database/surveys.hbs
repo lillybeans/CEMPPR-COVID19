@@ -1,7 +1,7 @@
 <script type="text/javascript" src="../../../js/survey/editSurvey.js"></script>
 
 <div class="mx-5 my-4">
-  <h1 class="display-4 mx-3">👩‍💼 All Surveys ({{numberOfRecords}})</h1>
+  <h1 class="display-4 mx-3">👩‍💼 Database: Surveys ({{numberOfRecords}})</h1>
   <hr class="mx-3 bg-dark">
 
   <nav class="m-3">
@@ -33,7 +33,9 @@
 
         <div id="collapse{{@index}}" class="collapse" aria-labelledby="heading{{@index}}" data-parent="#surveyList">
           <div class="card-body">
-
+            <div class="mx-4 my-2">
+            <a href=#>Show Questions</a>
+            </div>
             {{> survey/editSurvey surveyModel=../surveyModel survey=this }}
 
           </div>
