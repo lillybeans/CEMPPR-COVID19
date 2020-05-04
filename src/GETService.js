@@ -163,7 +163,7 @@ function fetchSubmitQuestionDataPromise() {
     })
 }
 
-module.exports = {,
+module.exports = {
   fetchSurveyWithId,fetchSurveyWithId,
   fetchPollNamesPromise: fetchPollNamesPromise,
   fetchNumberOfSurveysPromise: fetchNumberOfSurveysPromise,

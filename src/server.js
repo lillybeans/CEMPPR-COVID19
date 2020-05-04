@@ -8,7 +8,8 @@ const helpers = require("./helpers") //handlebars helpers
 
 const indexRouter = require("./routes/indexRouter")
 const questionsRouter = require("./routes/questionsRouter")
-const adminRouter = require("./routes/adminRouter")
+const databaseRouter = require("./routes/databaseRouter")
+const pendingRouter = require("./routes/pendingRouter")
 const updateRouter = require("./routes/updateRouter")
 const deleteRouter = require("./routes/deleteRouter")
 
@@ -35,8 +36,7 @@ app.use(express.static(__dirname + '/public')); //static files
 //Routers
 app.use('/', indexRouter)
 app.use("/questions", questionsRouter) //use "/questions" instead of "/routes/questions" in the browser
-app.use("/admin", adminRouter)
-app.use("/update", updateRouter)
-app.use("/delete", deleteRouter)
+app.use("/database", databaseRouter)
+app.use("/pending", pendingRouter)
 
 app.listen(3000) //listen to port 3000

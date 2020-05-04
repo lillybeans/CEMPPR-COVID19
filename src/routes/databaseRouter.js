@@ -3,13 +3,19 @@ const router = express.Router()
 const getService = require("../GETService")
 
 //Define our Routes:
-const adminRouter = express.Router();
+const databaseRouter = express.Router();
 const util = require("util")
 
 const editSurveyModel = require("../models/editSurveyModel")
 
+const updateRouter = require("./updateRouter")
+const deleteRouter = require("./deleteRouter")
+
+databaseRouter.use('/update', updateRouter)
+databaseRouter.use('/delete', deleteRouter)
+
 // home page route
-adminRouter.get('/', function(req, res) {
+databaseRouter.get('/', function(req, res) {
   res.render("home", {
     active: {
       home: true
@@ -18,7 +24,7 @@ adminRouter.get('/', function(req, res) {
 })
 
 /** Database: Surveys **/
-adminRouter.get('/database/surveys/:page', function(req, res) {
+databaseRouter.get('/surveys/:page', function(req, res) {
   const page = req.params.page
   var pages = []
   var numberOfRecords = 0
@@ -54,7 +60,7 @@ adminRouter.get('/database/surveys/:page', function(req, res) {
     return getService.fetchSurveysByPagePromise(page)
   }).then( rows => {
     var populatedModel = populateModelWithData(editSurveyModel, countries, populations, languages, sampleMethods, typeOfStudies)
-    res.render("admin/database/surveys", {
+    res.render("database/surveys", {
       surveys: rows,
       numberOfRecords: numberOfRecords,
       surveyModel: populatedModel,
@@ -64,11 +70,14 @@ adminRouter.get('/database/surveys/:page', function(req, res) {
   })
 })
 
-adminRouter.get('/database/surveys/:surveyId/questions/:page', function(req, res) {
+databaseRouter.get('/surveys/:surveyId/questions/:page', function(req, res) {
   const surveyId = req.params.surveyId
   const page = req.params.page
   var surveyName = ""
   var questions = {}
+  console.log("getting this path")
+  res.render("database/survey_questions")
+  /**
   getService.fetchSurveyWithId(surveyId).then(survey => {
     surveyName = survey.poll_name
     return getService.fetchQuestionsForSurveyWithId(surveyId, page)
@@ -86,45 +95,20 @@ adminRouter.get('/database/surveys/:surveyId/questions/:page', function(req, res
     var questionId = optionsResults.question
     questions[questionId]["options"] = optionsResults.map(res => { return {"option": res.option, "percentage": res.percentage}})
     questions[questionId]["keywords"] = keywordsResults.map(res => res.keyword)
-    res.render("admin/database/survey_questions",{
+    res.render("database/survey_questions",{
       surveyName: surveyName,
       questions: questions
     })
   })
+  **/
 })
 
-adminRouter.get('/database/questions', function(req, res) {
-  res.render("admin/database/questions")
+databaseRouter.get('/questions', function(req, res) {
+  res.render("database/questions")
 })
 
-adminRouter.get('/database/parameters', function(req, res) {
-  res.render("admin/database/parameters")
-})
-
-adminRouter.get('/pending/surveys', function(req, res) {
-  // getService.fetchPollNamesPromise().then( pollNames => {
-  //   res.render("submit/question", {
-  //     active: {
-  //       submit: true
-  //     },
-  //     questionInfoModel: questionInfoModel,
-  //     surveys: pollNames
-  //   })
-  // })
-  res.render("admin/pending/surveys")
-})
-
-adminRouter.get('/pending/questions', function(req, res) {
-  // getService.fetchPollNamesPromise().then( pollNames => {
-  //   res.render("submit/question", {
-  //     active: {
-  //       submit: true
-  //     },
-  //     questionInfoModel: questionInfoModel,
-  //     surveys: pollNames
-  //   })
-  // })
-  res.render("admin/pending/questions")
+databaseRouter.get('/parameters', function(req, res) {
+  res.render("database/parameters")
 })
 
 function populateModelWithData(surveyModel, countries, populations, languages, sampleMethods, typeOfStudies) {
@@ -155,4 +139,4 @@ function populateModelWithData(surveyModel, countries, populations, languages, s
 }
 
 
-module.exports = adminRouter
+module.exports = databaseRouter
