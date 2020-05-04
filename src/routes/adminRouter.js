@@ -64,13 +64,28 @@ adminRouter.get('/database/surveys/:page', function(req, res) {
   })
 })
 
-adminRouter.get('/database/surveys/:surveyId/questions', function(req, res) {
+adminRouter.get('/database/surveys/:surveyId/questions/:page', function(req, res) {
   const surveyId = req.params.surveyId
+  const page = req.params.page
   var surveyName = ""
+  var questions = {}
   getService.fetchSurveyWithId(surveyId).then(survey => {
     surveyName = survey.poll_name
-    return getService.fetchQuestionsForSurveyWithId(surveyId)
-  }).then(questions => {
+    return getService.fetchQuestionsForSurveyWithId(surveyId, page)
+  }).then(questionMetadata => {
+    questionMetadata.map(q => {
+      questions[q.id] = questionMetadata // { 1:md1, 2:md2, 3:md3}
+    })
+    var promises = questions.map((question) => {
+      return fetchOptionsAndKeywordsForQuestionWithId(question.id)
+    })
+    return Promise.all(promises)
+  }).then(questionOptionsAndKeywords => {
+    var optionsResults = questionOptionsAndKeywords[0]
+    var keywordsResults = questionOptionsAndKeywords[1]
+    var questionId = optionsResults.question
+    questions[questionId]["options"] = optionsResults.map(res => { return {"option": res.option, "percentage": res.percentage}})
+    questions[questionId]["keywords"] = keywordsResults.map(res => res.keyword)
     res.render("admin/database/survey_questions",{
       surveyName: surveyName,
       questions: questions

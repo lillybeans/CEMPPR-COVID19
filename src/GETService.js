@@ -65,25 +65,18 @@ function fetchQuestionsForSurveyWithId(surveyId, page){
   });
 }
 
-function fetchOptionsForQuestionWithId(questionId){
+function fetchOptionsAndKeywordsForQuestionWithId(questionId){
+  var optionsQuery = "SELECT * FROM Question_Options WHERE question_id=" + questionId
+  var keywordsQuery = "SELECT * FROM Question_Keywords WHERE question_id=" + questionId
   return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT * FROM Question_Options WHERE question_id=" + questionId, (err, rows) => {
+    mysqlConnection.query(optionsQuery + ";" + keywordsQuery, (err, results) => {
       if (err)
         return reject(err);
-      resolve(rows);
+      resolve(results);
     });
   });
 }
 
-function fetchKeywordsForQuestionWithId(questionId){
-  return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT * FROM Question_Keywords WHERE question_id=" + questionId, (err, rows) => {
-      if (err)
-        return reject(err);
-      resolve(rows.map(row => row.keyword));
-    });
-  });
-}
 
 /** Survey Parameters **/
 
@@ -180,7 +173,6 @@ module.exports = {,
   fetchLanguages: fetchLanguages,
   fetchSampleMethods: fetchSampleMethods,
   fetchTypeofStudies: fetchTypeofStudies,
-  fetchQuestionsForSurveyWithId,
-  fetchOptionsForQuestionWithId,
-  fetchKeywordsForQuestionWithId
+  fetchQuestionsForSurveyWithId: fetchQuestionsForSurveyWithId,
+  fetchOptionsAndKeywordsForQuestionWithId: fetchOptionsAndKeywordsForQuestionWithId
 }
