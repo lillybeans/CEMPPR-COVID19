@@ -1,25 +1,46 @@
 <div class="mx-4">
-  <br>
-  <div class="questions_list">
+  <ol class="questions_list">
     {{#each questions}}
-      <b>{{add @index 1}}. {{this.question}}</b>
-      <ol type="A" class="my-2">
-        {{#each options}}
+      <div class="my-4">
+        <h6>
           <li>
-            <div class="row">
-              <div class="col-3">{{option}}</div>
-              <div class="col-1">{{percentage}}%</div>
+            {{this.question}}
+        </h6>
+
+        <div class="row">
+          <div class="col-6">
+            <ol type="A" class="my-2">
+              {{#each options}}
+                <li>
+                  <div class="row">
+                    <div class="col-9">{{option}}</div>
+                    <div class="col-3">{{percentage}}%</div>
+                  </div>
+                </li>
+              {{/each}}
+            </ol>
+          </div>
+          <div class="col-6">
+            <div class="categorization border-left m-2 pl-3">
+            <div class="group m-2">
+              <span><b>Group:</b></span> {{group}}
             </div>
-          </li>
-        {{/each}}
-      </ol>
-      <div class="keywords-list">
-        <span><b>Keywords:</b></span>
-        {{#each keywords}}
-          <span class="text-{{keywordColor this}} border border-{{keywordColor this}} rounded px-2 py-1 mr-1">{{this}}</span>
-        {{/each}}
-    </div>
-      <br>
+            <div class="theme m-2">
+              <span><b>Theme:</b></span> {{theme}}
+            </div>
+            <div class="keywords-list m-2">
+              <span><b>Keywords:</b></span>
+              {{#each keywords}}
+                <span class="text-{{keywordColor this}} border border-{{keywordColor this}} rounded px-2 py-1 mr-1">{{this}}</span>
+              {{/each}}
+            </div>
+          </div>
+          </div>
+            </li>
+
+
+        </div>
+      </div>
     {{/each}}
-  </div>
+  </ol>
 </div>

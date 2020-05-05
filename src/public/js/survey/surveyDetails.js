@@ -4,9 +4,19 @@ Handlebars.registerHelper("add",function(a, b) {
 
 Handlebars.registerHelper("keywordColor", function(keyword){
   switch(keyword){
-    case "Economics": return "primary"
-    case "Fear": return "danger"
-    default: return "secondary"
+    case "Economics":
+    case "Employment":
+      return "primary"
+    case "Fear":
+    case "Illness":
+    case "Hospitals":
+      return "danger"
+    case "Trust":
+    case "Healthcare":
+    case "Food":
+      return "success"
+    default:
+      return "secondary"
   }
 })
 
