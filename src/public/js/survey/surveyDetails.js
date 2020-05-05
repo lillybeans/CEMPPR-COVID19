@@ -2,6 +2,14 @@ Handlebars.registerHelper("add",function(a, b) {
     return  Number(a) + Number(b)
 })
 
+Handlebars.registerHelper("keywordColor", function(keyword){
+  switch(keyword){
+    case "Economics": return "primary"
+    case "Fear": return "danger"
+    default: return "secondary"
+  }
+})
+
 function editSurvey(editButton) {
   var saveButton = $(editButton).siblings('.saveButton').first()
   var cancelButton = $(editButton).siblings('.cancelButton').first()

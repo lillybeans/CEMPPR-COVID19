@@ -1,18 +1,24 @@
 <div class="mx-4">
-  <hr class="bg-dark">
+  <br>
   <div class="questions_list">
     {{#each questions}}
-    {{add @index 1}}. {{this.question}}
-      <ol>
+      <b>{{add @index 1}}. {{this.question}}</b>
+      <ol type="A" class="my-2">
         {{#each options}}
-          <li>{{option}}, {{percentage}}</li>
+          <li>
+            <div class="row">
+              <div class="col-3">{{option}}</div>
+              <div class="col-1">{{percentage}}%</div>
+            </div>
+          </li>
         {{/each}}
       </ol>
-      <ul class="list-inline">
+      <div class="keywords-list">
+        <span><b>Keywords:</b></span>
         {{#each keywords}}
-          <li>{{this}}</li>
+          <span class="text-{{keywordColor this}} border border-{{keywordColor this}} rounded px-2 py-1 mr-1">{{this}}</span>
         {{/each}}
-      </ul>
+    </div>
       <br>
     {{/each}}
   </div>
