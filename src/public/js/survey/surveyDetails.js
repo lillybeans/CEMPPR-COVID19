@@ -1,3 +1,7 @@
+Handlebars.registerHelper("add",function(a, b) {
+    return  Number(a) + Number(b)
+})
+
 function editSurvey(editButton) {
   var saveButton = $(editButton).siblings('.saveButton').first()
   var cancelButton = $(editButton).siblings('.cancelButton').first()
@@ -32,13 +36,12 @@ function showSurveyQuestions(button){
 
   //GET questions
   $.get("/database/surveys/"+surveyId+"/questions/1")
-  .then( function(response) {
+  .then(function(response) {
     data = response
-    return $.get("/dynamic_views/test.hbs")
+    return $.get("/dynamic_views/showQuestions.hbs")
   }).then(function(src) {
-    console.log("data is: "+ data)
-    console.log("src is: " + src)
-    return Handlebars.compile(src)(data)
+    var showQuestionsHtml = Handlebars.compile(src)(data)
+    console.log("html is: "+ showQuestionsHtml)
   }).fail( function() {
     alert("Show Questions failed!")
   })
