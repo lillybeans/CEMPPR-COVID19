@@ -25,12 +25,32 @@ function editSurvey(editButton) {
   var dropdowns = $(form).find('option').removeAttr('disabled')
 }
 
-function showSurveyMetadata(button){
-  console.log("show survey metadata")
+function showSurvey(button){
+  var form = $(button).parentsUntil('.form-container').parent().find('form').first()
+
+  var showQuestionsDiv = $(form).find('.show-questions').first()
+  var showSurveyDiv = $(form).find('.show-survey').first()
+
+  $(showQuestionsDiv).addClass("hide")
+  $(showSurveyDiv).removeClass("hide")
+
+  var links = $(form).find('.links')
+  updateLinks(links)
 }
 
 function showSurveyQuestions(button){
   var form = $(button).parentsUntil('.form-container').parent().find('form').first()
+  var showQuestionsDiv = $(form).find('.show-questions').first()
+  var showSurveyDiv = $(form).find('.show-survey').first()
+  var links = $(form).find('.links')
+
+  if($(showQuestionsDiv).hasClass("loaded")){
+    $(showSurveyDiv).addClass("hide")
+    $(showQuestionsDiv).removeClass("hide")
+    updateLinks(links)
+    return
+  }
+
   var surveyId = $(form).attr('id')
   var data = ""
 
@@ -41,13 +61,36 @@ function showSurveyQuestions(button){
     return $.get("/dynamic_views/showQuestions.hbs")
   }).then(function(src) {
     var showQuestionsHtml = Handlebars.compile(src)(data)
-    console.log("html is: "+ showQuestionsHtml)
+
+    $(showSurveyDiv).addClass("hide")
+    $(showQuestionsDiv).addClass("loaded") //so we don't reload the questions
+    $(showQuestionsDiv).html(showQuestionsHtml)
+
+    updateLinks(links)
   }).fail( function() {
     alert("Show Questions failed!")
   })
 
 }
 
+function updateLinks(links){
+  var showSurveyLink = $(links).find('a.showSurveyLink').first()
+  var showQuestionsLink = $(links).find('a.showQuestionsLink').first()
+
+  if($(showSurveyLink).hasClass("active")){ //user selected "Show Questions"
+    $(showSurveyLink).removeClass("active")
+    $(showSurveyLink).attr("href","#")
+
+    $(showQuestionsLink).addClass("active")
+    $(showQuestionsLink).removeAttr("href")
+  } else { //user selected "Show Survey"
+    $(showSurveyLink).addClass("active")
+    $(showSurveyLink).removeAttr("href")
+
+    $(showQuestionsLink).removeClass("active")
+    $(showQuestionsLink).attr("href","#")
+  }
+}
 
 function cancelEditSurvey(cancelButton) {
   var editButton = $(cancelButton).siblings('.editButton').first()
@@ -89,7 +132,7 @@ function deleteSurveyWithId(id) {
 $(function() {
 
   //On Save: Submit Edit Survey
-  $('form.edit_survey').submit(function(event) {
+  $('form.edit.survey').submit(function(event) {
     event.preventDefault()
 
     console.log("form.edit_survey: on submit!")

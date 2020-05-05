@@ -33,10 +33,12 @@
 
         <div id="collapse{{@index}}" class="collapse" aria-labelledby="heading{{@index}}" data-parent="#surveyList">
           <div class="card-body form-container">
-            <form class="edit_survey" id={{id}}>
+            <form class="edit survey" id={{id}}>
               <div class="mx-4 my-2">
-                <a class="active showSurveyLink" onClick="showSurveyMetadata(this)">Survey</a> <span class="mx-2">|</span>
+                <div class="links">
+                <a class="active showSurveyLink" onClick="showSurvey(this)">Survey</a> <span class="mx-2">|</span>
                 <a class="showQuestionsLink" href="#" onClick="showSurveyQuestions(this)">Questions</a>
+                </div>
                 <div class="float-right">
                   <span class="mx-2 text-success saved-msg hide">Saved!</span>
                   <button type="button" class="btn btn-primary mx-1 editButton" onClick="editSurvey(this)">Edit</button>
@@ -46,10 +48,14 @@
                   {{> survey/deleteModal title=poll_name id=id}}
                 </div>
               </div>
-              {{> survey/editSurvey surveyModel=../surveyModel survey=this }}
-              <div class="showQuestions hide">
-                {{> survey/showQuestions }}
-              </div>
+
+                <div class="show-survey">
+                  {{> survey/editSurvey surveyModel=../surveyModel survey=this }}
+                </div>
+
+                <div class="show-questions">
+                </div>
+
             </form>
           </div>
         </div>
