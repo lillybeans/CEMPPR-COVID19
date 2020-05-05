@@ -44,6 +44,7 @@ function showSurveyQuestions(button){
   var showSurveyDiv = $(form).find('.show-survey').first()
   var links = $(form).find('.links')
 
+  //If we have already fetched questions details, do not refetch
   if($(showQuestionsDiv).hasClass("loaded")){
     $(showSurveyDiv).addClass("hide")
     $(showQuestionsDiv).removeClass("hide")
@@ -73,6 +74,7 @@ function showSurveyQuestions(button){
 
 }
 
+//swap active and inactive
 function updateLinks(links){
   var showSurveyLink = $(links).find('a.showSurveyLink').first()
   var showQuestionsLink = $(links).find('a.showQuestionsLink').first()
