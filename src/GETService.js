@@ -55,6 +55,27 @@ function fetchSurveysByPagePromise(page){
 
 /** Questions **/
 
+function fetchNumberOfQuestionsPromise(){
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("SELECT COUNT(*) AS count FROM Questions", (err, rows) => {
+      if (err)
+        return reject(err);
+      resolve(rows[0].count);
+    });
+  });
+}
+
+function fetchQuestionsByPagePromise(page){
+  var rowsOffset = (page - 1)*10
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("SELECT * FROM Questions ORDER BY created_at ASC LIMIT 10 OFFSET " + rowsOffset, (err, rows) => {
+      if (err)
+        return reject(err);
+      resolve(rows);
+    });
+  });
+}
+
 function fetchQuestionsForSurveyWithId(surveyId, page){
   var rowsOffset = (page - 1)*10
   return new Promise((resolve, reject) => {
@@ -171,6 +192,8 @@ module.exports = {
   fetchPollNamesPromise: fetchPollNamesPromise,
   fetchNumberOfSurveysPromise: fetchNumberOfSurveysPromise,
   fetchSurveysByPagePromise: fetchSurveysByPagePromise,
+  fetchNumberOfQuestionsPromise: fetchNumberOfQuestionsPromise,
+  fetchQuestionsByPagePromise: fetchQuestionsByPagePromise,
   fetchCountries: fetchCountries,
   fetchPopulations: fetchPopulations,
   fetchLanguages: fetchLanguages,
