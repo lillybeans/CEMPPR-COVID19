@@ -49,14 +49,14 @@ var editSurveyModel = {
       "name": "sample_size",
       "title":"Sample Size",
       "type":"number",
-      "required": false
+      "required": true
     },
     {
       "name": "sample_method",
       "title":"Sample Method",
       "type":"dropdown",
       "options": ["Method 1", "Method 2", "Method 3"],
-      "required": false
+      "required": true
     },
     {
       "name": "type_of_study",

@@ -6,7 +6,7 @@ function updateSurveyWithId(id, dict) {
 
   for (var i = 0; i < keys.length; i++) {
     var key = keys[i]
-    fieldsToUpdate = fieldsToUpdate + key + "='" + dict[key] +"'"
+    fieldsToUpdate = fieldsToUpdate + key + "=" + mysqlConnection.escape(dict[key])
     if (i < keys.length - 1) {
       fieldsToUpdate = fieldsToUpdate + ",\n"
     }
