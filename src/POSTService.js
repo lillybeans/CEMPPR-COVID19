@@ -1,4 +1,11 @@
 const mysqlConnection = require("./connection")
+const util = require("util")
+const searchResultsPerPage = 20
+
+function sanitize(myString){
+  var newString = myString.replace("'","''")
+  return newString
+}
 
 function updateSurveyWithId(id, dict) {
   var fieldsToUpdate = ""
@@ -77,7 +84,10 @@ function deleteSurveyWithId(id) {
 
 function searchQuestion(text){
   return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT * FROM Questions WHERE Question LIKE '%"+ mysqlConnection.escape(text) + "%'", (err, res) => {
+    var countQuery = "SELECT COUNT(*) as count FROM Questions WHERE Question LIKE '%"+sanitize(text)+"%'"
+    var firstPageQuestionsQuery = "SELECT * FROM Questions WHERE Question LIKE '%"+sanitize(text)+"%' LIMIT " + searchResultsPerPage
+    console.log("countQuery is: "+countQuery)
+    mysqlConnection.query(countQuery + ";" + firstPageQuestionsQuery, (err, res) => {
       if (err) {
         console.log("MYSQL Error:" +  err)
         return reject(err);
@@ -91,5 +101,6 @@ module.exports = {
   updateSurveyWithId: updateSurveyWithId,
   deleteQuestionsForSurveyWithId:deleteQuestionsForSurveyWithId,
   deleteSurveyWithId: deleteSurveyWithId,
-  searchQuestion: searchQuestion
+  searchQuestion: searchQuestion,
+  searchResultsPerPage: searchResultsPerPage
 }
