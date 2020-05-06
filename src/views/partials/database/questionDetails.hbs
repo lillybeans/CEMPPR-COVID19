@@ -1,7 +1,7 @@
 <div class="mb-2">
   <div class="row m-2 d-flex justify-content-between">
     <div class="col-6">
-      {{#each options}}
+      {{#each question.options}}
         <div class="row my-2">
           <div class="col-10">
             <input class="form-control option" type="text" value="{{option}}" readonly />
@@ -15,15 +15,36 @@
     </div>
     <div class="col-5">
       <div class="categorization m-2 pl-3">
+
         <div class="group m-2">
-          <span><b>Group:</b></span> {{group}}
+          <span><b>Group:</b></span>
+          <select class="form-control-sm" name="group" id="question_group{{question.id}}" required>
+            <option value="{{question.group}}" selected>{{question.group}}</option>
+            {{#each groups}}
+              {{#ifEquals this question.group}}
+            {{else}}
+              <option value="{{this}}" disabled>{{this}}</option>
+              {{/ifEquals}}
+            {{/each}}
+          </select>
         </div>
+
         <div class="theme m-2">
-          <span><b>Theme:</b></span> {{theme}}
+          <span><b>Theme:</b></span>
+          <select class="form-control-sm" name="theme" id="question_theme{{question.id}}" required>
+            <option value="{{question.theme}}" selected>{{question.theme}}</option>
+            {{#each themes}}
+              {{#ifEquals this theme}}
+            {{else}}
+              <option value="{{this}}" disabled>{{this}}</option>
+              {{/ifEquals}}
+            {{/each}}
+          </select>
         </div>
+
         <div class="keywords-list m-2">
           <span><b>Keywords:</b></span>
-          {{#each keywords}}
+          {{#each question.keywords}}
             <span class="text-{{keywordColor this}} border border-{{keywordColor this}} rounded px-2 py-1 mr-1">{{this}}</span>
           {{/each}}
         </div>

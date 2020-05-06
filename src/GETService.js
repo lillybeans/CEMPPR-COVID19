@@ -14,7 +14,7 @@ function queryPromise(sql) {
   });
 }
 
-function fetchPollNamesPromise(){
+function fetchPollNamesPromise() {
   return new Promise((resolve, reject) => {
     mysqlConnection.query("SELECT poll_name FROM Surveys ORDER BY id DESC LIMIT 20", (err, rows) => {
       if (err)
@@ -24,9 +24,9 @@ function fetchPollNamesPromise(){
   });
 }
 
-function fetchSurveyWithId(surveyId){
+function fetchSurveyWithId(surveyId) {
   return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT * FROM Surveys WHERE id="+surveyId, (err, rows) => {
+    mysqlConnection.query("SELECT * FROM Surveys WHERE id=" + surveyId, (err, rows) => {
       if (err)
         return reject(err);
       resolve(rows[0]);
@@ -34,7 +34,7 @@ function fetchSurveyWithId(surveyId){
   });
 }
 
-function fetchNumberOfSurveysPromise(){
+function fetchNumberOfSurveysPromise() {
   return new Promise((resolve, reject) => {
     mysqlConnection.query("SELECT COUNT(*) AS count FROM Surveys", (err, rows) => {
       if (err)
@@ -44,8 +44,8 @@ function fetchNumberOfSurveysPromise(){
   });
 }
 
-function fetchSurveysByPagePromise(page){
-  var rowsOffset = (page - 1)*10
+function fetchSurveysByPagePromise(page) {
+  var rowsOffset = (page - 1) * 10
   return new Promise((resolve, reject) => {
     mysqlConnection.query("SELECT * FROM Surveys ORDER BY created_at ASC LIMIT 10 OFFSET " + rowsOffset, (err, rows) => {
       if (err)
@@ -57,7 +57,7 @@ function fetchSurveysByPagePromise(page){
 
 /** Questions **/
 
-function fetchNumberOfQuestionsPromise(){
+function fetchNumberOfQuestionsPromise() {
   return new Promise((resolve, reject) => {
     mysqlConnection.query("SELECT COUNT(*) AS count FROM Questions", (err, rows) => {
       if (err)
@@ -67,10 +67,10 @@ function fetchNumberOfQuestionsPromise(){
   });
 }
 
-function fetchQuestionsByPagePromise(page){
-  var rowsOffset = (page - 1)*10
+function fetchQuestionsByPagePromise(page) {
+  var rowsOffset = (page - 1) * 10
   return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT * FROM Questions ORDER BY created_at ASC LIMIT "+questionsPerPage+" OFFSET " + rowsOffset, (err, rows) => {
+    mysqlConnection.query("SELECT * FROM Questions ORDER BY created_at ASC LIMIT " + questionsPerPage + " OFFSET " + rowsOffset, (err, rows) => {
       if (err)
         return reject(err);
       resolve(rows);
@@ -78,8 +78,8 @@ function fetchQuestionsByPagePromise(page){
   });
 }
 
-function fetchQuestionsForSurveyWithId(surveyId, page){
-  var rowsOffset = (page - 1)*10
+function fetchQuestionsForSurveyWithId(surveyId, page) {
+  var rowsOffset = (page - 1) * 10
   return new Promise((resolve, reject) => {
     mysqlConnection.query("SELECT * FROM Questions WHERE survey_id=" + surveyId + " LIMIT 10 OFFSET " + rowsOffset, (err, rows) => {
       if (err)
@@ -89,7 +89,7 @@ function fetchQuestionsForSurveyWithId(surveyId, page){
   });
 }
 
-function fetchOptionsAndKeywordsForQuestionWithId(questionId){
+function fetchOptionsAndKeywordsForQuestionWithId(questionId) {
   var optionsQuery = "SELECT * FROM Question_Options WHERE question_id=" + questionId
   var keywordsQuery = "SELECT * FROM Question_Keywords WHERE question_id=" + questionId
   return new Promise((resolve, reject) => {
@@ -106,7 +106,7 @@ function fetchOptionsAndKeywordsForQuestionWithId(questionId){
 
 /** Survey Parameters **/
 
-function fetchCountries(){
+function fetchCountries() {
   return new Promise((resolve, reject) => {
     mysqlConnection.query("SELECT * FROM Countries", (err, rows) => {
       if (err)
@@ -116,7 +116,7 @@ function fetchCountries(){
   });
 }
 
-function fetchPopulations(){
+function fetchPopulations() {
   return new Promise((resolve, reject) => {
     mysqlConnection.query("SELECT * FROM Population", (err, rows) => {
       if (err)
@@ -126,7 +126,7 @@ function fetchPopulations(){
   });
 }
 
-function fetchLanguages(){
+function fetchLanguages() {
   return new Promise((resolve, reject) => {
     mysqlConnection.query("SELECT * FROM Language", (err, rows) => {
       if (err)
@@ -136,7 +136,7 @@ function fetchLanguages(){
   });
 }
 
-function fetchSampleMethods(){
+function fetchSampleMethods() {
   return new Promise((resolve, reject) => {
     mysqlConnection.query("SELECT * FROM SampleMethods", (err, rows) => {
       if (err)
@@ -146,7 +146,7 @@ function fetchSampleMethods(){
   });
 }
 
-function fetchTypeofStudies(){
+function fetchTypeofStudies() {
   return new Promise((resolve, reject) => {
     mysqlConnection.query("SELECT * FROM TypeOfStudy", (err, rows) => {
       if (err)
@@ -155,6 +155,51 @@ function fetchTypeofStudies(){
     });
   });
 }
+
+/** Question Parameters **/
+
+function fetchGroups(withDescription = false) {
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("SELECT * FROM `Groups`", (err, rows) => {
+      if (err)
+        return reject(err);
+      if (withDescription) {
+        resolve(rows)
+      } else {
+        resolve(rows.map(row => row.name));
+      }
+    });
+  });
+}
+
+function fetchThemes(withDescription = false) {
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("SELECT * FROM Themes", (err, rows) => {
+      if (err)
+        return reject(err);
+      if (withDescription) {
+        resolve(rows)
+      } else {
+        resolve(rows.map(row => row.name));
+      }
+    });
+  });
+}
+
+function fetchKeywords(withDescription = false) {
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("SELECT * FROM Keywords", (err, rows) => {
+      if (err)
+        return reject(err);
+      if (withDescription) {
+        resolve(rows)
+      } else {
+        resolve(rows.map(row => row.name));
+      }
+    });
+  });
+}
+
 
 function closePromise() {
   return new Promise((resolve, reject) => {
@@ -202,6 +247,9 @@ module.exports = {
   fetchLanguages: fetchLanguages,
   fetchSampleMethods: fetchSampleMethods,
   fetchTypeofStudies: fetchTypeofStudies,
+  fetchGroups: fetchGroups,
+  fetchThemes: fetchThemes,
+  fetchKeywords: fetchKeywords,
   fetchQuestionsForSurveyWithId: fetchQuestionsForSurveyWithId,
   fetchOptionsAndKeywordsForQuestionWithId: fetchOptionsAndKeywordsForQuestionWithId
 }

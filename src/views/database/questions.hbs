@@ -18,18 +18,31 @@
     </ul>
   </nav>
 
-  <div class="accordion m-3" id="questionList">
-    <div class="header bg-light border">
-      <div class="row m-1 p-1">
-        <div class="col-9">
-          <span class="font-weight-bold">Question</span>
+  <div class="header bg-light border rounded mx-3">
+    <div class="row m-1 p-1">
+      <div class="col-9">
+        <div class="row">
+          <div class="col-1 font-weight-bold">
+            Questions
+          </div>
+          <div class="col-11 input-group-sm">
+            <input class="form-control search question" type="text" oninput="searchQuestion(this)" />
+          </div>
         </div>
-        <div class="col-2">
-          <span class="font-weight-bold">Survey</span>
+      </div>
+      <div class="col-3">
+        <div class="form-inline input-group-sm">
+          <span class="font-weight-bold mr-3">Survey</span>
+          <input class="form-control search survey" type="text" oninput="searchSurvey(this)" />
         </div>
       </div>
     </div>
+  </div>
 
+  <div class="search_results">
+  </div>
+
+  <div class="questions_list accordion mx-3" id="question_list">
     {{#each questions}}
       <div class="card">
         <div class="card-header" id="headingOne">
@@ -39,7 +52,7 @@
                 {{question}}
               </div>
               <div class="col-2">
-                {{poll_name}}
+                <h6>{{poll_name}}</h6>
               </div>
               <div class="col-1">
                 <ion-icon class="float-right icon-arrow-down" name="chevron-down-outline"></ion-icon>
@@ -49,25 +62,26 @@
           </div>
         </div>
 
-          <div id="question_collapse{{@index}}" class="collapse" aria-labelledby="question_heading{{@index}}" data-parent="#questionList">
-            <div class="card-body form-container">
-              <form class="edit survey" id={{id}}>
+        <div id="question_collapse{{@index}}" class="collapse" aria-labelledby="question_heading{{@index}}" data-parent="#question_list">
+          <div class="card-body form-container">
+            <form class="edit survey" id={{id}}>
 
-                {{> database/questionDetails this }}
+              {{> database/questionDetails question=this groups=../groups themes=../themes keywords=../keywords }}
 
-                <div class="mx-3 my-4 d-flex justify-content-end">
-                    <span class="mx-2 text-success saved-msg hide">Saved!</span>
-                    <button type="button" class="btn btn-primary mx-2 editButton" onClick="editQuestion(this)">Edit</button>
-                    <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteQuestionModal{{id}}">Delete</button>
-                    <button type="submit" class="btn btn-primary saveButton mx-2 hide">Save</button>
-                    <button type="button" class="btn btn-outline-primary cancelButton hide" onClick="cancelEditQuestion(this)">Cancel</button>
-                    {{> question/deleteModal this}}
-                </div>
+              <div class="mx-3 my-4 d-flex justify-content-end">
+                <span class="mx-2 text-success saved-msg hide">Saved!</span>
+                <button type="button" class="btn btn-primary mx-2 editButton" onClick="editQuestion(this)">Edit</button>
+                <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteQuestionModal{{id}}">Delete</button>
+                <button type="submit" class="btn btn-primary saveButton mx-2 hide">Save</button>
+                <button type="button" class="btn btn-outline-primary cancelButton hide" onClick="cancelEditQuestion(this)">Cancel</button>
+                {{> question/deleteModal this }}
+              </div>
 
-              </form>
-            </div>
+            </form>
           </div>
+        </div>
       </div>
     {{/each}}
+
   </div>
 </div>

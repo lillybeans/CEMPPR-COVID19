@@ -59,7 +59,7 @@ databaseRouter.get('/surveys/:page', function(req, res) {
     typeOfStudies = typeOfStudiesRes
     return getService.fetchSurveysByPagePromise(page)
   }).then( rows => {
-    var populatedModel = populateModelWithData(editSurveyModel, countries, populations, languages, sampleMethods, typeOfStudies)
+    var populatedModel = populateSurveyModelWithData(editSurveyModel, countries, populations, languages, sampleMethods, typeOfStudies)
     res.render("database/surveys", {
       surveys: rows,
       numberOfRecords: numberOfRecords,
@@ -120,6 +120,11 @@ databaseRouter.get('/questions/:page', function(req, res) {
   var numberOfRecords = 0
   var questions = {}
 
+  //Dropdowns
+  var groups = []
+  var themes = []
+  var keywords = []
+
   getService.fetchNumberOfQuestionsPromise().then(records => {
     numberOfRecords = records
     numPages = Math.ceil(numberOfRecords / getService.questionsPerPage)
@@ -152,11 +157,24 @@ databaseRouter.get('/questions/:page', function(req, res) {
       questions[questionId]["keywords"] = questionKeywords.map(row => row.keyword)
     }
 
+    return getService.fetchGroups()
+  }).then(groupsRes => {
+    groups = groupsRes
+    return getService.fetchThemes()
+  }).then(themesRes => {
+    themes = themesRes
+    return getService.fetchKeywords()
+  }).then(keywordsRes => {
+    keywords = keywordsRes
+
     res.render("database/questions",{
       numberOfRecords: numberOfRecords,
       pages: pages,
       active: page,
-      questions: questions
+      questions: questions,
+      groups: groups,
+      themes: themes,
+      keywords: keywords
     })
   })
 
@@ -167,7 +185,7 @@ databaseRouter.get('/parameters', function(req, res) {
   res.render("database/parameters")
 })
 
-function populateModelWithData(surveyModel, countries, populations, languages, sampleMethods, typeOfStudies) {
+function populateSurveyModelWithData(surveyModel, countries, populations, languages, sampleMethods, typeOfStudies) {
   var formItems = surveyModel.formItems
   for (var i = 0; i < formItems.length; i++) {
     var item = formItems[i]
