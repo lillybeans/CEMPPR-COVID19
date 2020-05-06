@@ -1,19 +1,20 @@
 <div class="mb-2">
-  <div class="row">
+  <div class="row m-2 d-flex justify-content-between">
     <div class="col-6">
-      <ol type="A" class="my-2">
-        {{#each options}}
-          <li>
-            <div class="row">
-              <div class="col-9">{{option}}</div>
-              <div class="col-3">{{percentage}}%</div>
-            </div>
-          </li>
-        {{/each}}
-      </ol>
+      {{#each options}}
+        <div class="row my-2">
+          <div class="col-10">
+            <input class="form-control option" type="text" value="{{option}}" readonly />
+          </div>
+          <div class="col-2">
+            <input class="form-control percentage" type="number" value="{{percentage}}" readonly />
+          </div>
+        </div>
+      {{/each}}
+
     </div>
-    <div class="col-6">
-      <div class="categorization border-left m-2 pl-3">
+    <div class="col-5">
+      <div class="categorization m-2 pl-3">
         <div class="group m-2">
           <span><b>Group:</b></span> {{group}}
         </div>
