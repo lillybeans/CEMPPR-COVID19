@@ -18,7 +18,7 @@
     </ul>
   </nav>
 
-  <div class="accordion m-3" id="surveyList">
+  <div class="accordion m-3" id="questionList">
     <div class="header bg-light border">
       <div class="row m-1 p-1">
         <div class="col-9">
@@ -33,7 +33,7 @@
     {{#each questions}}
       <div class="card">
         <div class="card-header" id="headingOne">
-          <div class="panel-heading" data-toggle="collapse" data-target="#collapse{{@index}}" aria-expanded="false" aria-controls="collapse{{@index}}">
+          <div class="panel-heading" data-toggle="collapse" data-target="#question_collapse{{@index}}" aria-expanded="false" aria-controls="question_collapse{{@index}}">
             <div class="row">
               <div class="col-9">
                 {{question}}
@@ -47,29 +47,26 @@
               </div>
             </div>
           </div>
+        </div>
 
-          <div id="collapse{{@index}}" class="collapse" aria-labelledby="heading{{@index}}" data-parent="#surveyList">
+          <div id="question_collapse{{@index}}" class="collapse" aria-labelledby="question_heading{{@index}}" data-parent="#questionList">
             <div class="card-body form-container">
               <form class="edit survey" id={{id}}>
-                <div class="mx-4 my-2 d-flex justify-content-between">
-                  <div class="links">
-                    <a class="active showSurveyLink" onClick="showSurvey(this)">Survey</a> <span class="mx-2">|</span>
-                    <a class="showQuestionsLink" href="#" onClick="showSurveyQuestions(this)">Questions</a>
-                  </div>
-                  <div>
+
+                {{> database/questionDetails this }}
+
+                <div class="mx-3 my-4">
                     <span class="mx-2 text-success saved-msg hide">Saved!</span>
-                    <button type="button" class="btn btn-primary mx-1 editButton" onClick="editSurvey(this)">Edit</button>
-                    <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteModal{{id}}">Delete</button>
+                    <button type="button" class="btn btn-primary mx-1 editButton" onClick="editQuestion(this)">Edit</button>
+                    <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteQuestionModal{{id}}">Delete</button>
                     <button type="submit" class="btn btn-primary saveButton mx-1 hide">Save</button>
-                    <button type="button" class="btn btn-outline-primary cancelButton hide" onClick="cancelEditSurvey(this)">Cancel</button>
+                    <button type="button" class="btn btn-outline-primary cancelButton hide" onClick="cancelEditQuestion(this)">Cancel</button>
                     {{> question/deleteModal this}}
-                  </div>
                 </div>
 
               </form>
             </div>
           </div>
-        </div>
       </div>
     {{/each}}
   </div>

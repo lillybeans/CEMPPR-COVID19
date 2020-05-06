@@ -13,6 +13,39 @@ const helpers = {
     if (dateString == null)
       return ""
     return dateString.split(" ")[0]
+  },
+  keywordColor: function(keyword){
+    switch(keyword){
+      case "Economics":
+      case "Employment":
+      case "Return to Normal":
+      case "Politics":
+        return "primary"
+      case "Fear":
+      case "Illness":
+      case "Hospitals":
+        return "danger"
+      case "Trust":
+      case "Healthcare":
+      case "Food":
+      case "Hygiene":
+        return "success"
+      case "Spread":
+      case "Testing":
+      case "Travel":
+      case "Vaccine":
+      case "Self-isolation":
+      case "Physical Distancing":
+        return "warning"
+      case "News":
+      case "Media":
+      case "Social Media":
+        return "purple-dark"
+      case "Science":
+        return "turqoise"
+      default:
+        return "secondary"
+    }
   }
 }
 
