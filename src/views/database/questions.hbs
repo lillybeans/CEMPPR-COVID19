@@ -18,29 +18,30 @@
     </ul>
   </nav>
 
-  <div class="header bg-light border rounded mx-3">
-    <div class="row m-1 p-1">
-      <div class="col-9">
-        <div class="row">
-          <div class="col-1 font-weight-bold">
-            Questions
-          </div>
-          <div class="col-11 input-group-sm">
-            <input class="form-control search question" type="text" oninput="searchQuestion(this)" />
+  <div class="table">
+    <div class="header bg-light border rounded mx-3">
+      <div class="row m-1 p-1">
+        <div class="col-9">
+          <div class="row">
+            <div class="col-1 font-weight-bold">
+              Questions
+            </div>
+            <div class="col-11 input-group-sm">
+              <input class="form-control search question" type="text" oninput="searchQuestion(this)" />
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-3">
-        <div class="form-inline input-group-sm">
-          <span class="font-weight-bold mr-3">Survey</span>
-          <input class="form-control search survey" type="text" oninput="searchSurvey(this)" />
+        <div class="col-3">
+          <div class="form-inline input-group-sm">
+            <span class="font-weight-bold mr-3">Survey</span>
+            <input class="form-control search survey" type="text" oninput="searchSurvey(this)" />
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="search_results">
-  </div>
+    <div class="search_results">
+    </div>
 
   <div class="questions_list accordion mx-3" id="question_list">
     {{#each questions}}
@@ -84,4 +85,5 @@
     {{/each}}
 
   </div>
+</div>
 </div>
