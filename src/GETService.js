@@ -1,6 +1,8 @@
 const mysqlConnection = require("./connection")
 const util = require("util")
 
+const questionsPerPage = 20;
+
 //Promisified MYSQL queries
 function queryPromise(sql) {
   return new Promise((resolve, reject) => {
@@ -68,7 +70,7 @@ function fetchNumberOfQuestionsPromise(){
 function fetchQuestionsByPagePromise(page){
   var rowsOffset = (page - 1)*10
   return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT * FROM Questions ORDER BY created_at ASC LIMIT 10 OFFSET " + rowsOffset, (err, rows) => {
+    mysqlConnection.query("SELECT * FROM Questions ORDER BY created_at ASC LIMIT "+questionsPerPage+" OFFSET " + rowsOffset, (err, rows) => {
       if (err)
         return reject(err);
       resolve(rows);
@@ -188,7 +190,8 @@ function fetchSubmitQuestionDataPromise() {
 }
 
 module.exports = {
-  fetchSurveyWithId,fetchSurveyWithId,
+  questionsPerPage: questionsPerPage,
+  fetchSurveyWithId: fetchSurveyWithId,
   fetchPollNamesPromise: fetchPollNamesPromise,
   fetchNumberOfSurveysPromise: fetchNumberOfSurveysPromise,
   fetchSurveysByPagePromise: fetchSurveysByPagePromise,

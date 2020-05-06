@@ -1,4 +1,76 @@
+<script type="text/javascript" src="../../../js/questionDetails.js"></script>
+
 <div class="mx-5 my-4">
-  <h1 class="display-4 mx-3">👩‍💼 Questions </h1>
+  <h1 class="display-4 mx-3">👩‍💼 Questions ({{numberOfRecords}})</h1>
   <hr class="mx-3 bg-dark">
+
+  <nav class="m-3">
+    <ul class="pagination">
+      <li class="page-item {{#ifEquals active 1}}disabled{{/ifEquals}}">
+        <a class="page-link" href="./{{minus active 1}}">Previous</a>
+      </li>
+      {{#each pages}}
+        <li class="page-item {{#ifEquals ../active this}}active{{/ifEquals}}"><a class="page-link" href="./{{this}}">{{this}}</a></li>
+      {{/each}}
+      <li class="page-item {{#ifEquals active pages.length}}disabled{{/ifEquals}}">
+        <a class="page-link" href="./{{add active 1}}" tabindex="-1">Next</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="accordion m-3" id="surveyList">
+    <div class="header bg-light border">
+      <div class="row m-1 p-1">
+        <div class="col-9">
+          <span class="font-weight-bold">Question</span>
+        </div>
+        <div class="col-2">
+          <span class="font-weight-bold">Survey</span>
+        </div>
+      </div>
+    </div>
+
+    {{#each questions}}
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <div class="panel-heading" data-toggle="collapse" data-target="#collapse{{@index}}" aria-expanded="false" aria-controls="collapse{{@index}}">
+            <div class="row">
+              <div class="col-9">
+                {{question}}
+              </div>
+              <div class="col-2">
+                {{poll_name}}
+              </div>
+              <div class="col-1">
+                <ion-icon class="float-right icon-arrow-down" name="chevron-down-outline"></ion-icon>
+                <ion-icon class="float-right icon-arrow-up" name="chevron-up-outline"></ion-icon>
+              </div>
+            </div>
+          </div>
+
+          <div id="collapse{{@index}}" class="collapse" aria-labelledby="heading{{@index}}" data-parent="#surveyList">
+            <div class="card-body form-container">
+              <form class="edit survey" id={{id}}>
+                <div class="mx-4 my-2 d-flex justify-content-between">
+                  <div class="links">
+                    <a class="active showSurveyLink" onClick="showSurvey(this)">Survey</a> <span class="mx-2">|</span>
+                    <a class="showQuestionsLink" href="#" onClick="showSurveyQuestions(this)">Questions</a>
+                  </div>
+                  <div>
+                    <span class="mx-2 text-success saved-msg hide">Saved!</span>
+                    <button type="button" class="btn btn-primary mx-1 editButton" onClick="editSurvey(this)">Edit</button>
+                    <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteModal{{id}}">Delete</button>
+                    <button type="submit" class="btn btn-primary saveButton mx-1 hide">Save</button>
+                    <button type="button" class="btn btn-outline-primary cancelButton hide" onClick="cancelEditSurvey(this)">Cancel</button>
+                    {{> question/deleteModal this}}
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
 </div>

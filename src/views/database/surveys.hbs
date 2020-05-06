@@ -34,26 +34,17 @@
         <div id="collapse{{@index}}" class="collapse" aria-labelledby="heading{{@index}}" data-parent="#surveyList">
           <div class="card-body form-container">
             <form class="edit survey" id={{id}}>
-              <div class="mx-4 my-2 d-flex justify-content-between">
-                <div class="links">
-                <a class="active showSurveyLink" onClick="showSurvey(this)">Survey</a> <span class="mx-2">|</span>
-                <a class="showQuestionsLink" href="#" onClick="showSurveyQuestions(this)">Questions</a>
-                </div>
-                <div>
+              <div class="mx-4 my-2 d-flex justify-content-end">
                   <span class="mx-2 text-success saved-msg hide">Saved!</span>
                   <button type="button" class="btn btn-primary mx-1 editButton" onClick="editSurvey(this)">Edit</button>
                   <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteModal{{id}}">Delete</button>
                   <button type="submit" class="btn btn-primary saveButton mx-1 hide">Save</button>
                   <button type="button" class="btn btn-outline-primary cancelButton hide" onClick="cancelEditSurvey(this)">Cancel</button>
                   {{> survey/deleteModal title=poll_name id=id}}
-                </div>
               </div>
 
                 <div class="show-survey">
                   {{> survey/editSurvey surveyModel=../surveyModel survey=this }}
-                </div>
-
-                <div class="show-questions">
                 </div>
 
             </form>

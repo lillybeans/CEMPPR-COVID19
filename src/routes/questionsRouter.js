@@ -3,7 +3,7 @@ const router = express.Router()
 const mysqlConnection = require("../connection") //relative path
 
 router.get("/", (req, res) => {
-  mysqlConnection.query("SELECT question from Responses", (error, rows, fields) => {
+  mysqlConnection.query("SELECT question from Questions", (error, rows, fields) => {
     if(error) {
       console.log(error)
       return
@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
 
 router.get("/:question_id", (req, res) => {
   const questionId = req.params.question_id
-  const questionByIdQuery = "SELECT question from Responses WHERE question_id=" + questionId
+  const questionByIdQuery = "SELECT question from Questions WHERE id=" + questionId
   mysqlConnection.query(questionByIdQuery, (error, rows, fields) => {
     if(error) {
       console.log(error)

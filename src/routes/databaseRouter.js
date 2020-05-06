@@ -113,16 +113,20 @@ databaseRouter.get('/surveys/:surveyId/questions/:page', function(req, res) {
 
 })
 
-databaseRouter.get('/surveys/:surveyId/questions/:page', function(req, res) {
-  const surveyId = req.params.surveyId
+/** Database: Questions **/
+databaseRouter.get('/questions/:page', function(req, res) {
   const page = req.params.page
-  var survey = ""
+  var pages = []
+  var numberOfRecords = 0
   var questions = {}
 
-  getService.fetchSurveyWithId(surveyId).then(surveyRes => {
-    survey = surveyRes
-    console.log("GOT - Survey pollname: " + survey.poll_name)
-    return getService.fetchQuestionsForSurveyWithId(surveyId, page)
+  getService.fetchNumberOfQuestionsPromise().then(records => {
+    numberOfRecords = records
+    numPages = Math.ceil(numberOfRecords / getService.questionsPerPage)
+    for (var i = 1; i <= numPages; i++) {
+      pages.push(i)
+    }
+    return getService.fetchQuestionsByPagePromise(page)
   }).then(questionsMetadata => {
     //console.log("GOT - questionsMetadata: " + util.inspect(questionsMetadata))
     questionsMetadata.map(qMetadata => {
@@ -148,17 +152,16 @@ databaseRouter.get('/surveys/:surveyId/questions/:page', function(req, res) {
       questions[questionId]["keywords"] = questionKeywords.map(row => row.keyword)
     }
 
-    res.send({
-      survey: survey,
+    res.render("database/questions",{
+      numberOfRecords: numberOfRecords,
+      pages: pages,
+      active: page,
       questions: questions
     })
   })
 
 })
 
-databaseRouter.get('/questions', function(req, res) {
-  res.render("database/questions")
-})
 
 databaseRouter.get('/parameters', function(req, res) {
   res.render("database/parameters")
