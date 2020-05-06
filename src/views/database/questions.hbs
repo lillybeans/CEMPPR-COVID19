@@ -55,11 +55,11 @@
 
                 {{> database/questionDetails this }}
 
-                <div class="mx-3 my-4">
+                <div class="mx-3 my-4 d-flex justify-content-end">
                     <span class="mx-2 text-success saved-msg hide">Saved!</span>
-                    <button type="button" class="btn btn-primary mx-1 editButton" onClick="editQuestion(this)">Edit</button>
+                    <button type="button" class="btn btn-primary mx-2 editButton" onClick="editQuestion(this)">Edit</button>
                     <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteQuestionModal{{id}}">Delete</button>
-                    <button type="submit" class="btn btn-primary saveButton mx-1 hide">Save</button>
+                    <button type="submit" class="btn btn-primary saveButton mx-2 hide">Save</button>
                     <button type="button" class="btn btn-outline-primary cancelButton hide" onClick="cancelEditQuestion(this)">Cancel</button>
                     {{> question/deleteModal this}}
                 </div>
