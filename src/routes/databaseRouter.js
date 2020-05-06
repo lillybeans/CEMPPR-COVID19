@@ -10,9 +10,11 @@ const editSurveyModel = require("../models/editSurveyModel")
 
 const updateRouter = require("./updateRouter")
 const deleteRouter = require("./deleteRouter")
+const searchRouter = require("./searchRouter")
 
 databaseRouter.use('/update', updateRouter)
 databaseRouter.use('/delete', deleteRouter)
+databaseRouter.use('/search', searchRouter)
 
 // home page route
 databaseRouter.get('/', function(req, res) {

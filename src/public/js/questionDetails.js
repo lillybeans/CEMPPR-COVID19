@@ -4,7 +4,7 @@ function searchQuestion(input){
   var questionsListDiv = $(input).parentsUntil('.table').parent().find('.questions_list').first()
 
   //SEARCH
-  $.post("/database/search", text)
+  $.post("/database/search/questions", text)
   .then(function(response) {
     data = response
     return $.get("/dynamic_views/searchQuestionResults.hbs")

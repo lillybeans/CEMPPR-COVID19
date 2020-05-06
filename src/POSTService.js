@@ -75,8 +75,21 @@ function deleteSurveyWithId(id) {
   });
 }
 
+function searchQuestion(text){
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("SELECT * FROM Questions WHERE Question LIKE '%"+ mysqlConnection.escape(text) + "%'", (err, res) => {
+      if (err) {
+        console.log("MYSQL Error:" +  err)
+        return reject(err);
+      }
+      resolve(res);
+    });
+  });
+}
+
 module.exports = {
   updateSurveyWithId: updateSurveyWithId,
   deleteQuestionsForSurveyWithId:deleteQuestionsForSurveyWithId,
-  deleteSurveyWithId: deleteSurveyWithId
+  deleteSurveyWithId: deleteSurveyWithId,
+  searchQuestion: searchQuestion
 }
