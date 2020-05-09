@@ -1,4 +1,4 @@
-<div class="search_question_list accordion mx-3" id="search_question_list">
+<div class="{{#if isSearch}}search_{{/if}}questions_list accordion mx-3" id="{{#if isSearch}}search_{{/if}}question_list">
   {{#each questions}}
     <div class="card">
       <div class="card-header" id="headingOne">
@@ -18,11 +18,11 @@
         </div>
       </div>
 
-      <div id="question_collapse{{@index}}" class="collapse" aria-labelledby="question_heading{{@index}}" data-parent="#question_list">
+      <div id="question_collapse{{@index}}" class="collapse" aria-labelledby="question_heading{{@index}}" data-parent="#{{#if isSearch}}search_{{/if}}question_list">
         <div class="card-body form-container">
           <form class="edit survey" id={{id}}>
 
-            {{> database/questionDetails question=this groups=../groups themes=../themes keywords=../keywords }}
+            {{> database/questionDetailsTemplate question=this groups=groups themes=themes keywords=keywords }}
 
             <div class="mx-3 my-4 d-flex justify-content-end">
               <span class="mx-2 text-success saved-msg hide">Saved!</span>
@@ -30,7 +30,7 @@
               <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteQuestionModal{{id}}">Delete</button>
               <button type="submit" class="btn btn-primary saveButton mx-2 hide">Save</button>
               <button type="button" class="btn btn-outline-primary cancelButton hide" onClick="cancelEditQuestion(this)">Cancel</button>
-              {{> question/deleteModal this }}
+              {{> database/questionDeleteModalTemplate this }}
             </div>
 
           </form>

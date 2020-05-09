@@ -1,4 +1,49 @@
-<script type="text/javascript" src="../../../js/questionDetails.js"></script>
+<script type="text/javascript" src="../../../js/search.js"></script>
+
+<script id="search-results-template" type="text/x-handlebars-template">
+  <div class="{{#if isSearch}}search_{{/if}}questions_list accordion mx-3" id="{{#if isSearch}}search_{{/if}}question_list">
+    {{#each s_questions}}
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <div class="panel-heading" data-toggle="collapse" data-target="#question_collapse{{@index}}" aria-expanded="false" aria-controls="question_collapse{{@index}}">
+            <div class="row">
+              <div class="col-9">
+                {{s_question}}
+              </div>
+              <div class="col-2">
+                <h6>{{s_poll_name}}</h6>
+              </div>
+              <div class="col-1">
+                <ion-icon class="float-right icon-arrow-down" name="chevron-down-outline"></ion-icon>
+                <ion-icon class="float-right icon-arrow-up" name="chevron-up-outline"></ion-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="question_collapse{{@index}}" class="collapse" aria-labelledby="question_heading{{@index}}" data-parent="#{{#if isSearch}}search_{{/if}}question_list">
+          <div class="card-body form-container">
+            <form class="edit survey" id={{id}}>
+
+              {{> database/questionDetailsTemplate question=this groups=groups themes=themes keywords=keywords }}
+
+              <div class="mx-3 my-4 d-flex justify-content-end">
+                <span class="mx-2 text-success saved-msg hide">Saved!</span>
+                <button type="button" class="btn btn-primary mx-2 editButton" onClick="editQuestion(this)">Edit</button>
+                <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteQuestionModal{{id}}">Delete</button>
+                <button type="submit" class="btn btn-primary saveButton mx-2 hide">Save</button>
+                <button type="button" class="btn btn-outline-primary cancelButton hide" onClick="cancelEditQuestion(this)">Cancel</button>
+                {{> database/questionDeleteModalTemplate this }}
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+
+  </div>
+</script>
 
 <div class="questions_page mx-5 my-4">
   <h1 class="display-4 mx-3">👩‍💼 Questions</h1>
@@ -44,49 +89,11 @@
     </div>
 
     <div class="search_results">
+
     </div>
 
-  <div class="questions_list accordion mx-3" id="question_list">
-    {{#each questions}}
-      <div class="card">
-        <div class="card-header" id="headingOne">
-          <div class="panel-heading" data-toggle="collapse" data-target="#question_collapse{{@index}}" aria-expanded="false" aria-controls="question_collapse{{@index}}">
-            <div class="row">
-              <div class="col-9">
-                {{question}}
-              </div>
-              <div class="col-2">
-                <h6>{{poll_name}}</h6>
-              </div>
-              <div class="col-1">
-                <ion-icon class="float-right icon-arrow-down" name="chevron-down-outline"></ion-icon>
-                <ion-icon class="float-right icon-arrow-up" name="chevron-up-outline"></ion-icon>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="question_collapse{{@index}}" class="collapse" aria-labelledby="question_heading{{@index}}" data-parent="#question_list">
-          <div class="card-body form-container">
-            <form class="edit survey" id={{id}}>
-
-              {{> database/questionDetails question=this groups=../groups themes=../themes keywords=../keywords }}
-
-              <div class="mx-3 my-4 d-flex justify-content-end">
-                <span class="mx-2 text-success saved-msg hide">Saved!</span>
-                <button type="button" class="btn btn-primary mx-2 editButton" onClick="editQuestion(this)">Edit</button>
-                <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteQuestionModal{{id}}">Delete</button>
-                <button type="submit" class="btn btn-primary saveButton mx-2 hide">Save</button>
-                <button type="button" class="btn btn-outline-primary cancelButton hide" onClick="cancelEditQuestion(this)">Cancel</button>
-                {{> question/deleteModal this }}
-              </div>
-
-            </form>
-          </div>
-        </div>
-      </div>
-    {{/each}}
-
-  </div>
+    <div class="questions_results">
+      {{> database/questionsListTemplate question=questions groups=../groups themes=../themes keywords=../keywords }}
+    </div>
 </div>
 </div>

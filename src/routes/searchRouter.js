@@ -8,9 +8,11 @@ const searchRouter = express.Router();
 const util = require("util")
 
 searchRouter.post('/questions/:page', function(req, res) {
-  const text = req.body["text"]
+  const questionSearchText = req.body["question"]
+  const surveySearchText = req.body["survey"]
+
   const page = req.params.page
-  console.log("text is:" + util.inspect(text))
+
   var pages = []
   var numberOfRecords = 0
   var questions = {}
@@ -20,7 +22,7 @@ searchRouter.post('/questions/:page', function(req, res) {
   var themes = []
   var keywords = []
 
-  postService.searchQuestion(text).then(results => {
+  postService.searchQuestionAndSurvey(questionSearchText, surveySearchText).then(results => {
     //Results contains 2 parts
 
     var totalRecords = results[0][0].count
@@ -44,13 +46,18 @@ searchRouter.post('/questions/:page', function(req, res) {
     //[firstQuestion, secondQuestion, thirdQuestion]
     //firstQuestion:[options, keywords], secondQuestion:[options,keywords]
 
-    for (var q=0; q<questionOptionsAndKeywords.length; q++){
+    for (var q = 0; q < questionOptionsAndKeywords.length; q++) {
       var question = questionOptionsAndKeywords[q]
       var questionOptions = question[0]
       var questionKeywords = question[1]
       var questionId = questionOptions[0].question_id
 
-      questions[questionId]["options"] = questionOptions.map(row => { return {"option": row.option, "percentage": row.percentage}})
+      questions[questionId]["options"] = questionOptions.map(row => {
+        return {
+          "option": row.option,
+          "percentage": row.percentage
+        }
+      })
       questions[questionId]["keywords"] = questionKeywords.map(row => row.keyword)
     }
 
@@ -64,17 +71,23 @@ searchRouter.post('/questions/:page', function(req, res) {
   }).then(keywordsRes => {
     keywords = keywordsRes
 
-    res.send({
+    res.render("partials/database/questionsListTemplate", {
       numberOfRecords: numberOfRecords,
       pages: pages,
       active: page,
       questions: questions,
       groups: groups,
       themes: themes,
-      keywords: keywords
+      keywords: keywords,
+      isSearch: true,
+      layout: false
+    }, function(err, html) {
+      res.send(html)
     })
+
   })
 
 })
+
 
 module.exports = searchRouter

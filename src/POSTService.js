@@ -2,8 +2,8 @@ const mysqlConnection = require("./connection")
 const util = require("util")
 const searchResultsPerPage = 20
 
-function sanitize(myString){
-  var newString = myString.replace("'","''")
+function sanitize(myString) {
+  var newString = myString.replace("'", "''")
   return newString
 }
 
@@ -26,7 +26,7 @@ function updateSurveyWithId(id, dict) {
   return new Promise((resolve, reject) => {
     mysqlConnection.query(query, (err, row) => {
       if (err) {
-        console.log("MYSQL Error:" +  err)
+        console.log("MYSQL Error:" + err)
         return reject(err);
       }
       resolve(row);
@@ -36,9 +36,9 @@ function updateSurveyWithId(id, dict) {
 
 function deleteOptionsForQuestionWithId(id) {
   return new Promise((resolve, reject) => {
-    mysqlConnection.query("DELETE FROM Question_Options WHERE question_id="+id, (err, res) => {
+    mysqlConnection.query("DELETE FROM Question_Options WHERE question_id=" + id, (err, res) => {
       if (err) {
-        console.log("MYSQL Error:" +  err)
+        console.log("MYSQL Error:" + err)
         return reject(err);
       }
       resolve(res);
@@ -48,9 +48,9 @@ function deleteOptionsForQuestionWithId(id) {
 
 function deleteKeywordsForQuestionWithId(id) {
   return new Promise((resolve, reject) => {
-    mysqlConnection.query("DELETE FROM Question_Keywords WHERE question_id="+id, (err, res) => {
+    mysqlConnection.query("DELETE FROM Question_Keywords WHERE question_id=" + id, (err, res) => {
       if (err) {
-        console.log("MYSQL Error:" +  err)
+        console.log("MYSQL Error:" + err)
         return reject(err);
       }
       resolve(res);
@@ -60,9 +60,9 @@ function deleteKeywordsForQuestionWithId(id) {
 
 function deleteQuestionsForSurveyWithId(id) {
   return new Promise((resolve, reject) => {
-    mysqlConnection.query("DELETE FROM Questions WHERE survey_id="+id, (err, res) => {
+    mysqlConnection.query("DELETE FROM Questions WHERE survey_id=" + id, (err, res) => {
       if (err) {
-        console.log("MYSQL Error:" +  err)
+        console.log("MYSQL Error:" + err)
         return reject(err);
       }
       resolve(res);
@@ -72,9 +72,9 @@ function deleteQuestionsForSurveyWithId(id) {
 
 function deleteSurveyWithId(id) {
   return new Promise((resolve, reject) => {
-    mysqlConnection.query("DELETE FROM Surveys WHERE id="+id, (err, res) => {
+    mysqlConnection.query("DELETE FROM Surveys WHERE id=" + id, (err, res) => {
       if (err) {
-        console.log("MYSQL Error:" +  err)
+        console.log("MYSQL Error:" + err)
         return reject(err);
       }
       resolve(res);
@@ -82,14 +82,25 @@ function deleteSurveyWithId(id) {
   });
 }
 
-function searchQuestion(text){
+function searchQuestionAndSurvey(question, survey) {
   return new Promise((resolve, reject) => {
-    var countQuery = "SELECT COUNT(*) as count FROM Questions WHERE Question LIKE '%"+sanitize(text)+"%'"
-    var firstPageQuestionsQuery = "SELECT * FROM Questions WHERE Question LIKE '%"+sanitize(text)+"%' LIMIT " + searchResultsPerPage
-    console.log("countQuery is: "+countQuery)
+    var countQuery, firstPageQuestionQuery
+
+    //BOTH Question and Survey filter on
+    if (question != "" && survey != "") {
+      countQuery = "SELECT COUNT(*) as count FROM Questions WHERE Question LIKE '%" + sanitize(question) + "%' and poll_name LIKE '%" + sanitize(survey) + "%'"
+      firstPageQuestionsQuery = "SELECT * FROM Questions WHERE Question LIKE '%" + sanitize(question) + "%' and poll_name LIKE '%" + sanitize(survey) + "%' LIMIT " + searchResultsPerPage
+    } else if (question != "") { //Filter Questions by Question Only
+      countQuery = "SELECT COUNT(*) as count FROM Questions WHERE Question LIKE '%" + sanitize(question) + "%'"
+      firstPageQuestionsQuery = "SELECT * FROM Questions WHERE Question LIKE '%" + sanitize(question) + "%' LIMIT " + searchResultsPerPage
+    } else if (survey != "") { //Filter Questions by Survey Only
+      countQuery = "SELECT COUNT(*) as count FROM Questions WHERE poll_name LIKE '%" + sanitize(survey) + "%'"
+      firstPageQuestionsQuery = "SELECT * FROM Questions WHERE poll_name LIKE '%" + sanitize(survey) + "%' LIMIT " + searchResultsPerPage
+    }
+
     mysqlConnection.query(countQuery + ";" + firstPageQuestionsQuery, (err, res) => {
       if (err) {
-        console.log("MYSQL Error:" +  err)
+        console.log("MYSQL Error:" + err)
         return reject(err);
       }
       resolve(res);
@@ -99,8 +110,8 @@ function searchQuestion(text){
 
 module.exports = {
   updateSurveyWithId: updateSurveyWithId,
-  deleteQuestionsForSurveyWithId:deleteQuestionsForSurveyWithId,
+  deleteQuestionsForSurveyWithId: deleteQuestionsForSurveyWithId,
   deleteSurveyWithId: deleteSurveyWithId,
-  searchQuestion: searchQuestion,
+  searchQuestionAndSurvey: searchQuestionAndSurvey,
   searchResultsPerPage: searchResultsPerPage
 }
