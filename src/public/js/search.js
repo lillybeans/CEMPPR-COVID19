@@ -1,18 +1,20 @@
+var currentPage = 1 //update this
+
 function searchQuestion(input) {
   var questionSearchText = $(input).val()
   var surveySearchText = $(input).parentsUntil('.header').find('.search.survey').first().val()
 
-  search(questionSearchText, surveySearchText, input, 1)
+  search(questionSearchText, surveySearchText, input)
 }
 
 function searchSurvey(input) {
   var surveySearchText = $(input).val()
   var questionSearchText = $(input).parentsUntil('.header').find('.search.question').first().val()
 
-  search(questionSearchText, surveySearchText, input, 1)
+  search(questionSearchText, surveySearchText, input)
 }
 
-function search(questionText, surveyText, input, page) {
+function search(questionText, surveyText, input) {
   var searchResultsDiv = $(input).parentsUntil('.table').parent().find('.search_results').first()
   var questionsResultsDiv = $(input).parentsUntil('.table').parent().find('.questions_results').first()
   var searchResultsNavDiv = $(searchResultsDiv).parentsUntil('.questions_page').parent().find('nav').find('.search_results_nav').first()
@@ -20,6 +22,7 @@ function search(questionText, surveyText, input, page) {
 
   if (questionText == "" && surveyText == "") {
     console.log("Clearing both!")
+    currentPage = 1
     $(searchResultsNavDiv).addClass("hide")
     $(searchResultsDiv).addClass("hide")
 
@@ -27,7 +30,7 @@ function search(questionText, surveyText, input, page) {
     $(questionsResultsDiv).removeClass("hide")
   } else {
     //SEARCH
-    $.post("/database/search/questions/"+page, {
+    $.post("/database/search/questions/"+currentPage, {
         "question": questionText,
         "survey": surveyText
       })
@@ -59,5 +62,6 @@ function searchPage(pageNumber){
   var surveySearchText = $('input.search.survey').first().val()
   var input = $('input.search.question').first()
 
-  search(questionSearchText, surveySearchText, input, pageNumber)
+  currentPage = pageNumber
+  search(questionSearchText, surveySearchText, input)
 }
