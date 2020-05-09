@@ -1,7 +1,18 @@
-function toggleQuestionDetails(element){
-  console.log("toggle question details!")
+function showQuestion(questionLink){
+  $(questionLink).addClass("active")
+  $(questionLink).removeAttr("href")
+
+  var surveyLink = $(questionLink).siblings().first()
+  $(surveyLink).removeClass("active")
+  $(surveyLink).attr("href","#")
 }
 
-function toggleSurveyDetails(element){
-  console.log("toggle survey details!")
+function showSurvey(surveyLink){
+  $(surveyLink).addClass("active")
+  $(surveyLink).removeAttr("href")
+
+  var questionLink = $(surveyLink).siblings().first()
+  $(questionLink).removeClass("active")
+  $(questionLink).attr("href","#")
+
 }

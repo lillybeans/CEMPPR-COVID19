@@ -30,20 +30,11 @@
           <form class="edit" id={{id}}>
 
             <div class="mx-4 my-4 links">
-              <a class="active mr-2">Question</a> |
-              <a class="ml-2" href="#">Survey</a>
+              <a class="active mr-2" onclick="showQuestion(this)">Question</a> |
+              <a class="ml-2" href="#" onclick="showSurvey(this)">Survey</a>
             </div>
 
             {{> database/questionDetailsTemplate question=this groups=groups themes=themes keywords=keywords }}
-
-            <div class="mx-3 my-4 d-flex justify-content-end">
-              <span class="mx-2 text-success saved-msg hide">Saved!</span>
-              <button type="button" class="btn btn-primary mx-2 editButton" onClick="editQuestion(this)">Edit</button>
-              <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteQuestionModal{{id}}">Delete</button>
-              <button type="submit" class="btn btn-primary saveButton mx-2 hide">Save</button>
-              <button type="button" class="btn btn-outline-primary cancelButton hide" onClick="cancelEditQuestion(this)">Cancel</button>
-              {{> database/questionDeleteModalTemplate this }}
-            </div>
 
           </form>
         </div>

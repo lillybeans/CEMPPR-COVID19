@@ -70,6 +70,18 @@ function deleteQuestionsForSurveyWithId(id) {
   });
 }
 
+function deleteQuestionWithId(id) {
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("DELETE FROM Questions WHERE id=" + id, (err, res) => {
+      if (err) {
+        console.log("MYSQL Error:" + err)
+        return reject(err);
+      }
+      resolve(res);
+    });
+  });
+}
+
 function deleteSurveyWithId(id) {
   return new Promise((resolve, reject) => {
     mysqlConnection.query("DELETE FROM Surveys WHERE id=" + id, (err, res) => {
@@ -115,7 +127,9 @@ function searchQuestionAndSurvey(question, survey, page) {
 
 module.exports = {
   updateSurveyWithId: updateSurveyWithId,
-  deleteQuestionsForSurveyWithId: deleteQuestionsForSurveyWithId,
+  deleteOptionsForQuestionWithId:deleteOptionsForQuestionWithId,
+  deleteKeywordsForQuestionWithId:deleteKeywordsForQuestionWithId,
+  deleteQuestionWithId: deleteQuestionWithId,
   deleteSurveyWithId: deleteSurveyWithId,
   searchQuestionAndSurvey: searchQuestionAndSurvey,
   searchResultsPerPage: searchResultsPerPage
