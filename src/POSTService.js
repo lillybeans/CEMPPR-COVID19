@@ -103,8 +103,6 @@ function searchQuestionAndSurvey(question, survey, page) {
     //add limit and offset
     perPageQuestionsQuery += " LIMIT " + searchResultsPerPage + " OFFSET " + rowsOffset
 
-    console.log("searchQuestionAndSurvey query: "+ perPageQuestionsQuery)
-
     mysqlConnection.query(countQuery + ";" + perPageQuestionsQuery, (err, res) => {
       if (err) {
         console.log("MYSQL Error:" + err)

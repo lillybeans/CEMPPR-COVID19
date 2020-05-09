@@ -14,6 +14,14 @@ const helpers = {
       return ""
     return dateString.split(" ")[0]
   },
+  recordsRange: function(page, total){
+    var upper = page*20
+    var lower = upper - 20 + 1
+    if (upper > total){
+      upper = total
+    }
+    return lower+"-"+upper
+  },
   keywordColor: function(keyword){
     switch(keyword){
       case "Economics":
