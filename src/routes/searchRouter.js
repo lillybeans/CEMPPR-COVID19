@@ -22,18 +22,18 @@ searchRouter.post('/questions/:page', function(req, res) {
   var themes = []
   var keywords = []
 
-  postService.searchQuestionAndSurvey(questionSearchText, surveySearchText).then(results => {
+  postService.searchQuestionAndSurvey(questionSearchText, surveySearchText, page).then(results => {
     //Results contains 2 parts
 
     var totalRecords = results[0][0].count
-    var firstPageQuestions = results[1]
+    var perPageQuestions = results[1]
 
     numberOfRecords = totalRecords
     numPages = Math.ceil(numberOfRecords / postService.searchResultsPerPage)
     for (var i = 1; i <= numPages; i++) {
       pages.push(i)
     }
-    firstPageQuestions.map(qMetadata => {
+    perPageQuestions.map(qMetadata => {
       questions[qMetadata.id] = qMetadata // { 1:{..,"options":__,"keywords":___}}, 2:md2, 3:md3}
     })
     let questionIds = Object.keys(questions)

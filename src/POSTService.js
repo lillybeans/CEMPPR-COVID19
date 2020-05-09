@@ -82,23 +82,30 @@ function deleteSurveyWithId(id) {
   });
 }
 
-function searchQuestionAndSurvey(question, survey) {
+function searchQuestionAndSurvey(question, survey, page) {
   return new Promise((resolve, reject) => {
-    var countQuery, firstPageQuestionQuery
+    var countQuery, perPageQuestionsQuery
+
+    var rowsOffset = (page - 1) * searchResultsPerPage
 
     //BOTH Question and Survey filter on
     if (question != "" && survey != "") {
       countQuery = "SELECT COUNT(*) as count FROM Questions WHERE Question LIKE '%" + sanitize(question) + "%' and poll_name LIKE '%" + sanitize(survey) + "%'"
-      firstPageQuestionsQuery = "SELECT * FROM Questions WHERE Question LIKE '%" + sanitize(question) + "%' and poll_name LIKE '%" + sanitize(survey) + "%' LIMIT " + searchResultsPerPage
+      perPageQuestionsQuery = "SELECT * FROM Questions WHERE Question LIKE '%" + sanitize(question) + "%' and poll_name LIKE '%" + sanitize(survey) + "%'"
     } else if (question != "") { //Filter Questions by Question Only
       countQuery = "SELECT COUNT(*) as count FROM Questions WHERE Question LIKE '%" + sanitize(question) + "%'"
-      firstPageQuestionsQuery = "SELECT * FROM Questions WHERE Question LIKE '%" + sanitize(question) + "%' LIMIT " + searchResultsPerPage
+      perPageQuestionsQuery = "SELECT * FROM Questions WHERE Question LIKE '%" + sanitize(question) + "%'"
     } else if (survey != "") { //Filter Questions by Survey Only
       countQuery = "SELECT COUNT(*) as count FROM Questions WHERE poll_name LIKE '%" + sanitize(survey) + "%'"
-      firstPageQuestionsQuery = "SELECT * FROM Questions WHERE poll_name LIKE '%" + sanitize(survey) + "%' LIMIT " + searchResultsPerPage
+      perPageQuestionsQuery = "SELECT * FROM Questions WHERE poll_name LIKE '%" + sanitize(survey) + "%'"
     }
 
-    mysqlConnection.query(countQuery + ";" + firstPageQuestionsQuery, (err, res) => {
+    //add limit and offset
+    perPageQuestionsQuery += " LIMIT " + searchResultsPerPage + " OFFSET " + rowsOffset
+
+    console.log("searchQuestionAndSurvey query: "+ perPageQuestionsQuery)
+
+    mysqlConnection.query(countQuery + ";" + perPageQuestionsQuery, (err, res) => {
       if (err) {
         console.log("MYSQL Error:" + err)
         return reject(err);

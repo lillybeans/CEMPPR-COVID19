@@ -1,3 +1,10 @@
+<!-- Contains Navigation (pages) and Table -->
+{{#if isSearch}}
+  <div class="search_results_nav_template" hidden> <!-- we are using this hidden div to render html -->
+    {{> database/paginationNavTemplate active=active pages=pages numberOfRecords=numberOfRecords isSearch=true}}
+  </div>
+{{/if}}
+
 <div class="{{#if isSearch}}search_{{/if}}questions_list accordion mx-3" id="{{#if isSearch}}search_{{/if}}question_list">
   {{#each questions}}
     <div class="card">

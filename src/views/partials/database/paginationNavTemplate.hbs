@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-between">
+  <ul class="pagination">
+    <li class="page-item {{#ifEquals active 1}}disabled{{/ifEquals}}">
+      <a class="page-link" href="#" {{#if isSearch}}onclick="searchPage({{minus active 1}})"{{/if}}">Previous</a>
+    </li>
+    {{#each pages}}
+      <li class="page-item {{#ifEquals ../active this}}active{{/ifEquals}}"><a class="page-link" href="#" {{#if ../isSearch}}onclick="searchPage({{this}})"{{/if}}>{{this}}</a></li>
+    {{/each}}
+    <li class="page-item {{#ifEquals active pages.length}}disabled{{/ifEquals}}">
+      <a class="page-link" href="#" {{#if isSearch}}onclick="searchPage({{add active 1}})"{{/if}} tabindex="-1">Next</a>
+    </li>
+  </ul>
+  <div class="num_records_label">
+    {{numberOfRecords}} Records
+  </div>
+</div>
