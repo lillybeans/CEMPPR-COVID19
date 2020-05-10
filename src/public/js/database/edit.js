@@ -43,12 +43,18 @@ function addAnswer(lastAnswer) {
 }
 
 function removeAnswer(removeButton) {
-  var answer = $(removeButton).closest('.answer')
-  var answers = $(answer).parent()
-  $(answer).remove()
+  var answerToRemove = $(removeButton).closest('.answer')
+  var answers = $(answerToRemove).parent()
+
+  if ($(answerToRemove).hasClass('inserted')){ //user added option: just remove it
+    $(answerToRemove).remove()
+  } else { //existing option: do not remove it, hide it, we need it for the database update
+    $(answerToRemove).addClass("deleted")
+    $(answerToRemove).addClass("hide")
+  }
 
   //add back the "tapToAdd" class to the new last answer
-  $(answers).children('.answer').last().find('input.percentage').addClass('tapToAdd')
+  $(answers).children('.answer:not(.deleted)').last().find('input.percentage').addClass('tapToAdd')
 
 }
 
@@ -221,11 +227,11 @@ $(function() {
 
   //Question: add answer
 
-  $('.answers').on("keydown", "input.tapToAdd", function (e) {
+  $('.questions_page').on("keydown", "input.tapToAdd", function (e) {
     console.log(".answers Tapped!")
     var inputValue = $(this).val();
     if(e.keyCode == 9) { //tab pressed
-      var lastAnswer = $(this).closest('.answer')
+      var lastAnswer = $(this).closest('.answer:not(.deleted)')
       addAnswer(lastAnswer)
     }
   })
