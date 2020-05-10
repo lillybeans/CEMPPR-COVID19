@@ -80,6 +80,18 @@ function cancelEditQuestion(cancelButton) {
     $(this).attr('readonly', true)
   })
 
+  //hide all remove buttons
+  $(form).find('.answer .removeButton').addClass("hide")
+  
+  //Delete all inserted answers
+  $(form).find('.answer.inserted').remove()
+
+  //Restore all deleted Answers
+  $(form).find('.answer.deleted').removeClass("hide deleted")
+
+  //Restore all updated answers
+  $(form).find('.answer.updated').removeClass("updated")
+
   //Restore all dropdowns
   $(form).find('option').attr('disabled', true)
 
