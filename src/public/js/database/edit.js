@@ -49,6 +49,9 @@ function removeAnswer(removeButton) {
   if ($(answerToRemove).hasClass('inserted')){ //user added option: just remove it
     $(answerToRemove).remove()
   } else { //existing option: do not remove it, hide it, we need it for the database update
+    if ($(answerToRemove).hasClass('updated')){
+      $(answerToRemove).removeClass('updated')
+    }
     $(answerToRemove).addClass("deleted")
     $(answerToRemove).addClass("hide")
   }
@@ -228,11 +231,19 @@ $(function() {
   //Question: add answer
 
   $('.questions_page').on("keydown", "input.tapToAdd", function (e) {
-    console.log(".answers Tapped!")
     var inputValue = $(this).val();
     if(e.keyCode == 9) { //tab pressed
       var lastAnswer = $(this).closest('.answer:not(.deleted)')
       addAnswer(lastAnswer)
+    }
+  })
+
+  //detect update
+  $('.questions_page').on("input", ".answer:not(.inserted,.deleted) input", function (e) {
+    console.log("Original answer updated")
+    var answer = $(this).closest('.answer')
+    if (!$(answer).hasClass("updated")){
+      $(answer).addClass("updated")
     }
   })
 
