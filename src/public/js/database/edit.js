@@ -1,3 +1,5 @@
+/** Question **/
+
 function editQuestion(editButton) {
   var saveButton = $(editButton).siblings('.saveButton').first()
   var cancelButton = $(editButton).siblings('.cancelButton').first()
@@ -48,7 +50,47 @@ function cancelEditQuestion(cancelButton) {
   })
 }
 
-/** survey **/
+
+function saveQuestion(saveButton){
+  var form = $(saveButton).parentsUntil('form.edit.question').parent()
+  var questionId = $(form).attr('id')
+  var formData = $(form).serialize()
+
+  var editButton = $(form).find('.editButton').first()
+  var saveButton = $(form).find('.saveButton').first()
+  var deleteButton = $(form).find('.deleteButton').first()
+  var cancelButton = $(form).find('.cancelButton').first()
+  var savedMessage = $(form).find('.saved-msg').first()
+
+  var inputs = $(form).find('input')
+  var options = $(form).find('option')
+  var updatedAtInput = $(form).find('input[name="updated_at"]')
+
+  $.post("/database/update/question/"+questionId, formData)
+  .done( function(updatedAtTimestamp) {
+    console.log("update successful! updated question with questionId="+ questionId + ", updatedAt "+updatedAtTimestamp)
++
+    $(savedMessage).fadeIn(500).delay(2000).fadeOut(500)
+
+    $(editButton).removeClass('hide')
+    $(deleteButton).removeClass('hide')
+
+    $(saveButton).addClass('hide')
+    $(cancelButton).addClass('hide')
+
+    $(updatedAtInput).val(updatedAtTimestamp)
+
+    //Change all inputs to readonly
+    $(inputs).attr('readonly', true)
+    $(options).attr('disabled', true)
+  })
+  .fail( function() {
+    alert("Update survey failed!")
+  })
+}
+
+
+/** Survey **/
 
 function editSurvey(editButton) {
   var saveButton = $(editButton).siblings('.saveButton').first()
@@ -100,53 +142,40 @@ function cancelEditSurvey(cancelButton) {
   })
 }
 
-$(function() {
+function saveSurvey(saveButton){
+  var form = $(saveButton).parentsUntil('form.edit.survey').parent()
+  var surveyId = $(form).attr('id')
+  var formData = $(form).serialize()
 
-  //On Save: Submit Edit Survey
-  $('form.edit.survey').submit(function(event) {
-    event.preventDefault()
+  var editButton = $(form).find('.editButton').first()
+  var saveButton = $(form).find('.saveButton').first()
+  var deleteButton = $(form).find('.deleteButton').first()
+  var cancelButton = $(form).find('.cancelButton').first()
+  var savedMessage = $(form).find('.saved-msg').first()
 
-    var surveyId = $(this).attr('id')
-    var formData = $(this).serialize()
+  var inputs = $(form).find('input')
+  var options = $(form).find('option')
+  var updatedAtInput = $(form).find('input[name="updated_at"]')
 
-    var editButton = $(this).find('.editButton').first()
-    var saveButton = $(this).find('.saveButton').first()
-    var deleteButton = $(this).find('.deleteButton').first()
-    var cancelButton = $(this).find('.cancelButton').first()
-    var savedMessage = $(this).find('.saved-msg').first()
-
-    var inputs = $(this).find('input')
-    var options = $(this).find('option')
-    var updatedAtInput = $(this).find('input[name="updated_at"]')
-
-    $.post("/database/update/survey/"+surveyId, formData)
-    .done( function(updatedAtTimestamp) {
-      console.log("update successful! updated survey with surveyId="+ surveyId + ", updatedAt "+updatedAtTimestamp)
+  $.post("/database/update/survey/"+surveyId, formData)
+  .done( function(updatedAtTimestamp) {
+    console.log("update successful! updated survey with surveyId="+ surveyId + ", updatedAt "+updatedAtTimestamp)
 +
-      $(savedMessage).fadeIn(500).delay(2000).fadeOut(500)
+    $(savedMessage).fadeIn(500).delay(2000).fadeOut(500)
 
-      $(editButton).removeClass('hide')
-      $(deleteButton).removeClass('hide')
+    $(editButton).removeClass('hide')
+    $(deleteButton).removeClass('hide')
 
-      $(saveButton).addClass('hide')
-      $(cancelButton).addClass('hide')
+    $(saveButton).addClass('hide')
+    $(cancelButton).addClass('hide')
 
-      $(updatedAtInput).val(updatedAtTimestamp)
+    $(updatedAtInput).val(updatedAtTimestamp)
 
-      //Change all inputs to readonly
-      $(inputs).attr('readonly', true)
-      $(options).attr('disabled', true)
-    })
-    .fail( function() {
-      alert("Update survey failed!")
-    })
-
+    //Change all inputs to readonly
+    $(inputs).attr('readonly', true)
+    $(options).attr('disabled', true)
   })
-
-  $('form.edit.question').submit(function(event) {
-    event.preventDefault()
-    console.log("Edit question submitted!")
-    //TODO: get questionID and keep working
+  .fail( function() {
+    alert("Update survey failed!")
   })
-
-})
+}
