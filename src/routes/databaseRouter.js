@@ -60,7 +60,7 @@ databaseRouter.get('/surveys/:page', function(req, res) {
   }).then(typeOfStudiesRes => {
     typeOfStudies = typeOfStudiesRes
     return getService.fetchSurveysByPagePromise(page)
-  }).then( rows => {
+  }).then(rows => {
     var populatedModel = populateSurveyModelWithData(editSurveyModel, countries, populations, languages, sampleMethods, typeOfStudies)
     res.render("database/surveys", {
       surveys: rows,
@@ -97,13 +97,18 @@ databaseRouter.get('/surveys/:surveyId/questions/:page', function(req, res) {
     //[firstQuestion, secondQuestion, thirdQuestion]
     //firstQuestion:[options, keywords], secondQuestion:[options,keywords]
 
-    for (var q=0; q<questionOptionsAndKeywords.length; q++){
+    for (var q = 0; q < questionOptionsAndKeywords.length; q++) {
       var question = questionOptionsAndKeywords[q]
       var questionOptions = question[0]
       var questionKeywords = question[1]
       var questionId = questionOptions[0].question_id
 
-      questions[questionId]["options"] = questionOptions.map(row => { return {"option": row.option, "percentage": row.percentage}})
+      questions[questionId]["options"] = questionOptions.map(row => {
+        return {
+          "option": row.option,
+          "percentage": row.percentage
+        }
+      })
       questions[questionId]["keywords"] = questionKeywords.map(row => row.keyword)
     }
 
@@ -114,6 +119,46 @@ databaseRouter.get('/surveys/:surveyId/questions/:page', function(req, res) {
   })
 
 })
+
+databaseRouter.get('/survey_partial/:surveyId', function(req, res) {
+  const surveyId = req.params.surveyId
+
+  //Dropdowns
+  var countries = []
+  var populations = []
+  var languages = []
+  var sampleMethods = []
+  var typeOfStudies = []
+
+  getService.fetchCountries()
+    .then(countriesRes => {
+      countries = countriesRes
+      return getService.fetchPopulations()
+    }).then(populationsRes => {
+      populations = populationsRes
+      return getService.fetchLanguages()
+    }).then(languagesRes => {
+      languages = languagesRes
+      return getService.fetchSampleMethods()
+    }).then(sampleMethodsRes => {
+      sampleMethods = sampleMethodsRes
+      return getService.fetchTypeofStudies()
+    }).then(typeOfStudiesRes => {
+      typeOfStudies = typeOfStudiesRes
+      return getService.fetchSurveyWithId(surveyId)
+    }).then(survey => {
+      var populatedModel = populateSurveyModelWithData(editSurveyModel, countries, populations, languages, sampleMethods, typeOfStudies)
+      res.render("partials/database/surveyDetailsTemplate", {
+        survey: survey,
+        surveyModel: populatedModel,
+        layout: false
+      }, function(err, html) {
+        res.send(html)
+      })
+    })
+
+})
+
 
 /** Database: Questions **/
 databaseRouter.get('/questions/:page', function(req, res) {
@@ -149,13 +194,18 @@ databaseRouter.get('/questions/:page', function(req, res) {
     //[firstQuestion, secondQuestion, thirdQuestion]
     //firstQuestion:[options, keywords], secondQuestion:[options,keywords]
 
-    for (var q=0; q<questionOptionsAndKeywords.length; q++){
+    for (var q = 0; q < questionOptionsAndKeywords.length; q++) {
       var question = questionOptionsAndKeywords[q]
       var questionOptions = question[0]
       var questionKeywords = question[1]
       var questionId = questionOptions[0].question_id
 
-      questions[questionId]["options"] = questionOptions.map(row => { return {"option": row.option, "percentage": row.percentage}})
+      questions[questionId]["options"] = questionOptions.map(row => {
+        return {
+          "option": row.option,
+          "percentage": row.percentage
+        }
+      })
       questions[questionId]["keywords"] = questionKeywords.map(row => row.keyword)
     }
 
@@ -169,7 +219,7 @@ databaseRouter.get('/questions/:page', function(req, res) {
   }).then(keywordsRes => {
     keywords = keywordsRes
 
-    res.render("database/questions",{
+    res.render("database/questions", {
       numberOfRecords: numberOfRecords,
       pages: pages,
       active: page,
@@ -211,7 +261,9 @@ function populateSurveyModelWithData(surveyModel, countries, populations, langua
         break;
     }
   }
-  return {"formItems": formItems}
+  return {
+    "formItems": formItems
+  }
 }
 
 
