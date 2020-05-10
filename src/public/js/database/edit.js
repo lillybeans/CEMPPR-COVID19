@@ -100,13 +100,16 @@ function cancelEditSurvey(cancelButton) {
   })
 }
 
+//SAVE FUNCTIONS
 $(function() {
 
-  //On Save: Submit Edit Survey
-  $('form.edit.survey').submit(function(event) {
+  //These functions below must be dynamically bound because user could edit from search results
+
+  //Save Question after Edit
+  $('.questions_page').on("submit", "form.edit.question", function() {
     event.preventDefault()
 
-    var surveyId = $(this).attr('id')
+    var questionId = $(this).attr('id')
     var formData = $(this).serialize()
 
     var editButton = $(this).find('.editButton').first()
@@ -119,9 +122,9 @@ $(function() {
     var options = $(this).find('option')
     var updatedAtInput = $(this).find('input[name="updated_at"]')
 
-    $.post("/database/update/survey/"+surveyId, formData)
+    $.post("/database/update/question/"+questionId, formData)
     .done( function(updatedAtTimestamp) {
-      console.log("update successful! updated survey with surveyId="+ surveyId + ", updatedAt "+updatedAtTimestamp)
+      console.log("Success! updated question with questionId="+ questionId + ", updatedAt "+updatedAtTimestamp)
 +
       $(savedMessage).fadeIn(500).delay(2000).fadeOut(500)
 
@@ -143,10 +146,46 @@ $(function() {
 
   })
 
-  $('form.edit.question').submit(function(event) {
+
+  //Save Survey after Edit
+  $('.questions_page').on("submit", "form.edit.survey", function() {
     event.preventDefault()
-    console.log("Edit question submitted!")
-    //TODO: get questionID and keep working
+
+    var surveyId = $(this).attr('id')
+    var formData = $(this).serialize()
+
+    var editButton = $(this).find('.editButton').first()
+    var saveButton = $(this).find('.saveButton').first()
+    var deleteButton = $(this).find('.deleteButton').first()
+    var cancelButton = $(this).find('.cancelButton').first()
+    var savedMessage = $(this).find('.saved-msg').first()
+
+    var inputs = $(this).find('input')
+    var options = $(this).find('option')
+    var updatedAtInput = $(this).find('input[name="updated_at"]')
+
+    $.post("/database/update/survey/"+surveyId, formData)
+    .done( function(updatedAtTimestamp) {
+      console.log("Success! updated survey with surveyId="+ surveyId + ", updatedAt "+updatedAtTimestamp)
++
+      $(savedMessage).fadeIn(500).delay(2000).fadeOut(500)
+
+      $(editButton).removeClass('hide')
+      $(deleteButton).removeClass('hide')
+
+      $(saveButton).addClass('hide')
+      $(cancelButton).addClass('hide')
+
+      $(updatedAtInput).val(updatedAtTimestamp)
+
+      //Change all inputs to readonly
+      $(inputs).attr('readonly', true)
+      $(options).attr('disabled', true)
+    })
+    .fail( function() {
+      alert("Update survey failed!")
+    })
+
   })
 
 })
