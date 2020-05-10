@@ -35,7 +35,6 @@ function search(questionText, surveyText, input) {
         "survey": surveyText
       })
       .then(function(searchHTML) {
-
         //Hide question nav + results
         $(questionsResultsNavDiv).addClass("hide") //hide question results
         $(questionsResultsDiv).addClass("hide")
@@ -47,7 +46,6 @@ function search(questionText, surveyText, input) {
         //Render Search Page Navigation HTML, which is hidden inside the Search Results Template
         var searchResultsNavTemplateHtml = $(searchResultsDiv).find('.search_results_nav_template').first().html()
         $(searchResultsNavDiv).html(searchResultsNavTemplateHtml)
-
 
 
       }).fail(function() {
