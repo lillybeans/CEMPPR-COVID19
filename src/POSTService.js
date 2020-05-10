@@ -10,6 +10,7 @@ function sanitize(myString) {
 function updateSurveyWithId(id, dict) {
   var fieldsToUpdate = ""
   var keys = Object.keys(dict);
+  var newPollName = ""
 
   for (var i = 0; i < keys.length; i++) {
     var key = keys[i]
@@ -17,14 +18,20 @@ function updateSurveyWithId(id, dict) {
     if (i < keys.length - 1) {
       fieldsToUpdate = fieldsToUpdate + ",\n"
     }
+
+    if(key == "poll_name"){
+      newPollName = mysqlConnection.escape(dict[key])
+    }
   }
 
-  query = "UPDATE Surveys SET \n" +
+  updateSurveyQuery = "UPDATE Surveys SET \n" +
     fieldsToUpdate + "\n" +
     "WHERE id =" + id
 
+  updateQuestionsQuery = "UPDATE Questions SET poll_name =" + newPollName + " WHERE survey_id =" + id
+
   return new Promise((resolve, reject) => {
-    mysqlConnection.query(query, (err, row) => {
+    mysqlConnection.query(updateSurveyQuery + ";" + updateQuestionsQuery, (err, row) => {
       if (err) {
         console.log("MYSQL Error:" + err)
         return reject(err);

@@ -82,7 +82,7 @@ function cancelEditQuestion(cancelButton) {
 
   //hide all remove buttons
   $(form).find('.answer .removeButton').addClass("hide")
-  
+
   //Delete all inserted answers
   $(form).find('.answer.inserted').remove()
 
@@ -244,6 +244,8 @@ $(function() {
     var inputs = $(this).find('input')
     var options = $(this).find('option')
     var updatedAtInput = $(this).find('input[name="updated_at"]')
+
+    console.log("formData is: "+formData)
 
     $.post("/database/update/survey/"+surveyId, formData)
     .done( function(updatedAtTimestamp) {
