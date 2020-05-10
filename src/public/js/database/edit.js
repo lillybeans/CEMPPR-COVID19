@@ -61,7 +61,7 @@ function editSurvey(editButton) {
   //Hide these buttons
   $(editButton).addClass('hide')
   $(deleteButton).addClass('hide')
-  var form = $(editButton).parentsUntil('.form-container').parent().find('form').first() //parentsUntil: up to but not including matching parent
+  var form = $(editButton).parentsUntil('form.edit.survey').parent().first() //parentsUntil: up to but not including matching parent
 
   //Change all inputs to be editable
   var inputs = $(form).find('input').removeAttr('readonly')
@@ -84,7 +84,7 @@ function cancelEditSurvey(cancelButton) {
 
   $(saveButton).addClass('hide')
   $(cancelButton).addClass('hide')
-  var form = $(editButton).parentsUntil('.form-container').parent().find('form').first()
+  var form = $(editButton).parentsUntil('form.edit.survey').parent().first()
 
   //restore all values, and change to readonly
   $(form).find('input').each(function() {

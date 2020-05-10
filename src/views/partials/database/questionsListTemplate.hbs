@@ -1,6 +1,7 @@
 <!-- Contains Navigation (pages) and Table -->
 {{#if isSearch}}
-  <div class="search_results_nav_template" hidden> <!-- we are using this hidden div to render html -->
+  <div class="search_results_nav_template" hidden>
+    <!-- we are using this hidden div to render html -->
     {{> database/paginationNavTemplate active=active pages=pages numberOfRecords=numberOfRecords isSearch=true}}
   </div>
 {{/if}}
@@ -27,21 +28,23 @@
 
       <div id="question_collapse{{@index}}" class="collapse" aria-labelledby="question_heading{{@index}}" data-parent="#{{#if isSearch}}search_{{/if}}question_list">
         <div class="card-body form-container">
-          <form class="edit" id={{id}}>
 
-            <div class="mx-4 my-4 links">
-              <a class="active mr-2" onclick="showQuestion(this)">Question</a> |
-              <a class="ml-2" href="#" onclick="showSurvey(this)" data-value={{survey_id}}>Survey</a>
-            </div>
+          <div class="mx-4 my-4 links">
+            <a class="active mr-2" onclick="showQuestion(this)">Question</a> |
+            <a class="ml-2" href="#" onclick="showSurvey(this)" data-value={{survey_id}}>Survey</a>
+          </div>
 
+          <form class="edit question" id={{id}}>
             <div class="question_details">
-            {{> database/questionDetailsTemplate question=this groups=groups themes=themes keywords=keywords }}
+              {{> database/questionDetailsTemplate question=this groups=groups themes=themes keywords=keywords }}
             </div>
+          </form>
 
+          <form class="edit survey" id={{survey_id}}>
             <div class="survey_details hide">
             </div>
-
           </form>
+
         </div>
       </div>
     </div>

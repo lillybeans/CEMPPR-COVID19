@@ -6,9 +6,9 @@ function showQuestion(questionLink){
   $(surveyLink).removeClass("active")
   $(surveyLink).attr("href","#")
 
-  var form = $(surveyLink).parentsUntil('form').parent()
-  var questionDetailsDiv =  $(form).find('.question_details').first()
-  var surveyDetailsDiv = $(form).find('.survey_details').first()
+  var cardBody = $(surveyLink).parentsUntil('.card-body').parent()
+  var questionDetailsDiv =  $(cardBody).find('.question_details').first()
+  var surveyDetailsDiv = $(cardBody).find('.survey_details').first()
 
   $(surveyDetailsDiv).addClass("hide")
   $(questionDetailsDiv).removeClass("hide")
@@ -25,9 +25,9 @@ function showSurvey(surveyLink){
   $(questionLink).removeClass("active")
   $(questionLink).attr("href","#")
 
-  var form = $(surveyLink).parentsUntil('form').parent()
-  var questionDetailsDiv =  $(form).find('.question_details').first()
-  var surveyDetailsDiv = $(form).find('.survey_details').first()
+  var cardBody = $(surveyLink).parentsUntil('.card-body').parent()
+  var questionDetailsDiv =  $(cardBody).find('.question_details').first()
+  var surveyDetailsDiv = $(cardBody).find('.survey_details').first()
 
   $(questionDetailsDiv).addClass("hide")
   $(surveyDetailsDiv).removeClass("hide")
