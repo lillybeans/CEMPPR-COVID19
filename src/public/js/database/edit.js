@@ -106,7 +106,6 @@ $(function() {
   $('form.edit.survey').submit(function(event) {
     event.preventDefault()
 
-    console.log("form.edit_survey: on submit!")
     var surveyId = $(this).attr('id')
     var formData = $(this).serialize()
 
@@ -122,8 +121,8 @@ $(function() {
 
     $.post("/database/update/survey/"+surveyId, formData)
     .done( function(updatedAtTimestamp) {
-      console.log("update successful! updatedAt "+updatedAtTimestamp)
-
+      console.log("update successful! updated survey with surveyId="+ surveyId + ", updatedAt "+updatedAtTimestamp)
++
       $(savedMessage).fadeIn(500).delay(2000).fadeOut(500)
 
       $(editButton).removeClass('hide')
