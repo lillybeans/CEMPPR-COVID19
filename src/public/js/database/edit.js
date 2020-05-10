@@ -150,7 +150,36 @@ $(function() {
     event.preventDefault()
 
     var questionId = $(this).attr('id')
-    var formData = $(this).serialize()
+
+    //Get latest options
+    var insertedOptions = [] // [ {option:option, percentage: percentage} ]
+    var deletedOptionIds = [] // [id]
+    var updatedOptions = [] // [ {id:id, option:option, percentage: percentage} ]
+
+    $(this).find(".answer.inserted").each(function(){
+      var insertedAnswer = $(this)
+      var option = $(insertedAnswer).find("input[name='option']").first().val()
+      var percentage = $(insertedAnswer).find("input[name='percentage']").first().val()
+      insertedOptions.push({"option": option,
+                            "percentage": percentage})
+    })
+
+    $(this).find(".answer.deleted").each(function(){
+      var deletedAnswer = $(this)
+      var deletedId = $(deletedAnswer).attr('id').split("_")[1]
+      deletedOptionIds.push(deletedId)
+    })
+
+    $(this).find(".answer.updated").each(function(){
+      var updatedAnswer = $(this)
+      var id = $(updatedAnswer).attr('id').split("_")[1]
+      var option = $(updatedAnswer).find("input[name='option']").first().val()
+      var percentage = $(updatedAnswer).find("input[name='percentage']").first().val()
+      updatedAnswer.push({"id":id,
+                          "option": option,
+                          "percentage": percentage})
+    })
+
 
     var editButton = $(this).find('.editButton').first()
     var saveButton = $(this).find('.saveButton').first()
@@ -181,7 +210,7 @@ $(function() {
       $(options).attr('disabled', true)
     })
     .fail( function() {
-      alert("Update survey failed!")
+      alert("Update question failed!")
     })
 
   })

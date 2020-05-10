@@ -4,10 +4,10 @@
       {{#each question.options}}
         <div class="answer {{#if @first}}{{else}}canRemove{{/if}} row my-2" id="option_{{id}}">
           <div class="col-9">
-            <input class="form-control option" type="text" value="{{option}}" required readonly />
+            <input class="form-control option" name="option" type="text" value="{{option}}" required readonly />
           </div>
           <div class="col-2">
-            <input class="form-control percentage {{#if @last}}tapToAdd{{/if}}" type="number" value="{{percentage}}" required readonly />
+            <input class="form-control percentage {{#if @last}}tapToAdd{{/if}}" name="percentage" type="number" value="{{percentage}}" required readonly />
           </div>
           <div class="col-1 remove_button_container">
             <button type='button' tabindex=-1 class='btn btn-dark removeButton pb-1 hide' onclick='removeAnswer(this)'>
