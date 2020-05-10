@@ -143,4 +143,10 @@ $(function() {
 
   })
 
+  $('form.edit.question').submit(function(event) {
+    event.preventDefault()
+    console.log("Edit question submitted!")
+    //TODO: get questionID and keep working
+  })
+
 })
