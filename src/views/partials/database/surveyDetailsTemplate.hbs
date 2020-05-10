@@ -80,4 +80,13 @@
 
     </div>
   </div>
+
+  <div class="mx-4 my-2 d-flex justify-content-end">
+      <span class="mx-2 text-success saved-msg hide">Saved!</span>
+      <button type="button" class="btn btn-primary mx-2 editButton" onClick="editSurvey(this)">Edit</button>
+      <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteModal{{id}}">Delete</button>
+      <button type="submit" class="btn btn-primary saveButton mx-2 hide">Save</button>
+      <button type="button" class="btn btn-outline-primary cancelButton hide" onClick="cancelEditSurvey(this)">Cancel</button>
+      {{> submit_survey/deleteModal title=survey.poll_name id=survey.id}}
+  </div>
 </div>
