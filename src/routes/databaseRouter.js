@@ -202,11 +202,18 @@ databaseRouter.get('/questions/:page', function(req, res) {
 
       questions[questionId]["options"] = questionOptions.map(row => {
         return {
+          "id": row.id,
           "option": row.option,
           "percentage": row.percentage
         }
       })
-      questions[questionId]["keywords"] = questionKeywords.map(row => row.keyword)
+
+      questions[questionId]["keywords"] = questionKeywords.map(row => {
+        return {
+        "id": row.id,
+        "keyword": row.keyword
+        }
+      })
     }
 
     return getService.fetchGroups()

@@ -1,18 +1,27 @@
 <div class="mb-2">
   <div class="row m-2 d-flex justify-content-between">
-    <div class="col-6">
+    <div class="answers col-6" data-deleted="">
       {{#each question.options}}
-        <div class="row my-2">
-          <div class="col-10">
+        <div class="answer {{#if @first}}{{else}}canRemove{{/if}} row my-2">
+          <div class="col-9">
             <input class="form-control option" type="text" value="{{option}}" readonly />
           </div>
           <div class="col-2">
-            <input class="form-control percentage" type="number" value="{{percentage}}" readonly />
+            <input class="form-control percentage {{#if @last}}tapToAdd{{/if}}" type="number" value="{{percentage}}" readonly />
           </div>
+          {{#if @first}}
+          {{else}}
+            <div class="col-1 remove_button_container">
+              <button type='button' tabindex=-1 class='btn btn-dark removeButton pb-1 hide' onclick='removeAnswer(this)'>
+                <ion-icon name='remove-outline' class="white"></ion-icon>
+              </button>
+            </div>
+          {{/if}}
         </div>
       {{/each}}
 
     </div>
+
     <div class="col-5">
       <div class="categorization m-2 pl-3">
 
@@ -56,7 +65,7 @@
           </div>
           <div class="col-9">
             {{#each question.keywords}}
-              <span class="text-{{keywordColor this}} border border-{{keywordColor this}} rounded px-2 py-1 mr-1">{{this}}</span>
+              <span class="text-{{keywordColor this.keyword}} border border-{{keywordColor this.keyword}} rounded px-2 py-1 mr-1">{{this.keyword}}</span>
             {{/each}}
           </div>
         </div>

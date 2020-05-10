@@ -12,13 +12,44 @@ function editQuestion(editButton) {
   var form = $(editButton).parentsUntil('.form-container').parent().find('form').first() //parentsUntil: up to but not including matching parent
 
   //Change all inputs to be editable
-  var inputs = $(form).find('input').removeAttr('readonly')
+  $(form).find('.answers input').removeAttr('readonly')
+
+  //Add a remove button to all the answers that can be removed
+  $(form).find('.answer').each(function() {
+    if($(this).hasClass('canRemove')){
+      $(this).find('button.removeButton').removeClass("hide")
+    }
+  })
 
   //Clear Updated By so user can fill it out
   $(form).find('input[name="updated_by"]').val("")
 
   //remove any disabled dropdown options
   var dropdowns = $(form).find('option').removeAttr('disabled')
+}
+
+
+function addAnswer(lastAnswer) {
+  var lastAnswerClone = $(lastAnswer).clone()
+  $(lastAnswerClone).find('input').attr('value','') //clear inputs of the clone to provide a blank slate
+  var nextAnswerHtml = "<div class='answer inserted row my-2'>" + $(lastAnswerClone).html() + "</div>"
+
+  $(lastAnswer).find('input.percentage').removeClass('tapToAdd')
+
+  var questionForm = $(lastAnswer).parent()
+  $(questionForm).append(nextAnswerHtml)
+
+  $(questionForm).children('.answer').last().find('.removeButton').show()
+}
+
+function removeAnswer(removeButton) {
+  var answer = $(removeButton).closest('.answer')
+  var answers = $(answer).parent()
+  $(answer).remove()
+
+  //add back the "tapToAdd" class to the new last answer
+  $(answers).children('.answer').last().find('input.percentage').addClass('tapToAdd')
+
 }
 
 function cancelEditQuestion(cancelButton) {
@@ -186,6 +217,17 @@ $(function() {
       alert("Update survey failed!")
     })
 
+  })
+
+  //Question: add answer
+
+  $('.answers').on("keydown", "input.tapToAdd", function (e) {
+    console.log(".answers Tapped!")
+    var inputValue = $(this).val();
+    if(e.keyCode == 9) { //tab pressed
+      var lastAnswer = $(this).closest('.answer')
+      addAnswer(lastAnswer)
+    }
   })
 
 })
