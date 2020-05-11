@@ -102,6 +102,10 @@ function cancelEditQuestion(cancelButton) {
   $(form).find('select').each(function() {
     $(this).html($(this).html())
   })
+
+  //undo Keywords
+  $(form).find(".allKeywords").addClass("hide")
+  $(form).find(".questionKeywords").removeClass("hide")
 }
 
 /** survey **/
