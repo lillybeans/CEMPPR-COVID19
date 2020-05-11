@@ -12,7 +12,7 @@ function editQuestion(editButton) {
   var form = $(editButton).parentsUntil('.form-container').parent().find('form').first() //parentsUntil: up to but not including matching parent
 
   //Change all inputs to be editable
-  $(form).find('.answers input').removeAttr('readonly')
+  $(form).find('input').removeAttr('readonly')
 
   //Add a remove button to all the answers that can be removed
   $(form).find('.answer').each(function() {
