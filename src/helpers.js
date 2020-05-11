@@ -9,6 +9,17 @@ const helpers = {
   add: function(a, b) {
     return  Number(a) + Number(b)
   },
+  shouldAddNewRow: function(currentIndex, itemsPerRow){
+    return (Number(currentIndex + 1) % Number(itemsPerRow) == 0)
+  },
+  containsKeyword: function(a, b){
+    for(i in a){
+      if (a[i]["keyword"] == b) {
+        return true
+      }
+    }
+    return false
+  },
   formatDate: function(dateString) {
     if (dateString == null)
       return ""

@@ -24,8 +24,12 @@ function editQuestion(editButton) {
   //Clear Updated By so user can fill it out
   $(form).find('input[name="updated_by"]').val("")
 
-  //remove any disabled dropdown options
+  //Enabling dropdowns: remove any disabled dropdown options
   var dropdowns = $(form).find('option').removeAttr('disabled')
+
+  //update Keywords
+  $(form).find(".allKeywords").removeClass("hide")
+  $(form).find(".questionKeywords").addClass("hide")
 }
 
 

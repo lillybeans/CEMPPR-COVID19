@@ -20,7 +20,7 @@
 
     </div>
 
-    <div class="col-5">
+    <div class="col-6">
       <div class="categorization m-2 pl-3">
 
         <div class="row group my-2">
@@ -61,10 +61,31 @@
           <div class="col-3">
             <span><b>Keywords:</b></span>
           </div>
-          <div class="col-9">
+          <div class="questionKeywords col-9">
             {{#each question.keywords}}
               <span class="text-{{keywordColor keyword}} border border-{{keywordColor keyword}} rounded px-2 py-1 mr-1" id="keyword_{{id}}">{{keyword}}</span>
             {{/each}}
+          </div>
+          <div class="allKeywords col-9 hide">
+            <div class="row">
+            {{#each keywords}}
+
+              <div class="col-3">
+              <div class="form-check mb-1">
+                <input class="form-check-input" type="checkbox" value={{this}} onclick="checkboxClicked(this)" {{#if (containsKeyword ../question.keywords this)}} checked {{/if}}>
+                <label class="form-check-label" for={{this}}>
+                  {{this}}
+                </label>
+              </div>
+            </div>
+
+            {{#if (shouldAddNewRow @index 4)}}
+              </div>
+              <div class="row">
+            {{else}}
+            {{/if}}
+            {{/each}}
+            </div>
           </div>
         </div>
       </div>
