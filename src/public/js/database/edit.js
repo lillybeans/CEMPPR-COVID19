@@ -298,4 +298,6 @@ $(function() {
     }
   })
 
+  //Detect dropdown changes
+  
 })
