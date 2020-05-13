@@ -2,7 +2,7 @@
   <div class="row m-2 d-flex justify-content-between">
     <div class="answers col-6">
       {{#each question.options}}
-        <div class="answer {{#if @first}}{{else}}canRemove{{/if}} row my-2" id="option_{{id}}">
+        <div class="answer {{#if @first}}{{else}}canRemove{{/if}} row my-2" name="original" id="option_{{id}}">
           <div class="col-9">
             <input class="form-control option" name="option" type="text" value="{{option}}" required readonly />
           </div>

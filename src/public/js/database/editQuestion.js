@@ -92,10 +92,10 @@ function cancelEditQuestion(cancelButton) {
 
   //Restore all deleted Answers
   $(form).find(".answer[name='deleted']").removeClass("hide")
-  $(form).find(".answer[name='deleted']").removeAttr("name")
+  $(form).find(".answer[name='deleted']").attr("name", "original")
 
   //Restore all updated answers
-  $(form).find(".answer[name='updated']").removeAttr('name')
+  $(form).find(".answer[name='updated']").attr("name", "original")
 
   //Restore all dropdowns
   $(form).find('option').attr('disabled', true)
@@ -123,35 +123,6 @@ $(function() {
 
     console.log("formData is: "+formData)
 
-    //Get latest options
-    var insertedOptions = [] // [ {option:option, percentage: percentage} ]
-    var deletedOptionIds = [] // [id]
-    var updatedOptions = [] // [ {id:id, option:option, percentage: percentage} ]
-
-    $(this).find(".answer.inserted").each(function(){
-      var insertedAnswer = $(this)
-      var option = $(insertedAnswer).find("input[name='option']").first().val()
-      var percentage = $(insertedAnswer).find("input[name='percentage']").first().val()
-      insertedOptions.push({"option": option,
-                            "percentage": percentage})
-    })
-
-    $(this).find(".answer.deleted").each(function(){
-      var deletedAnswer = $(this)
-      var deletedId = $(deletedAnswer).attr('id').split("_")[1]
-      deletedOptionIds.push(deletedId)
-    })
-
-    $(this).find(".answer.updated").each(function(){
-      var updatedAnswer = $(this)
-      var id = $(updatedAnswer).attr('id').split("_")[1]
-      var option = $(updatedAnswer).find("input[name='option']").first().val()
-      var percentage = $(updatedAnswer).find("input[name='percentage']").first().val()
-      updatedOptions.push({"id":id,
-                          "option": option,
-                          "percentage": percentage})
-    })
-
 
     var editButton = $(this).find('.editButton').first()
     var saveButton = $(this).find('.saveButton').first()
@@ -162,11 +133,6 @@ $(function() {
     var inputs = $(this).find('input')
     var options = $(this).find('option')
     var updatedAtInput = $(this).find('input[name="updated_at"]')
-
-    var formDataDict = {}
-    formDataDict["insertedOptions"] = insertedOptions
-    formDataDict["deletedOptionIds"] = deletedOptionIds
-    formDataDict["updatedOptions"] = updatedOptions
 
 
     $.post("/database/update/question/"+questionId, formData)
@@ -207,7 +173,7 @@ $(function() {
   $('.questions_page').on("input", ".answer input[name!='inserted']", function (e) {
     console.log("Original answer updated")
     var answer = $(this).closest('.answer')
-    if (!$(answer).attr('name')){
+    if ($(answer).attr('name') != "inserted"){ //make sure we are not updating an inserted answer
       $(answer).attr("name", "updated")
     }
   })
