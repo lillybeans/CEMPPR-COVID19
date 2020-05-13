@@ -36,7 +36,7 @@ function editQuestion(editButton) {
 function addAnswer(lastAnswer) {
   var lastAnswerClone = $(lastAnswer).clone()
   $(lastAnswerClone).find('input').attr('value','') //clear inputs of the clone to provide a blank slate
-  var nextAnswerHtml = "<div class='answer inserted row my-2'>" + $(lastAnswerClone).html() + "</div>"
+  var nextAnswerHtml = "<div class='answer row my-2' name='inserted'>" + $(lastAnswerClone).html() + "</div>"
 
   $(lastAnswer).find('input.percentage').removeClass('tapToAdd')
 
@@ -50,18 +50,18 @@ function removeAnswer(removeButton) {
   var answerToRemove = $(removeButton).closest('.answer')
   var answers = $(answerToRemove).parent()
 
-  if ($(answerToRemove).hasClass('inserted')){ //user added option: just remove it
+  if ($(answerToRemove).attr('name') == "inserted"){ //user added option: just remove it
     $(answerToRemove).remove()
   } else { //existing option: do not remove it, hide it, we need it for the database update
-    if ($(answerToRemove).hasClass('updated')){
-      $(answerToRemove).removeClass('updated')
+    if ($(answerToRemove).attr('name','updated')){
+      $(answerToRemove).removeAttr('updated')
     }
-    $(answerToRemove).addClass("deleted")
+    $(answerToRemove).attr('name', 'deleted')
     $(answerToRemove).addClass("hide")
   }
 
   //add back the "tapToAdd" class to the new last answer
-  $(answers).children('.answer:not(.deleted)').last().find('input.percentage').addClass('tapToAdd')
+  $(answers).children(".answer[name!='deleted']").last().find('input.percentage').addClass('tapToAdd')
 
 }
 
@@ -88,13 +88,14 @@ function cancelEditQuestion(cancelButton) {
   $(form).find('.answer .removeButton').addClass("hide")
 
   //Delete all inserted answers
-  $(form).find('.answer.inserted').remove()
+  $(form).find(".answer[name='inserted']").remove()
 
   //Restore all deleted Answers
-  $(form).find('.answer.deleted').removeClass("hide deleted")
+  $(form).find(".answer[name='deleted']").removeClass("hide")
+  $(form).find(".answer[name='deleted']").removeAttr("name")
 
   //Restore all updated answers
-  $(form).find('.answer.updated').removeClass("updated")
+  $(form).find(".answer[name='updated']").removeAttr('name')
 
   //Restore all dropdowns
   $(form).find('option').attr('disabled', true)
@@ -170,6 +171,9 @@ $(function() {
     event.preventDefault()
 
     var questionId = $(this).attr('id')
+    var formData = $(this).serialize()
+
+    console.log("formData is: "+formData)
 
     //Get latest options
     var insertedOptions = [] // [ {option:option, percentage: percentage} ]
@@ -195,7 +199,7 @@ $(function() {
       var id = $(updatedAnswer).attr('id').split("_")[1]
       var option = $(updatedAnswer).find("input[name='option']").first().val()
       var percentage = $(updatedAnswer).find("input[name='percentage']").first().val()
-      updatedAnswer.push({"id":id,
+      updatedOptions.push({"id":id,
                           "option": option,
                           "percentage": percentage})
     })
@@ -210,6 +214,12 @@ $(function() {
     var inputs = $(this).find('input')
     var options = $(this).find('option')
     var updatedAtInput = $(this).find('input[name="updated_at"]')
+
+    var formDataDict = {}
+    formDataDict["insertedOptions"] = insertedOptions
+    formDataDict["deletedOptionIds"] = deletedOptionIds
+    formDataDict["updatedOptions"] = updatedOptions
+
 
     $.post("/database/update/question/"+questionId, formData)
     .done( function(updatedAtTimestamp) {
@@ -284,20 +294,18 @@ $(function() {
   $('.questions_page').on("keydown", "input.tapToAdd", function (e) {
     var inputValue = $(this).val();
     if(e.keyCode == 9) { //tab pressed
-      var lastAnswer = $(this).closest('.answer:not(.deleted)')
+      var lastAnswer = $(this).closest(".answer[name!='deleted']")
       addAnswer(lastAnswer)
     }
   })
 
   //detect update
-  $('.questions_page').on("input", ".answer:not(.inserted,.deleted) input", function (e) {
+  $('.questions_page').on("input", ".answer input[name!='inserted']", function (e) {
     console.log("Original answer updated")
     var answer = $(this).closest('.answer')
-    if (!$(answer).hasClass("updated")){
-      $(answer).addClass("updated")
+    if (!$(answer).attr('name')){
+      $(answer).attr("name", "updated")
     }
   })
 
-  //Detect dropdown changes
-  
 })

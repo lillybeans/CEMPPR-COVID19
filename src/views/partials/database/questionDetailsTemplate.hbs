@@ -28,7 +28,7 @@
             <span><b>Survey Item #:</b></span>
           </div>
           <div class="col-5">
-            <input class="form-control input-sm surveyItem" type="text" value="{{question.survey_item_number}}" readonly required>
+            <input class="form-control input-sm surveyItem" name="survey_item_number" type="text" value="{{question.survey_item_number}}" readonly required>
           </div>
         </div>
 
@@ -81,7 +81,7 @@
 
                 <div class="col-4">
                   <div class="form-check mb-1">
-                    <input class="form-check-input" type="checkbox" value={{this}} onclick="checkboxClicked(this)" {{#if (containsKeyword ../question.keywords this)}} checked {{/if}}>
+                    <input class="form-check-input" name="keyword" type="checkbox" value={{this}} {{#if (containsKeyword ../question.keywords this)}} checked {{/if}}>
                     <small class="form-check-label">{{this}}</small>
                   </div>
                 </div>
