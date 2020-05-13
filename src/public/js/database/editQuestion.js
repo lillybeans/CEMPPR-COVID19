@@ -119,6 +119,14 @@ $(function() {
     event.preventDefault()
 
     var questionId = $(this).attr('id').split('_')[1] //editQuestion_qid
+
+    var inputs = $(this).find(".answer input").each(function(){
+      var answer = $(this).parentsUntil(".answer").parent()
+      var inputName = $(this).attr("name")
+      var answerState = $(answer).attr("name")
+      $(this).attr("name", inputName + "_" + answerState)
+    })
+
     var formData = $(this).serialize()
 
     console.log("formData is: "+formData)
@@ -170,7 +178,7 @@ $(function() {
   })
 
   //detect update
-  $('.questions_page').on("input", ".answer input[name!='inserted']", function (e) {
+  $('.questions_page').on("input", ".answer[name!='inserted']", function (e) {
     console.log("Original answer updated")
     var answer = $(this).closest('.answer')
     if ($(answer).attr('name') != "inserted"){ //make sure we are not updating an inserted answer
