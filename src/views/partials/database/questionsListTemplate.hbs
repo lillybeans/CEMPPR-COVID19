@@ -34,13 +34,13 @@
             <a class="ml-2" href="#" onclick="showSurvey(this)" data-value={{survey_id}}>Survey</a>
           </div>
 
-          <form class="edit question" id={{id}}>
+          <form class="edit question" id="editQuestion_{{id}}">
             <div class="question_details">
               {{> database/questionDetailsTemplate question=this groups=../groups themes=../themes keywords=../keywords }}
             </div>
           </form>
 
-          <form class="edit survey" id={{survey_id}}>
+          <form class="edit survey" id="editQuestion_{{id}}_survey_{{survey_id}}">
             <div class="survey_details hide">
             </div>
           </form>
