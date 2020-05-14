@@ -120,17 +120,23 @@ $(function() {
 
     var questionId = $(this).attr('id').split('_')[1] //editQuestion_qid
 
+    //Update each Option and Percentage to either: original, deleted, inserted or updated
     var inputs = $(this).find(".answer input").each(function(){
       var answer = $(this).parentsUntil(".answer").parent()
-      var inputName = $(this).attr("name")
+      var inputType = $(this).attr("name") //option or percentage
       var answerState = $(answer).attr("name")
-      $(this).attr("name", inputName + "_" + answerState)
+
+      var name = inputType + "_" + answerState
+
+      if (answerState != "inserted") {
+        var optionId = $(answer).attr("id").split("_")[1]
+        name += "_" + optionId
+      }
+
+      $(this).attr("name", name)
     })
 
     var formData = $(this).serialize()
-
-    console.log("formData is: "+formData)
-
 
     var editButton = $(this).find('.editButton').first()
     var saveButton = $(this).find('.saveButton').first()
@@ -142,6 +148,7 @@ $(function() {
     var options = $(this).find('option')
     var updatedAtInput = $(this).find('input[name="updated_at"]')
 
+    console.log(formData)
 
     $.post("/database/update/question/"+questionId, formData)
     .done( function(updatedAtTimestamp) {

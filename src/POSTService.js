@@ -7,6 +7,53 @@ function sanitize(myString) {
   return newString
 }
 
+function updateQuestionWithId(id, dict){
+  var fieldsToUpdate = ""
+  var keys = Object.keys(dict);
+
+  //We don't need to keep track of original
+  var updatedOptions = [] //{id, option, percentage}
+  var deletedOptionIds = [] //{id}
+  var insertedOptions = [] //{option, percentage}
+
+  //Find inserted, deleted and updated questions and percentages
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i]
+    //If this is a question option
+    if key.includes("option") { //possibilities: option_updated_159, percentage_deleted_161, option_original_163, option_inserted
+      var optionArray = key.split("_") //[option or percentage, state, ID]
+      var optionState = optionArray[1]  //possibilities: updated, deleted, original, inserted
+
+      switch optionState {
+        case "original":
+          break
+        case "updated":
+          var updatedOptionId = optionArray[2]
+          var updatedOption = mysqlConnection.escape(dict[key])
+          var updatedOptionPercentage = dict[keys[i+1]] //should be in order
+          updatedOptions.push({"id": updatedOptionId, "option": updatedOption, "percentage": updatedOptionPercentage})
+          break
+        case "deleted":
+          var deletedOptionId = optionArray[2]
+          deletedOptionIds.push(deletedOptionId)
+          break
+        case "inserted":
+          var insertedOption = mysqlConnection.escape(dict[key])
+          var insertedOptionPercentage = dict[keys[i+1]]
+          insertedOptions.push({"option": insertedOption, "percentage": insertedOptionPercentage})
+      }
+
+      i = i + 1 //skip next key cause its gonna be percentage
+    } else {
+      fieldsToUpdate = fieldsToUpdate + key + "=" + mysqlConnection.escape(dict[key])
+      if (i < keys.length - 1) {
+        fieldsToUpdate = fieldsToUpdate + ",\n"
+      }
+    }
+
+  }
+}
+
 function updateSurveyWithId(id, dict) {
   var fieldsToUpdate = ""
   var keys = Object.keys(dict);
