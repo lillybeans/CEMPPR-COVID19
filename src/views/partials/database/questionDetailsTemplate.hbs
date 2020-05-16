@@ -34,6 +34,15 @@
 
         <div class="row group my-2">
           <div class="col-3">
+            <span><b>Sample Size: </b></span>
+          </div>
+          <div class="col-5">
+            <input class="form-control input-sm sampleSize" name="sample_size" type="text" value="{{question.sample_size}}" readonly required>
+          </div>
+        </div>
+
+        <div class="row group my-2">
+          <div class="col-3">
             <span><b>Group:</b></span>
           </div>
           <div class="col-9">
@@ -113,7 +122,7 @@
             <input class="form-control my-2" type="text" value="{{question.updated_by}}" readonly required>
 
             <span class="my-2"><i><b>Updated At:</b></i></span>
-            <input class="form-control my-2" type="text" value="{{question.updated_at}}" readonly required disabled>
+            <input class="form-control my-2" type="text" name="updated_at" value="{{question.updated_at}}" readonly required disabled>
             <small id="description" class="form-text text-muted">Auto-generated field</small>
           </div>
 

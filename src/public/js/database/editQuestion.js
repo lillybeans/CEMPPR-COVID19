@@ -149,6 +149,17 @@ $(function() {
       $(this).attr("name", name)
     })
 
+    //Update each Keyword to be either: original, inserted, deleted
+    var keywords = $(this).find(".allKeywords :checkbox").each(function(){
+      if ($(this).hasClass("deleted")){
+        $(this).attr("name", "keyword_deleted")
+      } else if ($(this).hasClass("inserted")) {
+        $(this).attr("name", "keyword_inserted")
+      } else if ($(this).hasClass("original")) {
+        $(this).attr("name", "keyword_original")
+      }
+    })
+
     var formData = $(this).serialize()
 
     var editButton = $(this).find('.editButton').first()
@@ -211,6 +222,12 @@ $(function() {
     if($(this).hasClass("original")) {
       if ($(this).prop('checked') == false) {
         $(this).addClass("deleted")
+
+        //Create a deleted clone that is checked so the form can submit it
+        var deletedClone = $(this).clone()
+        $(deletedClone).prop("checked", true)
+        $(deletedClone).attr("hidden", true)
+        $(this).parent().append(deletedClone)
       } else {
         $(this).removeClass("deleted")
       }

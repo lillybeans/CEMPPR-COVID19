@@ -12,9 +12,8 @@ function updateQuestionWithId(id, dict){
   var keys = Object.keys(dict);
 
   //We don't need to keep track of original
-  var updatedOptions = [] //{id, option, percentage}
-  var deletedOptionIds = [] //{id}
-  var insertedOptions = [] //{option, percentage}
+  var optionQueries = []
+  var keywordQueries = []
 
   //Find inserted, deleted and updated questions and percentages
   for (var i = 0; i < keys.length; i++) {
@@ -31,27 +30,76 @@ function updateQuestionWithId(id, dict){
           var updatedOptionId = optionArray[2]
           var updatedOption = mysqlConnection.escape(dict[key])
           var updatedOptionPercentage = dict[keys[i+1]] //should be in order
-          updatedOptions.push({"id": updatedOptionId, "option": updatedOption, "percentage": updatedOptionPercentage})
+
+          let updateQuery = "UPDATE Question_Options SET `option` = " + updatedOption +", percentage = " + updatedOptionPercentage + " WHERE id=" + updatedOptionId
+          optionQueries.push(updateQuery)
           break
         case "deleted":
           var deletedOptionId = optionArray[2]
-          deletedOptionIds.push(deletedOptionId)
+
+          let deleteQuery = "DELETE FROM Question_Options WHERE id=" + deletedOptionId
+          optionQueries.push(deleteQuery)
           break
         case "inserted":
           var insertedOption = mysqlConnection.escape(dict[key])
           var insertedOptionPercentage = dict[keys[i+1]]
-          insertedOptions.push({"option": insertedOption, "percentage": insertedOptionPercentage})
+
+          let insertQuery = "INSERT INTO Question_Options (question_id, `option`, percentage) VALUES (" + id +", "+ insertedOption +", "+ insertedOptionPercentage + ")"
+          optionQueries.push(insertQuery)
+          break
       }
 
       i = i + 1 //skip next key cause its gonna be percentage
-    } else {
-      fieldsToUpdate = fieldsToUpdate + key + "=" + mysqlConnection.escape(dict[key])
-      if (i < keys.length - 1) {
-        fieldsToUpdate = fieldsToUpdate + ",\n"
+    } else if (key.includes("keyword")) {
+      var keywordArray = key.split("_")
+      var keywordState = optionArray[1]
+      var keyword = mysqlConnection.escape(dict[key])
+
+      switch (keywordState){
+        case "inserted":
+          let insertQuery = "INSERT INTO Question_Keywords (question_id, keyword) VALUES (" + id +", " + keyword +")"
+          keywordQueries.push(insertQuery)
+        case "deleted":
+          let deleteQuery = "DELETE FROM Question_Keywords WHERE question_id=" + id + " AND keyword=" + keyword
+          keywordQueries.push(deleteQuery)
+        default:
+          break
       }
+    } else { //general metadata
+      //if not first key value pair, add comma and line break before
+      if (fieldsToUpdate != "") {
+        fieldsToUpdate += ",\n"
+      }
+
+      fieldsToUpdate = fieldsToUpdate + "`"+key+"`" + "=" + mysqlConnection.escape(dict[key])
     }
 
   }
+
+  //general metadata
+  updateQuestionQuery = "UPDATE Questions SET \n" +
+    fieldsToUpdate + "\n" +
+    "WHERE id =" + id
+
+  //options
+
+  var optionsQueryString = optionQueries.join(";")
+
+  //keywords
+  var keywordsQueryString = keywordQueries.join(";")
+
+  var combinedQuery = updateQuestionQuery + ";" + optionsQueryString +";" + keywordsQueryString
+
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query(combinedQuery, (err, res) => {
+      if (err) {
+        console.log("MYSQL Error:" + err)
+        return reject(err);
+      }
+      resolve(res);
+    });
+  });
+
 }
 
 function updateSurveyWithId(id, dict) {
@@ -173,6 +221,7 @@ function searchQuestionAndSurvey(question, survey, page) {
 }
 
 module.exports = {
+  updateQuestionWithId: updateQuestionWithId,
   updateSurveyWithId: updateSurveyWithId,
   deleteOptionsForQuestionWithId:deleteOptionsForQuestionWithId,
   deleteKeywordsForQuestionWithId:deleteKeywordsForQuestionWithId,
