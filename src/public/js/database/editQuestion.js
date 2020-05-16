@@ -105,6 +105,19 @@ function cancelEditQuestion(cancelButton) {
   })
 
   //undo Keywords
+
+  //remove all added keywords
+  $(form).find(".allKeywords :checkbox.inserted").each(function(){
+    $(this).prop("checked", false)
+    $(this).removeClass("inserted")
+  })
+
+  //restore all deleted keywords
+  $(form).find(".allKeywords :checkbox.deleted").each(function(){
+    $(this).prop("checked", true)
+    $(this).removeClass("deleted")
+  })
+
   $(form).find(".allKeywords").addClass("hide")
   $(form).find(".questionKeywords").removeClass("hide")
 }
@@ -184,12 +197,29 @@ $(function() {
     }
   })
 
-  //detect update
+  //detect question options update
   $('.questions_page').on("input", ".answer[name!='inserted']", function (e) {
     console.log("Original answer updated")
     var answer = $(this).closest('.answer')
     if ($(answer).attr('name') != "inserted"){ //make sure we are not updating an inserted answer
       $(answer).attr("name", "updated")
+    }
+  })
+
+  //Keywords
+  $('.questions_page').on("change", ":checkbox", function (e) {
+    if($(this).hasClass("original")) {
+      if ($(this).prop('checked') == false) {
+        $(this).addClass("deleted")
+      } else {
+        $(this).removeClass("deleted")
+      }
+    } else {
+      if ($(this).prop('checked') == true) {
+        $(this).addClass("inserted")
+      } else {
+        $(this).removeClass("inserted")
+      }
     }
   })
 

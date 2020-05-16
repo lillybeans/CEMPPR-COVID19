@@ -20,11 +20,11 @@ function updateQuestionWithId(id, dict){
   for (var i = 0; i < keys.length; i++) {
     var key = keys[i]
     //If this is a question option
-    if key.includes("option") { //possibilities: option_updated_159, percentage_deleted_161, option_original_163, option_inserted
+    if (key.includes("option")) { //possibilities: option_updated_159, percentage_deleted_161, option_original_163, option_inserted
       var optionArray = key.split("_") //[option or percentage, state, ID]
       var optionState = optionArray[1]  //possibilities: updated, deleted, original, inserted
 
-      switch optionState {
+      switch (optionState) {
         case "original":
           break
         case "updated":
