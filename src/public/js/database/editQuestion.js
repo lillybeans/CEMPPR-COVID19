@@ -152,9 +152,9 @@ $(function() {
     //Update each Keyword to be either: original, inserted, deleted
     var keywords = $(this).find(".allKeywords :checkbox").each(function(){
       if ($(this).hasClass("deleted")){
-        $(this).attr("name", "keyword_deleted")
+        $(this).attr("name", "keyword_deleted_" + $(this).attr('id'))
       } else if ($(this).hasClass("inserted")) {
-        $(this).attr("name", "keyword_inserted")
+        $(this).attr("name", "keyword_inserted_" + $(this).attr('id'))
       } else if ($(this).hasClass("original")) {
         $(this).attr("name", "keyword_original")
       }
@@ -230,6 +230,7 @@ $(function() {
         $(this).parent().append(deletedClone)
       } else {
         $(this).removeClass("deleted")
+        $(this).siblings("input").first().remove()
       }
     } else {
       if ($(this).prop('checked') == true) {

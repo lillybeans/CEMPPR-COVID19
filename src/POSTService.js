@@ -52,16 +52,20 @@ function updateQuestionWithId(id, dict){
       i = i + 1 //skip next key cause its gonna be percentage
     } else if (key.includes("keyword")) {
       var keywordArray = key.split("_")
-      var keywordState = optionArray[1]
+      var keywordState = keywordArray[1]
       var keyword = mysqlConnection.escape(dict[key])
+
+      console.log("The current key is: " + key + ", keyword is: "+keyword)
 
       switch (keywordState){
         case "inserted":
           let insertQuery = "INSERT INTO Question_Keywords (question_id, keyword) VALUES (" + id +", " + keyword +")"
           keywordQueries.push(insertQuery)
+          break
         case "deleted":
           let deleteQuery = "DELETE FROM Question_Keywords WHERE question_id=" + id + " AND keyword=" + keyword
           keywordQueries.push(deleteQuery)
+          break
         default:
           break
       }
@@ -88,7 +92,17 @@ function updateQuestionWithId(id, dict){
   //keywords
   var keywordsQueryString = keywordQueries.join(";")
 
-  var combinedQuery = updateQuestionQuery + ";" + optionsQueryString +";" + keywordsQueryString
+  var combinedQuery = updateQuestionQuery + ";"
+
+  if (optionsQueryString != "") {
+    combinedQuery += optionsQueryString + ";"
+  }
+
+  if (keywordsQueryString != "") {
+    combinedQuery += keywordsQueryString
+  }
+
+  console.log("\n\ncombinedQuery:" + combinedQuery)
 
   return new Promise((resolve, reject) => {
     mysqlConnection.query(combinedQuery, (err, res) => {

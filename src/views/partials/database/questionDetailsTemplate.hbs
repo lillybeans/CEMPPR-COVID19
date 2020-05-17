@@ -90,7 +90,7 @@
 
                 <div class="col-4">
                   <div class="form-check mb-1">
-                    <input class="form-check-input {{#if (containsKeyword ../question.keywords this)}}original{{/if}}" name="keyword" type="checkbox" value={{this}} {{#if (containsKeyword ../question.keywords this)}} checked {{/if}}>
+                    <input class="form-check-input {{#if (containsKeyword ../question.keywords this)}}original{{/if}}" name="keyword" type="checkbox" value={{this}} {{#if (containsKeyword ../question.keywords this)}} checked {{/if}} id="kw{{@index}}">
                     <small class="form-check-label">{{this}}</small>
                   </div>
                 </div>
