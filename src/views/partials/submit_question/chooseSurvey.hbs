@@ -5,7 +5,7 @@
       Which survey is this question for?
     </label>
     <div>
-      <select class="form-control-sm" name="select_survey" id="select_survey" onchange="onSelectSurvey(this)" required>
+      <select class="form-control-sm" name="survey_id" id="select_survey" onchange="onSelectSurvey(this)" required>
         <option value="">Select Survey</option>
         {{#each surveys}}
           <option value={{this.id}} data-sample-size={{this.sample_size}}>{{this.poll_name}}</option>
@@ -23,19 +23,20 @@
     </label>
     <div class="form-check">
       <input class="form-check-input" type="radio" name="use_same_sample_size" value="yes">
-      <label class="form-check-label mb-2" for="no">
+      <input class="hide" type="text" name="sample_size" value="" id="survey_sample_size">
+      <label class="form-check-label mb-2" for="yes">
         Yes
       </label>
     </div>
 
     <div class="form-check-inline align-middle">
       <input class="form-check-input align-middle" type="radio" name="use_same_sample_size" value="no">
-      <label class="form-check-label align-middle" for="yes">
+      <label class="form-check-label align-middle" for="no">
         No
       </label>
 
       <div class="input-group-sm ml-3">
-        <input class="form-control hide" type="text" id="sample_size_textbox" placeholder="Enter Sample Size">
+        <input class="form-control hide" name="sample_size" type="text" id="custom_sample_size" placeholder="Enter Sample Size">
       </div>
     </div>
 

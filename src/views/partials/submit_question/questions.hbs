@@ -6,7 +6,7 @@
     <label class="font-weight-bold">
       Question
     </label>
-    <textarea class="form-control" id="question1" rows="2" required></textarea>
+    <textarea class="form-control" name="question" rows="2" required></textarea>
     <br>
     <label class="font-weight-bold">
       Answers
@@ -16,10 +16,10 @@
     <div class="answer">
       <div class="form-row my-2 option">
         <div class="col-10">
-          <input class="form-control" type="text" placeholder="Option">
+          <input class="form-control" name="option" type="text" placeholder="Option">
         </div>
         <div class="col-1">
-          <input class="form-control percentage tapToAdd" type="text" placeholder="%">
+          <input class="form-control percentage tapToAdd" name="percentage" type="text" placeholder="%">
         </div>
         <div class="col-1 button_container">
           <button type='button' tabindex=-1 class='btn btn-danger removeButton pb-1 hide' onclick='removeAnswer(this)'>

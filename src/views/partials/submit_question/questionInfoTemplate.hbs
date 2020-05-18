@@ -17,7 +17,7 @@
       Group
     </label>
     <div>
-      <select class="form-control-sm" name={{name}} id={{name}} required>
+      <select class="form-control-sm" name="group" id="group" required>
         <option value="">Select</option>
 
         {{#each groups}}
@@ -33,7 +33,7 @@
       Theme
     </label>
     <div>
-      <select class="form-control-sm" name={{name}} id={{name}} required>
+      <select class="form-control-sm" name="theme" id="theme" required>
         <option value="">Select</option>
 
         {{#each themes}}
@@ -51,7 +51,7 @@
 
     {{#each keywords}}
       <div class="form-check mb-1">
-        <input class="form-check-input" type="checkbox" value={{this}} onclick="checkboxClicked(this)" name="keyword{{@index}}">
+        <input class="form-check-input" type="checkbox" value={{this}} name="keyword{{@index}}">
         <label class="form-check-label" for={{this}}>
           {{this}}
         </label>

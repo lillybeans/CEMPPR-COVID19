@@ -13,7 +13,7 @@ $('#questions_container').on("keydown", "input.tapToAdd", function (e) {
 function onSelectSurvey(dropdown){
   var selectedOption = $(dropdown).find(":selected").first()
   var sampleSize = $(selectedOption).attr('data-sample-size')
-  console.log("sample size:" + sampleSize)
+  $("#survey_sample_size").val(sampleSize)
   $("#current_sample_size").html(sampleSize)
 }
 
@@ -44,3 +44,38 @@ function addQuestion(){
   var questionTemplate ="<div class='form-group question border border-dark rounded p-4'>\n" + question + "\n</div>"
   $('#questions').append(questionTemplate)
 }
+
+$(function() {
+
+  // If answered "Use same sample size for this question?"
+  $('input[name="use_same_sample_size"]').click(function() {
+    var radio = $(this);
+    var textbox = $('#custom_sample_size')
+    if (radio.val() == "no") {
+      textbox.prop("required",true)
+      textbox.fadeIn("fast") //show sample size textbox
+      textbox.attr("name","sample_size")
+    } else {
+      textbox.prop("required",false)
+      textbox.fadeOut("fast") //hide textbox
+      $("#survey_sample_size").attr("name","sample_size")
+    }
+  });
+
+  $('form').submit( function(event){
+    event.preventDefault()
+
+    var shouldUseSurveySampleSize = $("#use_same_sample_size :checked").val()
+
+    if (shouldUseSurveySampleSize == "yes") { //remove custom sample size
+      $("#custom_sample_size").removeAttr("name")
+    } else { //remove survey sample size
+      $("#survey_sample_size").removeAttr("name")
+    }
+
+    var form = $(this)
+    console.log("Submitted!")
+    console.log(form.serialize())
+  })
+
+});
