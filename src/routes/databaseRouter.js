@@ -174,7 +174,7 @@ databaseRouter.get('/questions/:page', function(req, res) {
 
   getService.fetchNumberOfQuestionsPromise().then(records => {
     numberOfRecords = records
-    numPages = Math.ceil(numberOfRecords / getService.questionsPerPage)
+    numPages = Math.ceil(numberOfRecords / getService.perPage)
     for (var i = 1; i <= numPages; i++) {
       pages.push(i)
     }
