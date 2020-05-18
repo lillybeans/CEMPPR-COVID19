@@ -10,10 +10,10 @@
   <div class="row mx-5 my-5">
 
     <div class="col-md-3">
-      {{> submit_question/chooseSurvey }}
+      {{> submit_question/chooseSurvey surveys=surveys}}
     </div>
     <div class="col-md-3">
-      {{> submit_question/questionInfoTemplate }}
+      {{> submit_question/questionInfoTemplate groups=groups themes=themes keywords=keywords}}
     </div>
 
     <div class="col-md-6" id="questions_container">

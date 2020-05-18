@@ -2,9 +2,6 @@ const express = require("express")
 const router = express.Router()
 const getService = require("../GETService")
 
-const questionInfoModel = require("../models/questionInfoModel")
-const submitSurveyModel = require("../models/submitSurveyModel")
-
 //Define our Routes:
 const indexRouter = express.Router();
 const util = require("util")
@@ -16,27 +13,6 @@ indexRouter.get('/', function(req, res) {
       home: true
     }
   });
-})
-
-indexRouter.get('/submit/question', function(req, res) {
-  getService.fetchPollNamesPromise().then( pollNames => {
-    res.render("submit/question", {
-      active: {
-        submit: true
-      },
-      questionInfoModel: questionInfoModel,
-      surveys: pollNames
-    })
-  })
-})
-
-indexRouter.get('/submit/survey', function(req, res) {
-  res.render("submit/survey", {
-    active: {
-      submit: true
-    },
-    surveyModel: submitSurveyModel
-  })
 })
 
 indexRouter.get('/about', function(req, res) {

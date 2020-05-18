@@ -8204,6 +8204,15 @@ a.text-turqoise-dark:hover, a.text-turqoise-dark:focus {
 .hide {
   display: none; }
 
+.spacer-sm {
+  height: 10px; }
+
+.spacer-md {
+  height: 20px; }
+
+.spacer-lg {
+  height: 50px; }
+
 a.active, a.active:hover {
   color: black; }
 

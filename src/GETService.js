@@ -1,7 +1,7 @@
 const mysqlConnection = require("./connection")
 const util = require("util")
 
-const questionsPerPage = 20;
+const perPage = 20;
 
 //Promisified MYSQL queries
 function queryPromise(sql) {
@@ -16,7 +16,7 @@ function queryPromise(sql) {
 
 function fetchPollNamesPromise() {
   return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT poll_name FROM Surveys ORDER BY id DESC LIMIT 20", (err, rows) => {
+    mysqlConnection.query("SELECT poll_name FROM Surveys ORDER BY id DESC LIMIT " + perPage, (err, rows) => {
       if (err)
         return reject(err);
       resolve(rows.map(row => row.poll_name));
@@ -45,9 +45,9 @@ function fetchNumberOfSurveysPromise() {
 }
 
 function fetchSurveysByPagePromise(page) {
-  var rowsOffset = (page - 1) * 10
+  var rowsOffset = (page - 1) * perPage
   return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT * FROM Surveys ORDER BY created_at ASC LIMIT 10 OFFSET " + rowsOffset, (err, rows) => {
+    mysqlConnection.query("SELECT * FROM Surveys ORDER BY created_at ASC LIMIT "+ perPage +" OFFSET " + rowsOffset, (err, rows) => {
       if (err)
         return reject(err);
       resolve(rows);
@@ -68,9 +68,9 @@ function fetchNumberOfQuestionsPromise() {
 }
 
 function fetchQuestionsByPagePromise(page) {
-  var rowsOffset = (page - 1) * 10
+  var rowsOffset = (page - 1) * perPage
   return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT * FROM Questions ORDER BY created_at ASC LIMIT " + questionsPerPage + " OFFSET " + rowsOffset, (err, rows) => {
+    mysqlConnection.query("SELECT * FROM Questions ORDER BY created_at ASC LIMIT " + perPage + " OFFSET " + rowsOffset, (err, rows) => {
       if (err)
         return reject(err);
       resolve(rows);
@@ -79,7 +79,7 @@ function fetchQuestionsByPagePromise(page) {
 }
 
 function fetchQuestionsForSurveyWithId(surveyId, page) {
-  var rowsOffset = (page - 1) * 10
+  var rowsOffset = (page - 1) * perPage
   return new Promise((resolve, reject) => {
     mysqlConnection.query("SELECT * FROM Questions WHERE survey_id=" + surveyId + " LIMIT 10 OFFSET " + rowsOffset, (err, rows) => {
       if (err)
@@ -235,7 +235,7 @@ function fetchSubmitQuestionDataPromise() {
 }
 
 module.exports = {
-  questionsPerPage: questionsPerPage,
+  perPage: perPage,
   fetchSurveyWithId: fetchSurveyWithId,
   fetchPollNamesPromise: fetchPollNamesPromise,
   fetchNumberOfSurveysPromise: fetchNumberOfSurveysPromise,

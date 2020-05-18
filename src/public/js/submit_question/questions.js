@@ -10,6 +10,13 @@ $('#questions_container').on("keydown", "input.tapToAdd", function (e) {
 
 })
 
+function onSelectSurvey(dropdown){
+  var selectedOption = $(dropdown).find(":selected").first()
+  var sampleSize = $(selectedOption).attr('data-sample-size')
+  console.log("sample size:" + sampleSize)
+  $("#current_sample_size").html(sampleSize)
+}
+
 function addAnswer(lastAnswer) {
   var lastAnswerHtml = $(lastAnswer).html()
   var nextAnswerHtml = "<div class='answer'>" + lastAnswerHtml + "</div>"

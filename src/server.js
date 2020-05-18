@@ -7,6 +7,7 @@ const helpers = require("./helpers") //handlebars helpers
 //Import our custom files/dependencies: MySQL, our routes
 
 const indexRouter = require("./routes/indexRouter")
+const submitRouter = require("./routes/submitRouter")
 const questionsRouter = require("./routes/questionsRouter")
 const databaseRouter = require("./routes/databaseRouter")
 const pendingRouter = require("./routes/pendingRouter")
@@ -35,6 +36,7 @@ app.use(express.static(__dirname + '/public')); //static files
 
 //Routers
 app.use('/', indexRouter)
+app.use("/submit", submitRouter)
 app.use("/questions", questionsRouter) //use "/questions" instead of "/routes/questions" in the browser
 app.use("/database", databaseRouter)
 app.use("/pending", pendingRouter)

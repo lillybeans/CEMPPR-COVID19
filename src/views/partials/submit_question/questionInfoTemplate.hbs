@@ -1,44 +1,64 @@
 <div id="question_info">
   <h2 class="font-weight-light mb-3"><span class="bg-dark rounded px-2 py-0.5 text-white">2</span> Question Info</h2>
 
-    {{#each questionInfoModel.formItems }}
-      <div class="form-group {{#if @last}}last-questionInfo{{/if}}" id="questionInfo_{{@index}}">
-        <label for={{ name }} class="font-weight-bold">
-          {{ title }}
+  <div class="form-group {{#if @last}}last-questionInfo{{/if}}" id="questionInfo_{{@index}}">
+
+    <label for="survey_item_number" class="font-weight-bold">
+      Survey Item Number
+    </label>
+    <div>
+      <input class="form-control col-8" type="text" name="survey_item_number" id="survey_item_number" placeholder="STGVTCV1" required>
+      <small id="description" class="form-text text-muted">Unique identifier minimum 3 chars.</small>
+    </div>
+
+    <div class="spacer-sm"></div>
+
+    <label for="group" class="font-weight-bold">
+      Group
+    </label>
+    <div>
+      <select class="form-control-sm" name={{name}} id={{name}} required>
+        <option value="">Select</option>
+
+        {{#each groups}}
+          <option value={{this}}>{{this}}</option>
+        {{/each}}
+
+      </select>
+    </div>
+
+    <div class="spacer-sm"></div>
+
+    <label for="theme" class="font-weight-bold">
+      Theme
+    </label>
+    <div>
+      <select class="form-control-sm" name={{name}} id={{name}} required>
+        <option value="">Select</option>
+
+        {{#each themes}}
+          <option value={{this}}>{{this}}</option>
+        {{/each}}
+
+      </select>
+    </div>
+
+    <div class="spacer-sm"></div>
+
+    <label for="keywords" class="font-weight-bold">
+      Keywords
+    </label>
+
+    {{#each keywords}}
+      <div class="form-check mb-1">
+        <input class="form-check-input" type="checkbox" value={{this}} onclick="checkboxClicked(this)" name="keyword{{@index}}">
+        <label class="form-check-label" for={{this}}>
+          {{this}}
         </label>
-
-        {{#ifEquals type "text"}}
-        <div>
-          <input class="form-control col-8" type="text" name={{name}} id={{name}} placeholder={{placeholder}} onInput="textChanged(this)" required>
-          <small id="description" class="form-text text-muted">{{description}}</small>
-        </div>
-        {{/ifEquals}}
-
-        {{#ifEquals type "dropdown"}}
-          <div>
-            <select class="form-control-sm" name={{name}} id={{name}} onchange="dropdownChanged(this)" required>
-              <option value="">Select</option>
-
-              {{#each options}}
-                <option value={{this}}>{{this}}</option>
-              {{/each}}
-
-            </select>
-          </div>
-        {{/ifEquals}}
-
-        {{#ifEquals type "checkbox"}}
-          {{#each options}}
-            <div class="form-check mb-1">
-              <input class="form-check-input" type="checkbox" value={{this}} onclick="checkboxClicked(this)" id={{name}}>
-              <label class="form-check-label" for={{this}}>
-                {{this}}
-              </label>
-            </div>
-          {{/each}}
-        {{/ifEquals}}
-
       </div>
     {{/each}}
+
+
+  </div>
 
 </div>
