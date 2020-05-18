@@ -8,9 +8,10 @@
       <select class="form-control-sm" name="survey_id" id="select_survey" onchange="onSelectSurvey(this)" required>
         <option value="">Select Survey</option>
         {{#each surveys}}
-          <option value={{this.id}} data-sample-size={{this.sample_size}}>{{this.poll_name}}</option>
+          <option value={{this.id}} data-sample-size={{this.sample_size}} data-poll-name={{this.poll_name}}>{{this.poll_name}}</option>
         {{/each}}
       </select>
+      <input type=hidden name="poll_name" value="">
     </div>
   </div>
 
@@ -22,7 +23,7 @@
       Use the same sample size? (<span id="current_sample_size"></span>)
     </label>
     <div class="form-check">
-      <input class="form-check-input" type="radio" name="use_same_sample_size" value="yes">
+      <input class="form-check-input" type="radio" name="use_same_sample_size" value="yes" required>
       <input class="hide" type="text" name="sample_size" value="" id="survey_sample_size">
       <label class="form-check-label mb-2" for="yes">
         Yes

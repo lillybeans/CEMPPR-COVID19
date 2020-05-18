@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const getService = require("../GETService")
+const postService = require("../POSTService")
 
 const submitSurveyModel = require("../models/submitSurveyModel")
 
@@ -38,6 +39,21 @@ submitRouter.get('/question', function(req, res) {
     })
   })
 
+})
+
+submitRouter.post('/question', function(req, res){
+
+  const formData = req.body
+  var questionId = ""
+
+  postService.insertQuestion(formData).then(newInsertQuestionId => {
+    questionId = newInsertQuestionId
+    return postService.insertQuestionOptions(questionId, formData)
+  }).then(res => {
+    return postService.insertQuestionKeywords(questionId, formData)
+  }).then(res => {
+    res.send("success")
+  })
 })
 
 submitRouter.get('/survey', function(req, res) {

@@ -13,13 +13,13 @@
     </label>
     <small id="description" class="form-text text-muted">Press tab to add more options</small>
 
-    <div class="answer">
+    <div class="answer" id="answer_1">
       <div class="form-row my-2 option">
-        <div class="col-10">
-          <input class="form-control" name="option" type="text" placeholder="Option">
+        <div class="col-9">
+          <input class="form-control option" name="option_1" type="text" placeholder="Option" required>
         </div>
-        <div class="col-1">
-          <input class="form-control percentage tapToAdd" name="percentage" type="text" placeholder="%">
+        <div class="col-2">
+          <input class="form-control percentage tapToAdd" name="percentage_1" type="number" step="0.1" placeholder="%" required>
         </div>
         <div class="col-1 button_container">
           <button type='button' tabindex=-1 class='btn btn-danger removeButton pb-1 hide' onclick='removeAnswer(this)'>

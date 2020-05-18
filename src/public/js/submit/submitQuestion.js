@@ -13,20 +13,28 @@ $('#questions_container').on("keydown", "input.tapToAdd", function (e) {
 function onSelectSurvey(dropdown){
   var selectedOption = $(dropdown).find(":selected").first()
   var sampleSize = $(selectedOption).attr('data-sample-size')
+  var pollName = $(selectedOption).attr('data-poll-name')
+
   $("#survey_sample_size").val(sampleSize)
   $("#current_sample_size").html(sampleSize)
+  $("input[name='poll_name']").val(pollName)
 }
 
 function addAnswer(lastAnswer) {
   var lastAnswerHtml = $(lastAnswer).html()
-  var nextAnswerHtml = "<div class='answer'>" + lastAnswerHtml + "</div>"
+  var nextAnswerIndex = Number($(lastAnswer).attr("id").split("_")[1]) + 1
+  var nextAnswerHtml = "<div class='answer' id='answer_"+nextAnswerIndex+"'>" + lastAnswerHtml + "</div>"
 
   $(lastAnswer).find('input.percentage').removeClass('tapToAdd')
 
   var questionForm = $(lastAnswer).parent()
   $(questionForm).append(nextAnswerHtml)
 
-  $(questionForm).children('.answer').last().find('.removeButton').show()
+  //For our newly added answer:
+  var nextAnswer = $(questionForm).children('.answer').last()
+  $(nextAnswer).find('.removeButton').show()
+  $(nextAnswer).find('input.option').first().attr("name","option_"+nextAnswerIndex)
+  $(nextAnswer).find('input.percentage').first().attr("name","percentage_"+nextAnswerIndex)
 }
 
 function removeAnswer(removeButton) {
@@ -73,9 +81,19 @@ $(function() {
       $("#survey_sample_size").removeAttr("name")
     }
 
-    var form = $(this)
-    console.log("Submitted!")
-    console.log(form.serialize())
+    var formData = $(this).serialize()
+
+    console.log(formData)
+
+    $.post("/submit/question/", formData)
+    .done( function(res) {
+      $("#success_message").fadeIn(1000)
+    })
+    .fail( function() {
+      alert("Update question failed!")
+    })
+
+
   })
 
 });
