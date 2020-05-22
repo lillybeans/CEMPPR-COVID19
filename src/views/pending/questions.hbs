@@ -1,4 +1,50 @@
-<div class="mx-5 my-4">
+<script type="text/javascript" src="../../../js/database/search.js"></script>
+<script type="text/javascript" src="../../../js/database/delete.js"></script>
+<script type="text/javascript" src="../../../js/database/details.js"></script>
+<script type="text/javascript" src="../../../js/database/editQuestion.js"></script>
+<script type="text/javascript" src="../../../js/database/editSurvey.js"></script>
+
+<div class="questions_page mx-5 my-4">
   <h1 class="display-4 mx-3">👩‍💼 Pending Questions</h1>
   <hr class="mx-3 bg-dark">
+
+  <nav class="mx-3 my-2">
+    <div class="search_results_nav">
+    </div>
+
+    <div class="questions_results_nav">
+      {{> database/paginationNavTemplate active=active pages=pages numberOfRecords=numberOfRecords }}
+    </div>
+  </nav>
+
+  <div class="table">
+    <div class="header bg-light border rounded mx-3 my-1">
+      <div class="row m-1 p-1">
+        <div class="col-9">
+          <div class="row">
+            <div class="col-1 font-weight-bold">
+              Questions
+            </div>
+            <div class="col-11 input-group-sm">
+              <input class="form-control search question" type="text" oninput="searchQuestion(this)" />
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-inline input-group-sm">
+            <span class="font-weight-bold mr-3">Survey</span>
+            <input class="form-control search survey" type="text" oninput="searchSurvey(this)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="search_results">
+
+    </div>
+
+    <div class="questions_results">
+      {{> database/questionsListTemplate question=questions groups=groups themes=themes keywords=keywords }}
+    </div>
+  </div>
 </div>

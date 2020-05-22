@@ -45,7 +45,6 @@ function insertQuestionOptions(questionId, dict) {
     if (key.includes("option")) {
       var option = mysqlConnection.escape(dict[key])
       var percentage = dict[keys[i + 1]]
-      console.log("option: "+option+", percentage:" + percentage)
       insertOptionQueries.push("INSERT INTO Question_Options (question_id, `option`, percentage) VALUES (" + questionId + "," + option + "," + percentage + ")")
       i += 1 // skip percentage
     }

@@ -49,9 +49,9 @@ submitRouter.post('/question', function(req, res){
   postService.insertQuestion(formData).then(newInsertQuestionId => {
     questionId = newInsertQuestionId
     return postService.insertQuestionOptions(questionId, formData)
-  }).then(res => {
+  }).then(insertQuestionOptionsRes => {
     return postService.insertQuestionKeywords(questionId, formData)
-  }).then(res => {
+  }).then(insertQuestionKeywordsRes => {
     res.send("success")
   })
 })
