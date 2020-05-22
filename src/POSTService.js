@@ -73,6 +73,7 @@ function insertQuestionKeywords(questionId, dict) {
     var key = keys[i]
     if (key.includes("keyword")) {
       var keyword = mysqlConnection.escape(dict[key])
+      console.log("keyword is:"+keyword)
       insertKeywordQueries.push("INSERT INTO Question_Keywords (question_id, keyword) VALUES (" + questionId + "," + keyword + ")")
     }
   }

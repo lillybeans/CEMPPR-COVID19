@@ -191,6 +191,7 @@ $(function() {
       //Change all inputs to readonly
       $(inputs).attr('readonly', true)
       $(options).attr('disabled', true)
+
     })
     .fail( function() {
       alert("Update question failed!")
