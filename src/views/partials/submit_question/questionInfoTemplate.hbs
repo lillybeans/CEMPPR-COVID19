@@ -21,7 +21,7 @@
         <option value="">Select</option>
 
         {{#each groups}}
-          <option value={{this}}>{{this}}</option>
+          <option value="{{this}}">{{this}}</option>
         {{/each}}
 
       </select>
@@ -37,7 +37,7 @@
         <option value="">Select</option>
 
         {{#each themes}}
-          <option value={{this}}>{{this}}</option>
+          <option value="{{this}}">{{this}}</option>
         {{/each}}
 
       </select>
@@ -51,7 +51,7 @@
 
     {{#each keywords}}
       <div class="form-check mb-1">
-        <input class="form-check-input" type="checkbox" value={{this}} name="keyword{{@index}}">
+        <input class="form-check-input" type="checkbox" value="{{this}}" name="keyword{{@index}}">
         <label class="form-check-label" for={{this}}>
           {{this}}
         </label>
