@@ -203,6 +203,7 @@ databaseRouter.get('/surveys/:surveyId/questions/:page', function(req, res) {
 
 })
 
+//Survey Details
 databaseRouter.get('/survey_partial/:surveyId', function(req, res) {
   const surveyId = req.params.surveyId
 
@@ -230,11 +231,16 @@ databaseRouter.get('/survey_partial/:surveyId', function(req, res) {
       typeOfStudies = typeOfStudiesRes
       return getService.fetchSurveyWithId(surveyId)
     }).then(survey => {
+      var pending = true
+      if (survey.approved) {
+        pending = false
+      }
       var populatedModel = populateSurveyModelWithData(editSurveyModel, countries, populations, languages, sampleMethods, typeOfStudies)
       res.render("partials/database/surveyDetailsTemplate", {
         survey: survey,
         surveyModel: populatedModel,
-        layout: false
+        layout: false,
+        pending: pending
       }, function(err, html) {
         res.send(html)
       })

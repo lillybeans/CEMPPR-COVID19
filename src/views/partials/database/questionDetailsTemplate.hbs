@@ -138,7 +138,11 @@
 <div class="mx-3 my-4 d-flex justify-content-end">
   <span class="mx-2 text-success saved-msg hide">Saved!</span>
   {{#if pending}}
-  <button type="button" class="btn btn-success mx-2 approveButton" onClick="approveQuestion(this)">Approve</button>
+    {{#if question.survey_approved}}
+      <button type="button" class="btn btn-success mx-2 approveButton" onClick="approveQuestion(this)">Approve</button>
+    {{else}}
+      <button type="button" class="btn btn-success mx-2 approveButton" disabled>Survey Needs Approval</button>
+    {{/if}}
   {{/if}}
   <button type="button" class="btn btn-primary mx-2 editButton" onClick="editQuestion(this)">Edit</button>
   <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteQuestionModal{{id}}">
