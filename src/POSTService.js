@@ -228,30 +228,6 @@ function updateSurveyWithId(id, dict) {
   });
 }
 
-function deleteOptionsForQuestionWithId(id) {
-  return new Promise((resolve, reject) => {
-    mysqlConnection.query("DELETE FROM Question_Options WHERE question_id=" + id, (err, res) => {
-      if (err) {
-        console.log("MYSQL Error:" + err)
-        return reject(err);
-      }
-      resolve(res);
-    });
-  });
-}
-
-function deleteKeywordsForQuestionWithId(id) {
-  return new Promise((resolve, reject) => {
-    mysqlConnection.query("DELETE FROM Question_Keywords WHERE question_id=" + id, (err, res) => {
-      if (err) {
-        console.log("MYSQL Error:" + err)
-        return reject(err);
-      }
-      resolve(res);
-    });
-  });
-}
-
 function deleteQuestionsForSurveyWithId(id) {
   return new Promise((resolve, reject) => {
     mysqlConnection.query("DELETE FROM Questions WHERE survey_id=" + id, (err, res) => {
@@ -333,8 +309,6 @@ module.exports = {
   insertQuestionKeywords: insertQuestionKeywords,
   updateQuestionWithId: updateQuestionWithId,
   updateSurveyWithId: updateSurveyWithId,
-  deleteOptionsForQuestionWithId: deleteOptionsForQuestionWithId,
-  deleteKeywordsForQuestionWithId: deleteKeywordsForQuestionWithId,
   deleteQuestionWithId: deleteQuestionWithId,
   deleteSurveyWithId: deleteSurveyWithId,
   searchQuestionAndSurvey: searchQuestionAndSurvey,
