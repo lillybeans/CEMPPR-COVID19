@@ -48,6 +48,18 @@ function cancelEditSurvey(cancelButton) {
   })
 }
 
+function approveSurvey(button){
+  var id = $(button).parent().parent().attr('id')
+  console.log("Approving survey with id:"+id)
+  $.post("/database/approve/survey/"+id)
+  .done( function(data) {
+    location.reload()
+  })
+  .fail( function() {
+    alert("Approve survey failed!")
+  })
+}
+
 //SAVE FUNCTIONS
 $(function() {
 

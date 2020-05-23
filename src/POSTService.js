@@ -34,7 +34,7 @@ function insertQuestion(dict) {
 
 function insertQuestionOptions(questionId, dict) {
 
-  console.log("insertQuestionOptions: questionId is "+questionId)
+  console.log("insertQuestionOptions: questionId is " + questionId)
 
   var insertOptionQueries = []
 
@@ -73,7 +73,7 @@ function insertQuestionKeywords(questionId, dict) {
     var key = keys[i]
     if (key.includes("keyword")) {
       var keyword = mysqlConnection.escape(dict[key])
-      console.log("keyword is:"+keyword)
+      console.log("keyword is:" + keyword)
       insertKeywordQueries.push("INSERT INTO Question_Keywords (question_id, keyword) VALUES (" + questionId + "," + keyword + ")")
     }
   }
@@ -317,7 +317,7 @@ function searchQuestionAndSurvey(question, survey, status, page) {
       perPageQuestionsQuery = "SELECT * FROM Questions WHERE poll_name LIKE '%" + sanitize(survey) + "%'"
     }
 
-    if (status == "approved"){
+    if (status == "approved") {
       countQuery = countQuery + " AND approved = true"
       perPageQuestionsQuery = perPageQuestionsQuery + " AND approved = true"
     } else if (status == "pending") {
@@ -338,6 +338,34 @@ function searchQuestionAndSurvey(question, survey, status, page) {
   });
 }
 
+/** Approve **/
+
+function approveSurveyWithId(surveyId) {
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("UPDATE Surveys SET approved = true WHERE id=" + surveyId, (err, res) => {
+      console.log("callback: res is " + util.inspect(res))
+      if (err) {
+        console.log("MYSQL Error:" + err)
+        return reject(err);
+      }
+      resolve(res);
+    });
+  });
+}
+
+
+function approveQuestionWithId(questionId) {
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("UPDATE Questions SET approved = true WHERE id=" + questionId, (err, res) => {
+      if (err) {
+        console.log("MYSQL Error:" + err)
+        return reject(err);
+      }
+      resolve(res);
+    });
+  });
+}
+
 module.exports = {
   insertQuestion: insertQuestion,
   insertQuestionOptions: insertQuestionOptions,
@@ -348,5 +376,7 @@ module.exports = {
   deleteQuestionWithId: deleteQuestionWithId,
   deleteSurveyWithId: deleteSurveyWithId,
   searchQuestionAndSurvey: searchQuestionAndSurvey,
-  searchResultsPerPage: searchResultsPerPage
+  searchResultsPerPage: searchResultsPerPage,
+  approveSurveyWithId: approveSurveyWithId,
+  approveQuestionWithId: approveQuestionWithId
 }

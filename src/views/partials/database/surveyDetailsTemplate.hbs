@@ -25,16 +25,14 @@
 
           {{#ifEquals type "text"}}
             <div>
-              <input class="form-control" type="text" name={{name}} id={{name}} value="{{lookup ../survey name}}" placeholder="{{placeholder}}" {{#if required}} required {{/if}} readonly
-                {{#ifEquals disabled true}}disabled {{/ifEquals}}>
+              <input class="form-control" type="text" name={{name}} id={{name}} value="{{lookup ../survey name}}" placeholder="{{placeholder}}" {{#if required}} required {{/if}} readonly {{#ifEquals disabled true}}disabled {{/ifEquals}}>
               <small id="description" class="form-text text-muted">{{description}}</small>
             </div>
           {{/ifEquals}}
 
           {{#ifEquals type "number"}}
             <div>
-              <input class="form-control" type="number" name={{name}} id={{name}} value="{{lookup ../survey name}}" placeholder="{{placeholder}}" {{#if required}} required {{/if}} readonly
-                {{#ifEquals disabled true}}disabled {{/ifEquals}}>
+              <input class="form-control" type="number" name={{name}} id={{name}} value="{{lookup ../survey name}}" placeholder="{{placeholder}}" {{#if required}} required {{/if}} readonly {{#ifEquals disabled true}}disabled {{/ifEquals}}>
               <small id="description" class="form-text text-muted">{{description}}</small>
             </div>
           {{/ifEquals}}
@@ -54,7 +52,7 @@
 
                 {{#each options}}
                   {{#ifEquals this (lookup ../../survey ../name)}}
-                  {{else}}
+                {{else}}
                   <option value="{{this}}" disabled>{{this}}</option>
                   {{/ifEquals}}
                 {{/each}}
@@ -82,15 +80,15 @@
   </div>
 
   <div class="mx-4 my-2 d-flex justify-content-end">
-      <span class="mx-2 text-success saved-msg hide">Saved!</span>
-      {{#if pending}}
+    <span class="mx-2 text-success saved-msg hide">Saved!</span>
+    {{#if pending}}
       <button type="button" class="btn btn-success mx-2 approveButton" onClick="approveSurvey(this)">Approve</button>
-      {{else}}
+    {{else}}
       <button type="button" class="btn btn-primary mx-2 editButton" onClick="editSurvey(this)">Edit</button>
-      {{/if}}
-      <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteSurveyModal{{survey.id}}">Delete</button>
-      <button type="submit" class="btn btn-primary saveButton mx-2 hide">Save</button>
-      <button type="button" class="btn btn-outline-primary cancelButton hide" onClick="cancelEditSurvey(this)">Cancel</button>
-      {{> database/surveyDeleteModalTemplate title=survey.poll_name id=survey.id}}
+    {{/if}}
+    <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteSurveyModal{{survey.id}}">Delete</button>
+    <button type="submit" class="btn btn-primary saveButton mx-2 hide">Save</button>
+    <button type="button" class="btn btn-outline-primary cancelButton hide" onClick="cancelEditSurvey(this)">Cancel</button>
+    {{> database/surveyDeleteModalTemplate title=survey.poll_name id=survey.id}}
   </div>
 </div>
