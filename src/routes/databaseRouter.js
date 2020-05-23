@@ -13,12 +13,14 @@ const deleteRouter = require("./deleteRouter")
 const searchRouter = require("./searchRouter")
 const pendingRouter = require("./pendingRouter")
 const approveRouter = require("./approveRouter")
+const parametersRouter = require("./parametersRouter")
 
 databaseRouter.use('/update', updateRouter)
 databaseRouter.use('/delete', deleteRouter)
 databaseRouter.use('/search', searchRouter)
 databaseRouter.use('/pending', pendingRouter)
 databaseRouter.use('/approve', approveRouter)
+databaseRouter.use('/parameters', parametersRouter)
 
 
 // home page route
