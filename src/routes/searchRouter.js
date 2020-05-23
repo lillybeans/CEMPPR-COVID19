@@ -7,10 +7,11 @@ const getService = require("../GETService")
 const searchRouter = express.Router();
 const util = require("util")
 
-searchRouter.post('/questions/:page', function(req, res) {
+searchRouter.post('/questions/:status/:page', function(req, res) {
   const questionSearchText = req.body["question"]
   const surveySearchText = req.body["survey"]
 
+  const status = req.params.status //"approved" or "pending"
   const page = req.params.page
 
   var pages = []
@@ -22,7 +23,7 @@ searchRouter.post('/questions/:page', function(req, res) {
   var themes = []
   var keywords = []
 
-  postService.searchQuestionAndSurvey(questionSearchText, surveySearchText, page).then(results => {
+  postService.searchQuestionAndSurvey(questionSearchText, surveySearchText, status, page).then(results => {
     //Results contains 2 parts
 
     var totalRecords = results[0][0].count

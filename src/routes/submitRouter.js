@@ -19,8 +19,9 @@ submitRouter.get('/question', function(req, res) {
   var themes = []
   var keywords = []
 
-  getService.fetchSurveysByPagePromise(1).then(surveysRes => {
+  getService.fetchSurveysByPagePromise(1, "all").then(surveysRes => {
     surveys = surveysRes //only first 20
+    console.log("surveys: "+util.inspect(surveys))
     return getService.fetchGroups()
   }).then(groupsRes => {
     groups = groupsRes

@@ -16,7 +16,7 @@
               {{question}}
             </div>
             <div class="col-2">
-              <h6 class="text-right">{{poll_name}}</h6>
+              <h6 class="text-right {{#if survey_approved}}{{else}}text-danger{{/if}}">{{poll_name}}</h6>
             </div>
             <div class="col-1">
               <ion-icon class="float-right icon-arrow-down" name="chevron-down-outline"></ion-icon>
@@ -36,7 +36,7 @@
 
           <form class="edit question" id="editQuestion_{{id}}">
             <div class="question_details">
-              {{> database/questionDetailsTemplate question=this groups=../groups themes=../themes keywords=../keywords }}
+              {{> database/questionDetailsTemplate question=this groups=../groups themes=../themes keywords=../keywords pending=../pending}}
             </div>
           </form>
 

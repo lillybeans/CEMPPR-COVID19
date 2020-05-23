@@ -288,7 +288,7 @@ function deleteSurveyWithId(id) {
   });
 }
 
-function searchQuestionAndSurvey(question, survey, page) {
+function searchQuestionAndSurvey(question, survey, status, page) {
   return new Promise((resolve, reject) => {
     var countQuery, perPageQuestionsQuery
 
@@ -304,6 +304,14 @@ function searchQuestionAndSurvey(question, survey, page) {
     } else if (survey != "") { //Filter Questions by Survey Only
       countQuery = "SELECT COUNT(*) as count FROM Questions WHERE poll_name LIKE '%" + sanitize(survey) + "%'"
       perPageQuestionsQuery = "SELECT * FROM Questions WHERE poll_name LIKE '%" + sanitize(survey) + "%'"
+    }
+
+    if (status == "approved"){
+      countQuery = countQuery + " AND approved = true"
+      perPageQuestionsQuery = perPageQuestionsQuery + " AND approved = true"
+    } else if (status == "pending") {
+      countQuery = countQuery + " AND approved = false"
+      perPageQuestionsQuery = perPageQuestionsQuery + " AND approved = false"
     }
 
     //add limit and offset

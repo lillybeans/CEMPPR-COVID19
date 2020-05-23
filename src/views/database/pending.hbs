@@ -26,14 +26,14 @@
               Questions
             </div>
             <div class="col-11 input-group-sm">
-              <input class="form-control search question" type="text" oninput="searchQuestion(this)" />
+              <input class="form-control search question" type="text" oninput="searchPendingQuestion(this)" />
             </div>
           </div>
         </div>
         <div class="col-3">
           <div class="form-inline input-group-sm">
             <span class="font-weight-bold mr-3">Survey</span>
-            <input class="form-control search survey" type="text" oninput="searchSurvey(this)" />
+            <input class="form-control search survey" type="text" oninput="searchPendingSurvey(this)" />
           </div>
         </div>
       </div>
@@ -44,7 +44,7 @@
     </div>
 
     <div class="questions_results">
-      {{> database/questionsListTemplate question=questions groups=groups themes=themes keywords=keywords }}
+      {{> database/questionsListTemplate question=questions groups=groups themes=themes keywords=keywords pending=true }}
     </div>
   </div>
 </div>

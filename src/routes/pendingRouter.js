@@ -8,7 +8,7 @@ const util = require("util")
 
 
 /** Database: Questions **/
-pendingRouter.get('/questions/:page', function(req, res) {
+pendingRouter.get('/:page', function(req, res) {
   const page = req.params.page
   var pages = []
   var numberOfRecords = 0
@@ -19,13 +19,13 @@ pendingRouter.get('/questions/:page', function(req, res) {
   var themes = []
   var keywords = []
 
-  getService.fetchNumberOfPendingQuestionsPromise().then(records => {
+  getService.fetchNumberOfQuestionsPromise("pending").then(records => {
     numberOfRecords = records
     numPages = Math.ceil(numberOfRecords / getService.perPage)
     for (var i = 1; i <= numPages; i++) {
       pages.push(i)
     }
-    return getService.fetchPendingQuestionsByPagePromise(page)
+    return getService.fetchQuestionsByPagePromise(page, "pending")
   }).then(questionsMetadata => {
     //console.log("GOT - questionsMetadata: " + util.inspect(questionsMetadata))
     questionsMetadata.map(qMetadata => {
@@ -73,7 +73,7 @@ pendingRouter.get('/questions/:page', function(req, res) {
   }).then(keywordsRes => {
     keywords = keywordsRes
 
-    res.render("pending/questions", {
+    res.render("database/pending", {
       numberOfRecords: numberOfRecords,
       pages: pages,
       active: page,

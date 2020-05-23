@@ -14,7 +14,23 @@ function searchSurvey(input) {
   search(questionSearchText, surveySearchText, input)
 }
 
-function search(questionText, surveyText, input) {
+function searchPendingQuestion(input) {
+  var questionSearchText = $(input).val()
+  var surveySearchText = $(input).parentsUntil('.header').find('.search.survey').first().val()
+
+  var isPending = true
+  search(questionSearchText, surveySearchText, input, isPending)
+}
+
+function searchPendingSurvey(input) {
+  var surveySearchText = $(input).val()
+  var questionSearchText = $(input).parentsUntil('.header').find('.search.question').first().val()
+
+  var isPending = true
+  search(questionSearchText, surveySearchText, input, isPending)
+}
+
+function search(questionText, surveyText, input, isPending = false) {
   var searchResultsDiv = $(input).parentsUntil('.table').parent().find('.search_results').first()
   var questionsResultsDiv = $(input).parentsUntil('.table').parent().find('.questions_results').first()
   var searchResultsNavDiv = $(searchResultsDiv).parentsUntil('.questions_page').parent().find('nav').find('.search_results_nav').first()
@@ -30,7 +46,13 @@ function search(questionText, surveyText, input) {
     $(questionsResultsDiv).removeClass("hide")
   } else {
     //SEARCH
-    $.post("/database/search/questions/"+currentPage, {
+    var searchUrl = "/database/search/questions/approved/"+currentPage
+
+    if (isPending) {
+      searchUrl = "/database/search/questions/pending/"+currentPage
+    }
+
+    $.post(searchUrl, {
         "question": questionText,
         "survey": surveyText
       })

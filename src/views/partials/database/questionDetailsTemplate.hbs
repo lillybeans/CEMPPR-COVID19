@@ -137,8 +137,17 @@
 
 <div class="mx-3 my-4 d-flex justify-content-end">
   <span class="mx-2 text-success saved-msg hide">Saved!</span>
+  {{#if pending}}
+  <button type="button" class="btn btn-success mx-2 approveButton" onClick="approveQuestion(this)">Approve</button>
+  {{/if}}
   <button type="button" class="btn btn-primary mx-2 editButton" onClick="editQuestion(this)">Edit</button>
-  <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteQuestionModal{{id}}">Delete</button>
+  <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteQuestionModal{{id}}">
+    {{#if pending}}
+    Reject
+    {{else}}
+    Delete
+    {{/if}}
+  </button>
   <button type="submit" class="btn btn-primary saveButton mx-2 hide">Save</button>
   <button type="button" class="btn btn-outline-primary cancelButton hide" onClick="cancelEditQuestion(this)">Cancel</button>
   {{> database/questionDeleteModalTemplate question }}

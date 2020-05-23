@@ -34,9 +34,23 @@ function fetchSurveyWithId(surveyId) {
   });
 }
 
-function fetchNumberOfPendingSurveysPromise() {
+function fetchNumberOfSurveysPromise(type) {
   return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT COUNT(*) AS count FROM Surveys WHERE approved = false", (err, rows) => {
+
+    var typeFilter = ""
+    switch (type) {
+      case "all":
+        typeFilter = ""
+        break
+      case "approved":
+        typeFilter = " WHERE approved = true"
+        break
+      case "pending":
+        typeFilter = " WHERE approved = false"
+        break
+    }
+
+    mysqlConnection.query("SELECT COUNT(*) AS count FROM Surveys" + typeFilter, (err, rows) => {
       if (err)
         return reject(err);
       resolve(rows[0].count);
@@ -44,31 +58,26 @@ function fetchNumberOfPendingSurveysPromise() {
   });
 }
 
-function fetchNumberOfSurveysPromise() {
-  return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT COUNT(*) AS count FROM Surveys WHERE approved = true", (err, rows) => {
-      if (err)
-        return reject(err);
-      resolve(rows[0].count);
-    });
-  });
-}
-
-function fetchPendingSurveysByPagePromise(page) {
+function fetchSurveysByPagePromise(page, type) {
   var rowsOffset = (page - 1) * perPage
   return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT * FROM Surveys WHERE approved = true ORDER BY created_at ASC LIMIT "+ perPage +" OFFSET " + rowsOffset, (err, rows) => {
-      if (err)
-        return reject(err);
-      resolve(rows);
-    });
-  });
-}
 
-function fetchSurveysByPagePromise(page) {
-  var rowsOffset = (page - 1) * perPage
-  return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT * FROM Surveys WHERE approved = true ORDER BY created_at ASC LIMIT "+ perPage +" OFFSET " + rowsOffset, (err, rows) => {
+    var typeFilter = ""
+    switch (type) {
+      case "all":
+        typeFilter = ""
+        break
+      case "approved":
+        typeFilter = " WHERE approved = true"
+        break
+      case "pending":
+        typeFilter = " WHERE approved = false"
+        break
+    }
+
+    let query = "SELECT * FROM Surveys" + typeFilter + " ORDER BY created_at DESC LIMIT "+ perPage +" OFFSET " + rowsOffset
+
+    mysqlConnection.query(query, (err, rows) => {
       if (err)
         return reject(err);
       resolve(rows);
@@ -78,9 +87,21 @@ function fetchSurveysByPagePromise(page) {
 
 /** Questions **/
 
-function fetchNumberOfPendingQuestionsPromise() {
+function fetchNumberOfQuestionsPromise(type) {
   return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT COUNT(*) AS count FROM Questions WHERE approved = false", (err, rows) => {
+    var typeFilter = ""
+    switch (type) {
+      case "all":
+        typeFilter = ""
+        break
+      case "approved":
+        typeFilter = " WHERE approved = true"
+        break
+      case "pending":
+        typeFilter = " WHERE approved = false"
+        break
+    }
+    mysqlConnection.query("SELECT COUNT(*) AS count FROM Questions" + typeFilter, (err, rows) => {
       if (err)
         return reject(err);
       resolve(rows[0].count);
@@ -88,31 +109,22 @@ function fetchNumberOfPendingQuestionsPromise() {
   });
 }
 
-function fetchNumberOfQuestionsPromise() {
-  return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT COUNT(*) AS count FROM Questions WHERE approved = true", (err, rows) => {
-      if (err)
-        return reject(err);
-      resolve(rows[0].count);
-    });
-  });
-}
-
-function fetchPendingQuestionsByPagePromise(page) {
+function fetchQuestionsByPagePromise(page, type) {
   var rowsOffset = (page - 1) * perPage
   return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT * FROM Questions WHERE approved = false ORDER BY created_at ASC LIMIT " + perPage + " OFFSET " + rowsOffset, (err, rows) => {
-      if (err)
-        return reject(err);
-      resolve(rows);
-    });
-  });
-}
-
-function fetchQuestionsByPagePromise(page) {
-  var rowsOffset = (page - 1) * perPage
-  return new Promise((resolve, reject) => {
-    mysqlConnection.query("SELECT * FROM Questions WHERE approved = true ORDER BY created_at ASC LIMIT " + perPage + " OFFSET " + rowsOffset, (err, rows) => {
+    var typeFilter = ""
+    switch (type) {
+      case "all":
+        typeFilter = ""
+        break
+      case "approved":
+        typeFilter = " WHERE approved = true"
+        break
+      case "pending":
+        typeFilter = " WHERE approved = false"
+        break
+    }
+    mysqlConnection.query("SELECT * FROM Questions" + typeFilter + " ORDER BY created_at ASC LIMIT " + perPage + " OFFSET " + rowsOffset, (err, rows) => {
       if (err)
         return reject(err);
       resolve(rows);
@@ -280,13 +292,9 @@ module.exports = {
   perPage: perPage,
   fetchSurveyWithId: fetchSurveyWithId,
   fetchPollNamesPromise: fetchPollNamesPromise,
-  fetchNumberOfPendingSurveysPromise: fetchNumberOfPendingSurveysPromise,
   fetchNumberOfSurveysPromise: fetchNumberOfSurveysPromise,
-  fetchPendingSurveysByPagePromise: fetchPendingSurveysByPagePromise,
   fetchSurveysByPagePromise: fetchSurveysByPagePromise,
-  fetchNumberOfPendingQuestionsPromise: fetchNumberOfPendingQuestionsPromise,
   fetchNumberOfQuestionsPromise: fetchNumberOfQuestionsPromise,
-  fetchPendingQuestionsByPagePromise: fetchPendingQuestionsByPagePromise,
   fetchQuestionsByPagePromise: fetchQuestionsByPagePromise,
   fetchCountries: fetchCountries,
   fetchPopulations: fetchPopulations,
