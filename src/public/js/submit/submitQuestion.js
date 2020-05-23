@@ -87,7 +87,7 @@ $(function() {
 
     $.post("/submit/question/", formData)
     .done( function(res) {
-      $("#success_message").fadeIn(500)
+      location.reload()
     })
     .fail( function() {
       alert("Submit question failed!")

@@ -90,7 +90,7 @@
 
                 <div class="col-4">
                   <div class="form-check mb-1">
-                    <input class="form-check-input {{#if (containsKeyword ../question.keywords this)}}original{{/if}}" name="keyword" type="checkbox" value="{{this}}" {{#if (containsKeyword ../question.keywords this)}} checked {{/if}} id="kw{{@index}}">
+                    <input class="form-check-input {{#if (containsKeyword ../question.keywords this)}}original{{/if}}" name="keyword" type="checkbox" value="{{this}}" {{#if (containsKeyword ../question.keywords this)}} checked {{/if}} id="kw{{@index}}_{{../question.id}}">
                     <small class="form-check-label">{{this}}</small>
                   </div>
                 </div>
@@ -139,7 +139,7 @@
   <span class="mx-2 text-success saved-msg hide">Saved!</span>
   {{#if pending}}
     {{#if question.survey_approved}}
-      <button type="button" class="btn btn-success mx-2 approveButton" onClick="approveQuestion(this)">Approve</button>
+      <button type="button" class="btn btn-success mx-2 approveButton" onClick="approveQuestion(this)" data-questionId="{{id}}">Approve</button>
     {{else}}
       <button type="button" class="btn btn-success mx-2 approveButton" disabled>Please Approve Survey</button>
     {{/if}}

@@ -122,8 +122,16 @@ function cancelEditQuestion(cancelButton) {
   $(form).find(".questionKeywords").removeClass("hide")
 }
 
-function approveQuestion(approveButton){
-  
+function approveQuestion(button){
+  var id = $(button).attr("data-questionId")
+  console.log("Approving question with id:"+id)
+  $.post("/database/approve/question/"+id)
+  .done( function(data) {
+    location.reload()
+  })
+  .fail( function() {
+    alert("Approve question failed!")
+  })
 }
 
 //SAVE FUNCTIONS
@@ -171,6 +179,7 @@ $(function() {
     var deleteButton = $(this).find('.deleteButton').first()
     var cancelButton = $(this).find('.cancelButton').first()
     var savedMessage = $(this).find('.saved-msg').first()
+    var removeButtons = $(this).find('.answer .removeButton')
 
     var inputs = $(this).find('input')
     var options = $(this).find('option')
@@ -183,6 +192,9 @@ $(function() {
       console.log("Success! updated question with questionId="+ questionId + ", updatedAt "+updatedAtTimestamp)
 +
       $(savedMessage).fadeIn(500).delay(2000).fadeOut(500)
+
+      //hide all remove buttons
+      $(removeButtons).addClass("hide")
 
       $(editButton).removeClass('hide')
       $(deleteButton).removeClass('hide')

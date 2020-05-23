@@ -8,7 +8,7 @@
       <select class="form-control-sm" name="survey_id" id="select_survey" onchange="onSelectSurvey(this)" required>
         <option value="">Select Survey</option>
         {{#each surveys}}
-          <option value={{this.id}} data-sample-size={{this.sample_size}} data-poll-name={{this.poll_name}}>{{this.poll_name}}</option>
+          <option value={{this.id}} data-sample-size={{this.sample_size}} data-poll-name="{{this.poll_name}}">{{this.poll_name}}</option>
         {{/each}}
       </select>
       <input type=hidden name="poll_name" value="">

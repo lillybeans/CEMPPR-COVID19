@@ -8,7 +8,7 @@ $(function(){
 
     $.post("/submit/survey/", formData)
     .done( function(res) {
-      $("#success_message").fadeIn(500)
+      location.reload()
     })
     .fail( function() {
       alert("Submit survey failed!")
