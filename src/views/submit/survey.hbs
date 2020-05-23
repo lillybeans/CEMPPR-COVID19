@@ -26,7 +26,7 @@
 
         {{#ifEquals type "text"}}
           <div>
-            <input class="form-control col-8" type="text" name="{{name}}" id="{{name}}" placeholder="{{placeholder}}" {{#if required}} required {{/if}}>
+            <input class="form-control col-8" type="text" name="{{name}}" id="{{name}}" placeholder="{{placeholder}}" value="" {{#if required}} required {{/if}}>
             <small id="description" class="form-text text-muted">{{description}}</small>
           </div>
         {{/ifEquals}}
@@ -44,7 +44,7 @@
               <option value="">Select</option>
 
               {{#each options}}
-                <option value={{this}}>{{this}}</option>
+                <option value="{{this}}">{{this}}</option>
               {{/each}}
 
             </select>
@@ -68,9 +68,14 @@
 
   </div>
 </div>
-<div class="mx-5 my-4">
+<div class="mx-5 mt-4">
   <button type="submit" class="btn btn-dark mx-3" id="submit_button">Submit</button>
 </div>
+
+<div class="mx-5 my-3 hide" id="success_message">
+  <span class="mx-3 text-success">Success!</span>
+</div>
+
 </div>
 </div>
 

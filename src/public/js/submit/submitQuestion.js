@@ -87,10 +87,10 @@ $(function() {
 
     $.post("/submit/question/", formData)
     .done( function(res) {
-      $("#success_message").fadeIn(1000)
+      $("#success_message").fadeIn(500)
     })
     .fail( function() {
-      alert("Update question failed!")
+      alert("Submit question failed!")
     })
 
 

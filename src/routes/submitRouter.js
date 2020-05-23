@@ -58,11 +58,42 @@ submitRouter.post('/question', function(req, res){
 })
 
 submitRouter.get('/survey', function(req, res) {
-  res.render("submit/survey", {
-    active: {
-      submit: true
-    },
-    surveyModel: submitSurveyModel
+  //Dropdowns
+  var countries = []
+  var populations = []
+  var languages = []
+  var sampleMethods = []
+  var typeOfStudies = []
+
+  getService.fetchCountries()
+    .then(countriesRes => {
+      countries = countriesRes
+      return getService.fetchPopulations()
+    }).then(populationsRes => {
+      populations = populationsRes
+      return getService.fetchLanguages()
+    }).then(languagesRes => {
+      languages = languagesRes
+      return getService.fetchSampleMethods()
+    }).then(sampleMethodsRes => {
+      sampleMethods = sampleMethodsRes
+      return getService.fetchTypeofStudies()
+    }).then(typeOfStudiesRes => {
+      typeOfStudies = typeOfStudiesRes
+
+      var populatedModel = populateSurveyModelWithData(submitSurveyModel, countries, populations, languages, sampleMethods, typeOfStudies)
+      res.render("submit/survey", {
+        surveyModel: populatedModel,
+      })
+    })
+})
+
+submitRouter.post('/survey', function(req, res){
+
+  const formData = req.body
+
+  postService.insertSurvey(formData).then(newInsertSurveyId => {
+    res.send("success")
   })
 })
 

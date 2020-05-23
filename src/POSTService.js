@@ -201,6 +201,41 @@ function updateQuestionWithId(id, dict) {
 
 }
 
+/** Surveys **/
+
+
+function insertSurvey(dict) {
+
+  var polling_group = mysqlConnection.escape(dict["polling_group"])
+  var poll_name = mysqlConnection.escape(dict["poll_name"])
+  var country = mysqlConnection.escape(dict["country"])
+  var subnational = mysqlConnection.escape(dict["subnational"])
+  var population = mysqlConnection.escape(dict["population"])
+  var language = mysqlConnection.escape(dict["language"])
+  var sample_size = mysqlConnection.escape(dict["sample_size"])
+  var sample_method = mysqlConnection.escape(dict["sample_method"])
+  var type_of_study = mysqlConnection.escape(dict["type_of_study"])
+  var url = mysqlConnection.escape(dict["url"])
+  var publication_date = mysqlConnection.escape(dict["publication_date"])
+  var start_date = mysqlConnection.escape(dict["start_date"])
+  var end_date = mysqlConnection.escape(dict["end_date"])
+  var created_by = mysqlConnection.escape(dict["created_by"])
+
+
+  var insertSurveyQuery = "INSERT INTO Surveys (polling_group, poll_name, country, subnational, population, `language`, sample_size, sample_method, type_of_study, url, publication_date, start_date, end_date, created_by) \
+                             VALUES (" + polling_group + "," + poll_name + "," + country + "," + subnational + "," + population + "," + language + "," + sample_size + "," + sample_method + "," + type_of_study + "," + url + "," + publication_date + "," + start_date + "," + end_date + "," + created_by + ")"
+
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query(insertSurveyQuery, (err, res) => {
+      if (err) {
+        console.log("MYSQL Error:" + err)
+        return reject(err);
+      }
+      resolve(res.insertId);
+    })
+  })
+}
+
 function updateSurveyWithId(id, dict) {
   var fieldsToUpdate = ""
   var keys = Object.keys(dict);
@@ -307,6 +342,7 @@ module.exports = {
   insertQuestion: insertQuestion,
   insertQuestionOptions: insertQuestionOptions,
   insertQuestionKeywords: insertQuestionKeywords,
+  insertSurvey: insertSurvey,
   updateQuestionWithId: updateQuestionWithId,
   updateSurveyWithId: updateSurveyWithId,
   deleteQuestionWithId: deleteQuestionWithId,

@@ -91,21 +91,21 @@ var submitSurveyModel = {
       "title":"Publication Date",
       "type":"date",
       "placeholder": "Ex: 2020/03/01",
-      "required": false
+      "required": true
     },
     {
       "name": "start_date",
       "title":"Start Date",
       "type":"date",
       "placeholder": "Ex: 2020/02/01",
-      "required": false
+      "required": true
     },
     {
       "name": "end_date",
       "title":"End Date",
       "type":"date",
       "placeholder": "Ex: 2020/02/02",
-      "required": false
+      "required": true
     },
   ]
 }
