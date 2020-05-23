@@ -6,7 +6,7 @@ function deleteQuestionWithId(id){
     location.reload()
   })
   .fail( function() {
-    alert("Delete survey failed!")
+    alert("Delete question failed!")
   })
 
 }

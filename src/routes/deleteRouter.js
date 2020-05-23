@@ -16,12 +16,8 @@ deleteRouter.post('/survey/:surveyId', function(req, res) {
 
 deleteRouter.post('/question/:questionId', function(req, res) {
   const questionId = req.params.questionId
-  postService.deleteOptionsForQuestionWithId(questionId)
-  .then( deleteResult => {
-    return postService.deleteKeywordsForQuestionWithId(questionId)
-  }).then(deleteResult => {
-    return postService.deleteQuestionWithId(questionId)
-  }).then(deleteResult => {
+  postService.deleteQuestionWithId(questionId)
+  .then(deleteResult => {
     res.send(deleteResult)
   })
 })

@@ -122,6 +122,10 @@ function cancelEditQuestion(cancelButton) {
   $(form).find(".questionKeywords").removeClass("hide")
 }
 
+function approveQuestion(approveButton){
+  
+}
+
 //SAVE FUNCTIONS
 $(function() {
 

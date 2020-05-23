@@ -45,6 +45,7 @@ pendingRouter.get('/:page', function(req, res) {
       var question = questionOptionsAndKeywords[q]
       var questionOptions = question[0]
       var questionKeywords = question[1]
+
       var questionId = questionOptions[0].question_id
 
       questions[questionId]["options"] = questionOptions.map(row => {
