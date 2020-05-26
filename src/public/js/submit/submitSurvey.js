@@ -8,7 +8,7 @@ $(function(){
 
     $.post("/submit/survey/", formData)
     .done( function(res) {
-      location.reload()
+      window.location = "/submit/survey/submitted"
     })
     .fail( function() {
       alert("Submit survey failed!")

@@ -11,7 +11,14 @@ const util = require("util")
 
 // home page route
 
-submitRouter.get('/question', function(req, res) {
+submitRouter.get('/question/:status?', function(req, res) {
+  const status = req.params.status //optional, either "submitted" or nothing
+
+  var isSubmitted = false
+  if (status == "submitted"){
+    isSubmitted = true
+  }
+
   var surveys = []
 
   //Dropdowns
@@ -36,7 +43,8 @@ submitRouter.get('/question', function(req, res) {
       surveys: surveys,
       groups: groups,
       themes: themes,
-      keywords: keywords
+      keywords: keywords,
+      submitted: isSubmitted
     })
   })
 
@@ -57,7 +65,15 @@ submitRouter.post('/question', function(req, res){
   })
 })
 
-submitRouter.get('/survey', function(req, res) {
+submitRouter.get('/survey/:status?', function(req, res) {
+
+  const status = req.params.status //optional, either "submitted" or nothing
+
+  var isSubmitted = false
+  if (status == "submitted"){
+    isSubmitted = true
+  }
+
   //Dropdowns
   var countries = []
   var populations = []
@@ -84,6 +100,7 @@ submitRouter.get('/survey', function(req, res) {
       var populatedModel = populateSurveyModelWithData(submitSurveyModel, countries, populations, languages, sampleMethods, typeOfStudies)
       res.render("submit/survey", {
         surveyModel: populatedModel,
+        submitted: isSubmitted
       })
     })
 })

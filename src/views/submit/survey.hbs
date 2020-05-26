@@ -3,6 +3,13 @@
 <div class="mx-5 my-4">
   <h1 class="display-4 mx-3">Submit Survey</h1>
   <hr class="mx-3 bg-dark">
+
+  {{#if submitted}}
+  <h5 class="mx-3 text-success">
+    Thank you. Your survey has been submitted!
+  </h5>
+  {{/if}}
+  
 </div>
 
 <form id="submit_survey">
