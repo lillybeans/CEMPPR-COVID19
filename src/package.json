@@ -9,11 +9,16 @@
   "author": "Lilly Tong",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.4.1",
     "express": "^4.17.1",
     "express-handlebars": "^4.0.3",
+    "express-mysql-session": "^2.1.4",
+    "express-session": "^1.17.1",
     "jquery": "^3.5.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
   }
 }

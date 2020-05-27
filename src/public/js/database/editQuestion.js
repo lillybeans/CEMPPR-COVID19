@@ -220,6 +220,7 @@ $(function() {
   $('.questions_page').on("keydown", "input.tapToAdd", function (e) {
     var inputValue = $(this).val();
     if(e.keyCode == 9) { //tab pressed
+      console.log("Tab pressed!")
       var lastAnswer = $(this).closest(".answer[name!='deleted']")
       addAnswer(lastAnswer)
     }
