@@ -3,6 +3,10 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const exphbs = require("express-handlebars")
 const helpers = require("./helpers") //handlebars helpers
+const bcrpyt = require("bcrypt")
+const mysqlConnection = require("./connection")
+var session = require('express-session')
+var MySQLStore = require('express-mysql-session')(session)
 
 //Import our custom files/dependencies: MySQL, our routes
 
@@ -22,6 +26,10 @@ var hbs = exphbs.create({
 })
 
 var app = express()
+
+// var sessionStore = new MySQLStore({
+//   /** session store properties **/
+// }, mysqlConnection);
 
 //Handlebars
 app.engine("hbs", hbs.engine)

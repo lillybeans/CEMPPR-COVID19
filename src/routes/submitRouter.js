@@ -28,7 +28,6 @@ submitRouter.get('/question/:status?', function(req, res) {
 
   getService.fetchSurveysByPagePromise(1, "all").then(surveysRes => {
     surveys = surveysRes //only first 20
-    console.log("surveys: "+util.inspect(surveys))
     return getService.fetchGroups()
   }).then(groupsRes => {
     groups = groupsRes

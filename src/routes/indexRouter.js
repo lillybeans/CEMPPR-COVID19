@@ -23,6 +23,19 @@ indexRouter.get('/about', function(req, res) {
   })
 })
 
+indexRouter.get('/login', function(req, res) {
+  res.render("login", {
+    active: {
+      login: true
+    }
+  })
+})
+
+indexRouter.get('/register', function(req, res) {
+  res.render("register", {
+  })
+})
+
 indexRouter.get('/test', function(req, res) {
   res.render("test")
 })
