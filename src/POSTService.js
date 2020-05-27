@@ -34,8 +34,6 @@ function insertQuestion(dict) {
 
 function insertQuestionOptions(questionId, dict) {
 
-  console.log("insertQuestionOptions: questionId is " + questionId)
-
   var insertOptionQueries = []
 
   var keys = Object.keys(dict);
@@ -140,8 +138,6 @@ function updateQuestionWithId(id, dict) {
       var keywordState = keywordArray[1]
       var keyword = mysqlConnection.escape(dict[key])
 
-      console.log("The current key is: " + key + ", keyword is: " + keyword)
-
       switch (keywordState) {
         case "inserted":
           let insertQuery = "INSERT INTO Question_Keywords (question_id, keyword) VALUES (" + id + ", " + keyword + ")"
@@ -186,8 +182,6 @@ function updateQuestionWithId(id, dict) {
   if (keywordsQueryString != "") {
     combinedQuery += keywordsQueryString
   }
-
-  console.log("\n\ncombinedQuery:" + combinedQuery)
 
   return new Promise((resolve, reject) => {
     mysqlConnection.query(combinedQuery, (err, res) => {
@@ -343,7 +337,6 @@ function searchQuestionAndSurvey(question, survey, status, page) {
 function approveSurveyWithId(surveyId) {
   return new Promise((resolve, reject) => {
     mysqlConnection.query("UPDATE Surveys SET approved = true WHERE id=" + surveyId, (err, res) => {
-      console.log("callback: res is " + util.inspect(res))
       if (err) {
         console.log("MYSQL Error:" + err)
         return reject(err);
