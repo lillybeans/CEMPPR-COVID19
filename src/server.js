@@ -3,7 +3,6 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const exphbs = require("express-handlebars")
 const helpers = require("./helpers") //handlebars helpers
-const bcrpyt = require("bcrypt")
 const mysqlConnection = require("./connection")
 var session = require('express-session')
 var MySQLStore = require('express-mysql-session')(session)

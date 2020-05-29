@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const getService = require("../GETService")
+const postService = require("../POSTService")
 
 //Define our Routes:
 const authRouter = express.Router();
@@ -31,10 +31,11 @@ authRouter.get('/register', function(req, res) {
 authRouter.post('/register', function(req, res) {
   const formData = req.body
 
-  getService.fetchCountries()
-  .then(countriesRes => {
-      res.render("dashboard", {
-      })
+  postService.createUser(formData)
+  .then(newUser => {
+      res.send("success")
+  }).catch(errorMsg => {
+    res.status(400).send(errorMsg)
   })
 
 })

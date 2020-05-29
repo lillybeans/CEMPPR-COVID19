@@ -1,4 +1,5 @@
 const mysqlConnection = require("./connection")
+const bcrypt = require("bcrypt")
 const util = require("util")
 const searchResultsPerPage = 20
 
@@ -359,6 +360,31 @@ function approveQuestionWithId(questionId) {
   });
 }
 
+/** User **/
+
+function createUser(form) {
+  return new Promise((resolve, reject) => {
+
+    var email = mysqlConnection.escape(form["email"])
+    var password = mysqlConnection.escape(form["password"])
+    var first_name = mysqlConnection.escape(form["first_name"])
+    var last_name = mysqlConnection.escape(form["last_name"])
+    var how_did_you_hear_about_us = mysqlConnection.escape(form["how_did_you_hear_about_us"])
+    var why_get_involved = mysqlConnection.escape(form["why_get_involved"])
+    var language_proficiencies = mysqlConnection.escape(form["language_proficiencies"])
+    var education = mysqlConnection.escape(form["education"])
+
+    let hashedPassword = mysqlConnection.escape(bcrypt.hashSync(password, 10))
+
+    mysqlConnection.query("INSERT INTO Users (email, password, first_name, last_name, how_did_you_hear_about_us, why_get_involved, language_proficiencies, education) VALUES (" + email + "," + hashedPassword + "," + first_name + "," + last_name + "," + how_did_you_hear_about_us + "," + why_get_involved + "," + language_proficiencies + "," + education + ")", (err, res) => {
+      if (err) {
+        return reject(err.sqlMessage);
+      }
+      resolve(res);
+    });
+  });
+}
+
 module.exports = {
   insertQuestion: insertQuestion,
   insertQuestionOptions: insertQuestionOptions,
@@ -371,5 +397,6 @@ module.exports = {
   searchQuestionAndSurvey: searchQuestionAndSurvey,
   searchResultsPerPage: searchResultsPerPage,
   approveSurveyWithId: approveSurveyWithId,
-  approveQuestionWithId: approveQuestionWithId
+  approveQuestionWithId: approveQuestionWithId,
+  createUser: createUser
 }
