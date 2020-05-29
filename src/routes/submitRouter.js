@@ -11,11 +11,11 @@ const util = require("util")
 
 // home page route
 
-submitRouter.get('/question/:status?', function(req, res) {
-  const status = req.params.status //optional, either "submitted" or nothing
+submitRouter.get('/question', function(req, res) {
+  const status = req.query.status //optional, either "submitted" or nothing
 
   var isSubmitted = false
-  if (status == "submitted"){
+  if (status && status == "submitted"){
     isSubmitted = true
   }
 
@@ -64,12 +64,12 @@ submitRouter.post('/question', function(req, res){
   })
 })
 
-submitRouter.get('/survey/:status?', function(req, res) {
+submitRouter.get('/survey', function(req, res) {
 
-  const status = req.params.status //optional, either "submitted" or nothing
+  const status = req.query.status //optional, either "submitted" or nothing
 
   var isSubmitted = false
-  if (status == "submitted"){
+  if (status && status == "submitted"){
     isSubmitted = true
   }
 

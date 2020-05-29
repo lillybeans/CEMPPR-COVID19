@@ -30,9 +30,13 @@ authRouter.get('/register', function(req, res) {
 
 authRouter.post('/register', function(req, res) {
   const formData = req.body
-  console.log(formData)
-  res.render("register", {
+
+  getService.fetchCountries()
+  .then(countriesRes => {
+      res.render("dashboard", {
+      })
   })
+
 })
 
 module.exports = authRouter
