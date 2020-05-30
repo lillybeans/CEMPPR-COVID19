@@ -68,4 +68,9 @@ app.use("/questions", questionsRouter) //use "/questions" instead of "/routes/qu
 app.use("/database", databaseRouter)
 app.use("/pending", pendingRouter)
 
+app.get('/logout', (req, res) => {
+  req.logOut()
+  res.redirect('/login')
+})
+
 app.listen(3000) //listen to port 3000

@@ -14,8 +14,10 @@ indexRouter.use('/', authRouter)
 indexRouter.get('/', function(req, res) {
   res.render("home", {
     active: {
-      home: true
-    }
+      home: true,
+    },
+    isAuthenticated: req.isAuthenticated(),
+    user: req.user
   });
 })
 
@@ -23,7 +25,9 @@ indexRouter.get('/about', function(req, res) {
   res.render("about", {
     active: {
       about: true
-    }
+    },
+    isAuthenticated: req.isAuthenticated(),
+    user: req.user
   })
 })
 
