@@ -4,6 +4,15 @@ const bodyParser = require("body-parser")
 const exphbs = require("express-handlebars")
 const helpers = require("./helpers") //handlebars helpers
 const mysqlConnection = require("./connection")
+const flash = require("express-flash")
+
+require('dotenv').config()
+
+//Auth
+const passport = require('passport')
+const initializePassport = require("./passport-config")
+initializePassport(passport)
+
 var session = require('express-session')
 var MySQLStore = require('express-mysql-session')(session)
 
@@ -26,9 +35,20 @@ var hbs = exphbs.create({
 
 var app = express()
 
-// var sessionStore = new MySQLStore({
-//   /** session store properties **/
-// }, mysqlConnection);
+//Session
+
+var sessionStore = new MySQLStore({}, mysqlConnection);
+
+app.use(session({
+	secret: process.env.SESSION_SECRET,
+	store: sessionStore,
+	resave: false,
+	saveUninitialized: false
+}))
+
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(flash())
 
 //Handlebars
 app.engine("hbs", hbs.engine)

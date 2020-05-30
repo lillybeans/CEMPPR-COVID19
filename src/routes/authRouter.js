@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const postService = require("../POSTService")
+const passport = require('passport')
 
 //Define our Routes:
 const authRouter = express.Router();
@@ -14,7 +15,11 @@ authRouter.get('/login', function(req, res) {
   })
 })
 
-authRouter.post('/login', function(req, res) {
+authRouter.post('/login', passport.authenticate('local', {
+  successRedirect: "/profile",
+  failureRedirect: "/login",
+  failureFlash: true
+}), function(req, res) {
   const formData = req.body
   res.render("login", {
     active: {
@@ -24,19 +29,18 @@ authRouter.post('/login', function(req, res) {
 })
 
 authRouter.get('/register', function(req, res) {
-  res.render("register", {
-  })
+  res.render("register", {})
 })
 
 authRouter.post('/register', function(req, res) {
   const formData = req.body
 
   postService.createUser(formData)
-  .then(newUser => {
+    .then(newUser => {
       res.send("success")
-  }).catch(errorMsg => {
-    res.status(400).send(errorMsg)
-  })
+    }).catch(errorMsg => {
+      res.status(400).send(errorMsg)
+    })
 
 })
 

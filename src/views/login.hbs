@@ -9,6 +9,11 @@
         <input class="form-control option" name="password" type="password" placeholder="Password" required>
       </div>
     </div>
+    {{#if messages.error}}
+    <div class="text-danger mb-3">
+      {{messages.error}}
+    </div>
+    {{/if}}
     <button type="submit" class="btn-dark rounded px-2 py-1 mb-3">Login</button>
   </form>
     <a href="/register">Register</a>
