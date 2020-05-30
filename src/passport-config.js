@@ -28,7 +28,6 @@ function initialize(passport) {
       } catch (e) {
         return done(e)
       }
-
     })
   }
 

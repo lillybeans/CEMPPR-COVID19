@@ -44,4 +44,8 @@ authRouter.post('/register', function(req, res) {
 
 })
 
+authRouter.get('/profile', function(req, res) {
+  res.render("profile", {})
+})
+
 module.exports = authRouter
