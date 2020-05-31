@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const getService = require("../GETService")
 const postService = require("../POSTService")
+const authService = require("../auth")
 
 const submitSurveyModel = require("../models/submitSurveyModel")
 
@@ -11,7 +12,7 @@ const util = require("util")
 
 // home page route
 
-submitRouter.get('/question', function(req, res) {
+submitRouter.get('/question', authService.checkAuthenticated, function(req, res) {
   const status = req.query.status //optional, either "submitted" or nothing
 
   var isSubmitted = false
@@ -43,13 +44,15 @@ submitRouter.get('/question', function(req, res) {
       groups: groups,
       themes: themes,
       keywords: keywords,
-      submitted: isSubmitted
+      submitted: isSubmitted,
+      isAuthenticated: req.isAuthenticated(),
+      user: req.user
     })
   })
 
 })
 
-submitRouter.post('/question', function(req, res){
+submitRouter.post('/question', authService.checkAuthenticated, function(req, res){
 
   const formData = req.body
   var questionId = ""
@@ -64,7 +67,7 @@ submitRouter.post('/question', function(req, res){
   })
 })
 
-submitRouter.get('/survey', function(req, res) {
+submitRouter.get('/survey', authService.checkAuthenticated, function(req, res) {
 
   const status = req.query.status //optional, either "submitted" or nothing
 
@@ -99,12 +102,14 @@ submitRouter.get('/survey', function(req, res) {
       var populatedModel = populateSurveyModelWithData(submitSurveyModel, countries, populations, languages, sampleMethods, typeOfStudies)
       res.render("submit/survey", {
         surveyModel: populatedModel,
-        submitted: isSubmitted
+        submitted: isSubmitted,
+        isAuthenticated: req.isAuthenticated(),
+        user: req.user
       })
     })
 })
 
-submitRouter.post('/survey', function(req, res){
+submitRouter.post('/survey', authService.checkAuthenticated, function(req, res){
 
   const formData = req.body
 

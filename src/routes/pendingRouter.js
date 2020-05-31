@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const getService = require("../GETService")
+const authService = require("../auth")
 
 //Define our Routes:
 const pendingRouter = express.Router();
@@ -8,7 +9,7 @@ const util = require("util")
 
 
 /** Database: Questions **/
-pendingRouter.get('/:page', function(req, res) {
+pendingRouter.get('/:page', authService.checkAuthenticated, authService.checkAdmin, function(req, res) {
   const page = req.params.page
   var pages = []
   var numberOfRecords = 0
@@ -81,7 +82,9 @@ pendingRouter.get('/:page', function(req, res) {
       questions: questions,
       groups: groups,
       themes: themes,
-      keywords: keywords
+      keywords: keywords,
+      isAuthenticated: req.isAuthenticated(),
+      user: req.user
     })
   })
 

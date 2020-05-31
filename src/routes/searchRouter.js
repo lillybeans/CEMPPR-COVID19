@@ -2,12 +2,13 @@ const express = require("express")
 const router = express.Router()
 const postService = require("../POSTService")
 const getService = require("../GETService")
+const authService = require("../auth")
 
 //Define our Routes:
 const searchRouter = express.Router();
 const util = require("util")
 
-searchRouter.post('/questions/:status/:page', function(req, res) {
+searchRouter.post('/questions/:status/:page', authService.checkAuthenticated, function(req, res) {
   const questionSearchText = req.body["question"]
   const surveySearchText = req.body["survey"]
 

@@ -31,6 +31,13 @@ indexRouter.get('/about', function(req, res) {
   })
 })
 
+indexRouter.get('/unauthorized', function(req, res) {
+  res.render("unauthorized", {
+    isAuthenticated: req.isAuthenticated(),
+    user: req.user
+  })
+})
+
 
 indexRouter.get('/test', function(req, res) {
   res.render("test")

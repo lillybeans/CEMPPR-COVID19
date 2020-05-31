@@ -1,6 +1,31 @@
 <div class="mx-5 my-4">
   <div class="mx-3">
+
+
     <h1 class="display-4 mb-4">User Profile</h1>
+
+    {{#if user.approved}}
+    {{else}}
+    <div class="text-danger">
+      Your Account is Pending. Please wait for an admin to approve your account.
+    </div>
+    {{/if}}
+
+    <div class="my-4">
     You are now logged in, {{user.first_name}}
+    </div>
+
+    <div class="my-4">
+    <div class="row">
+      <div class="col-1"><b>Role</b></div>
+      <div class="col-2">{{user.user_group}}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-1"><b>Email</b></div>
+      <div class="col-2">{{user.email}}</div>
+    </div>
+    </div>
+
   </div>
 </div>
