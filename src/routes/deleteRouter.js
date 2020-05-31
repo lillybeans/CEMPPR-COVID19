@@ -5,6 +5,9 @@ const postService = require("../POSTService")
 //Define our Routes:
 const deleteRouter = express.Router();
 const util = require("util")
+const authService = require("../auth")
+
+deleteRouter.use(authService.checkAdmin)
 
 //Will send back a timestamp for updated at
 deleteRouter.post('/survey/:surveyId', function(req, res) {

@@ -10,9 +10,11 @@ const submitSurveyModel = require("../models/submitSurveyModel")
 const submitRouter = express.Router();
 const util = require("util")
 
+submitRouter.use(authService.checkAccountApproved)
+
 // home page route
 
-submitRouter.get('/question', authService.checkAuthenticated, function(req, res) {
+submitRouter.get('/question', function(req, res) {
   const status = req.query.status //optional, either "submitted" or nothing
 
   var isSubmitted = false
@@ -52,7 +54,7 @@ submitRouter.get('/question', authService.checkAuthenticated, function(req, res)
 
 })
 
-submitRouter.post('/question', authService.checkAuthenticated, function(req, res){
+submitRouter.post('/question', function(req, res){
 
   const formData = req.body
   var questionId = ""
@@ -67,7 +69,7 @@ submitRouter.post('/question', authService.checkAuthenticated, function(req, res
   })
 })
 
-submitRouter.get('/survey', authService.checkAuthenticated, function(req, res) {
+submitRouter.get('/survey', function(req, res) {
 
   const status = req.query.status //optional, either "submitted" or nothing
 
@@ -109,7 +111,7 @@ submitRouter.get('/survey', authService.checkAuthenticated, function(req, res) {
     })
 })
 
-submitRouter.post('/survey', authService.checkAuthenticated, function(req, res){
+submitRouter.post('/survey', function(req, res){
 
   const formData = req.body
 

@@ -8,7 +8,9 @@ const authService = require("../auth")
 const searchRouter = express.Router();
 const util = require("util")
 
-searchRouter.post('/questions/:status/:page', authService.checkAuthenticated, function(req, res) {
+searchRouter.use(authService.checkAdmin)
+
+searchRouter.post('/questions/:status/:page', function(req, res) {
   const questionSearchText = req.body["question"]
   const surveySearchText = req.body["survey"]
 

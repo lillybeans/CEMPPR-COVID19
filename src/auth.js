@@ -16,14 +16,24 @@ function checkNotAuthenticated(req, res, next) {
 }
 
 function checkAdmin(req, res, next){
-  if (req.user.user_group != "admin"){
+  if (req.isAuthenticated() && req.user.user_group == "admin"){
+    next()
+  } else {
     return res.redirect('/unauthorized')
   }
-  next()
+}
+
+function checkAccountApproved(req, res, next){
+  if (req.isAuthenticated() && req.user.approved){
+    next()
+  } else {
+    return res.redirect('/unauthorized')
+  }
 }
 
 module.exports = {
   checkAuthenticated: checkAuthenticated,
   checkNotAuthenticated: checkNotAuthenticated,
-  checkAdmin: checkAdmin
+  checkAdmin: checkAdmin,
+  checkAccountApproved: checkAccountApproved
 }

@@ -7,9 +7,10 @@ const authService = require("../auth")
 const pendingRouter = express.Router();
 const util = require("util")
 
+pendingRouter.use(authService.checkAdmin)
 
 /** Database: Questions **/
-pendingRouter.get('/:page', authService.checkAuthenticated, authService.checkAdmin, function(req, res) {
+pendingRouter.get('/:page', function(req, res) {
   const page = req.params.page
   var pages = []
   var numberOfRecords = 0

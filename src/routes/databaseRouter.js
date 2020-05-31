@@ -23,6 +23,8 @@ databaseRouter.use('/pending', pendingRouter)
 databaseRouter.use('/approve', approveRouter)
 databaseRouter.use('/parameters', parametersRouter)
 
+databaseRouter.use(authService.checkAdmin)
+
 
 // home page route
 databaseRouter.get('/', function(req, res) {
@@ -35,7 +37,7 @@ databaseRouter.get('/', function(req, res) {
 
 
 /** Database: Approved **/
-databaseRouter.get('/approved/:page', authService.checkAuthenticated, authService.checkAdmin, function(req, res) {
+databaseRouter.get('/approved/:page', function(req, res) {
   const page = req.params.page
   var pages = []
   var numberOfRecords = 0
@@ -117,7 +119,7 @@ databaseRouter.get('/approved/:page', authService.checkAuthenticated, authServic
 
 
 /** Database: Surveys **/
-databaseRouter.get('/surveys/:page', authService.checkAuthenticated, function(req, res) {
+databaseRouter.get('/surveys/:page', function(req, res) {
   const page = req.params.page
   var pages = []
   var numberOfRecords = 0
@@ -165,7 +167,7 @@ databaseRouter.get('/surveys/:page', authService.checkAuthenticated, function(re
   })
 })
 
-databaseRouter.get('/surveys/:surveyId/questions/:page', authService.checkAuthenticated, function(req, res) {
+databaseRouter.get('/surveys/:surveyId/questions/:page', function(req, res) {
   const surveyId = req.params.surveyId
   const page = req.params.page
   var survey = ""
@@ -216,7 +218,7 @@ databaseRouter.get('/surveys/:surveyId/questions/:page', authService.checkAuthen
 })
 
 //Survey Details
-databaseRouter.get('/survey_partial/:surveyId', authService.checkAuthenticated, function(req, res) {
+databaseRouter.get('/survey_partial/:surveyId', function(req, res) {
   const surveyId = req.params.surveyId
 
   //Dropdowns
@@ -264,7 +266,7 @@ databaseRouter.get('/survey_partial/:surveyId', authService.checkAuthenticated, 
 
 
 
-databaseRouter.get('/parameters', authService.checkAuthenticated,function(req, res) {
+databaseRouter.get('/parameters',function(req, res) {
   res.render("database/parameters", {
     isAuthenticated: req.isAuthenticated(),
     user: req.user
