@@ -288,6 +288,31 @@ function fetchSubmitQuestionDataPromise() {
     })
 }
 
+// USERS
+
+function getUsers(state){
+  var query = "SELECT * FROM Users"
+
+  switch (state){
+    case "approved":
+      query += " WHERE approved = true"
+      break
+    case "pending":
+      query += " WHERE approved = false"
+      break
+    case "all":
+      break
+  }
+
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query(query, (err, rows) => {
+      if (err)
+        return reject(err)
+      resolve(rows)
+    })
+  })
+}
+
 module.exports = {
   perPage: perPage,
   fetchSurveyWithId: fetchSurveyWithId,
@@ -305,5 +330,6 @@ module.exports = {
   fetchThemes: fetchThemes,
   fetchKeywords: fetchKeywords,
   fetchQuestionsForSurveyWithId: fetchQuestionsForSurveyWithId,
-  fetchOptionsAndKeywordsForQuestionWithId: fetchOptionsAndKeywordsForQuestionWithId
+  fetchOptionsAndKeywordsForQuestionWithId: fetchOptionsAndKeywordsForQuestionWithId,
+  getUsers: getUsers
 }

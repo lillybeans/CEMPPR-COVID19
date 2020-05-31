@@ -44,7 +44,7 @@
           </div>
         </li>
         {{/if}}
-        
+
         {{#ifEquals user.user_group "admin"}}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -53,6 +53,7 @@
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="/database/approved/1">Approved</a></li>
             <li><a class="dropdown-item" href="/database/pending/1">Pending</a></li>
+            <li><a class="dropdown-item" href="/users/approved/">Users</a></li>
             <li><a class="dropdown-item" href="/database/parameters">Parameters</a></li>
           </ul>
         </li>

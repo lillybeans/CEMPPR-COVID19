@@ -1,0 +1,37 @@
+<div class="approved_users mx-5 my-4">
+  <div class="mx-3">
+    <h1 class="display-4">👩‍💼 Users: Pending</h1>
+    <hr class="bg-dark">
+
+    <a href="/users/approved">See Approved</a>
+
+    <div class="table table-hover my-3">
+      <table class="table">
+
+        <tr>
+          <td></td>
+          <td><b>Name</b></td>
+          <td><b>Email</b></td>
+          <td><b>User Group</b></td>
+          <td><b>Education</b></td>
+          <td><b>Languages</b></td>
+          <td><b>Joined</b></td>
+        </tr>
+
+        <form>
+        <button type="submit" class="btn btn-success rounded mb-4">Approve</button>
+        {{#each users}}
+          <tr>
+            <td><input type="checkbox" name="{{id}}"/></td>
+            <td>{{first_name}} {{last_name}}</td>
+            <td>{{email}}</td>
+            <td>{{user_group}}</td>
+            <td>{{education}}</td>
+            <td>{{language_proficiencies}}</td>
+            <td>{{created_at}}</td>
+          </tr>
+        {{/each}}
+        </form>
+    </div>
+  </div>
+</div>

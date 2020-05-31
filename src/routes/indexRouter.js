@@ -7,8 +7,10 @@ const indexRouter = express.Router();
 const util = require("util")
 
 const authRouter = require("./authRouter")
+const usersRouter = require("./usersRouter")
 
 indexRouter.use('/', authRouter)
+indexRouter.use('/users', usersRouter)
 
 // home page route
 indexRouter.get('/', function(req, res) {
