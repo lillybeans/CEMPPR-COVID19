@@ -19,6 +19,20 @@ usersRouter.get('/approved', function(req, res) {
   })
 })
 
+usersRouter.post('/delete', function(req, res) {
+  const ids = req.body["ids"]
+  postService.deleteUsers(ids).then(results => {
+    res.send("success")
+  })
+})
+
+usersRouter.post('/approve', function(req, res) {
+  const formData = req.body
+  postService.approveUsers(formData).then(results => {
+    res.send("success")
+  })
+})
+
 usersRouter.get('/pending', function(req, res) {
   getService.getUsers("pending").then(userResults => {
     res.render("users/pendingUsers", {

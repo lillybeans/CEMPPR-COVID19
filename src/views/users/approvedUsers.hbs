@@ -1,4 +1,6 @@
-<div class="approved_users mx-5 my-4">
+<script type="text/javascript" src="../../js/users.js"></script>
+
+<div class="mx-5 my-4">
   <div class= "mx-3">
   <h1 class="display-4">👩‍💼 Users: Approved ✅ </h1>
   <hr class="bg-dark">
@@ -18,7 +20,7 @@
       <td><b>Joined</b></td>
     </tr>
 
-    <form>
+    <div class="approved_users">
     <button type="button" class="btn btn-danger rounded mb-4" data-toggle="modal" data-target="#deleteUsers">Delete</button>
 
     <div class="modal fade" id="deleteUsers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -36,7 +38,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-            <button type="button" class="btn btn-primary" onClick="deleteUsers">Yes</button>
+            <button type="button" class="btn btn-primary" onClick="deleteUsers()">Yes</button>
           </div>
         </div>
       </div>
@@ -53,7 +55,7 @@
         <td>{{created_at}}</td>
       </tr>
     {{/each}}
-  </form>
+  </div>
 
   </div>
 </div>

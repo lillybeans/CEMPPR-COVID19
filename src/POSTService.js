@@ -386,6 +386,33 @@ function createUser(form) {
   });
 }
 
+function approveUsers(dict){
+  var ids = Object.keys(dict);
+  var idsString = ids.join(",")
+
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("UPDATE Users SET approved = true WHERE id in ("+ idsString +")", (err, res) => {
+      if (err) {
+        return reject(err.sqlMessage)
+      }
+      resolve(res)
+    })
+  })
+}
+
+function deleteUsers(ids){
+  var idsString = ids.join(",")
+
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("DELETE FROM Users WHERE id in ("+ idsString +")", (err, res) => {
+      if (err) {
+        return reject(err.sqlMessage)
+      }
+      resolve(res)
+    })
+  })
+}
+
 module.exports = {
   insertQuestion: insertQuestion,
   insertQuestionOptions: insertQuestionOptions,
@@ -399,5 +426,7 @@ module.exports = {
   searchResultsPerPage: searchResultsPerPage,
   approveSurveyWithId: approveSurveyWithId,
   approveQuestionWithId: approveQuestionWithId,
-  createUser: createUser
+  createUser: createUser,
+  approveUsers: approveUsers,
+  deleteUsers: deleteUsers
 }
