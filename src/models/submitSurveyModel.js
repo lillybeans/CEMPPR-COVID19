@@ -51,6 +51,7 @@ var submitSurveyModel = {
       "name": "sample_size",
       "title":"Sample Size",
       "type":"text",
+      "subtype": "number",
       "placeholder": "1800",
       "required": false
     },

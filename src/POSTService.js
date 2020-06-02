@@ -8,7 +8,7 @@ function sanitize(myString) {
   return newString
 }
 
-function insertQuestion(dict) {
+function insertQuestion(dict, userId) {
 
   var question = mysqlConnection.escape(dict["question"])
   var survey_id = mysqlConnection.escape(dict["survey_id"])
@@ -17,7 +17,7 @@ function insertQuestion(dict) {
   var sample_size = mysqlConnection.escape(dict["sample_size"])
   var group = mysqlConnection.escape(dict["group"])
   var theme = mysqlConnection.escape(dict["theme"])
-  var created_by = mysqlConnection.escape(dict["created_by"])
+  var created_by = mysqlConnection.escape(userId)
 
   var insertQuestionQuery = "INSERT INTO Questions (question, survey_id, poll_name, survey_item_number, sample_size, `group`, theme, created_by) \
                              VALUES (" + question + "," + survey_id + "," + poll_name + "," + survey_item_number + "," + sample_size + "," + group + "," + theme + "," + created_by + ")"
