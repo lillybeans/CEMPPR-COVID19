@@ -1,0 +1,41 @@
+<script type="text/javascript" src="../../../js/database/search.js"></script>
+
+<div class="questions_page mx-5 my-4">
+  <div class="mx-3">
+    <h1 class="display-4">Choose Survey</h1>
+    <hr class="bg-dark">
+
+    <nav class="my-2">
+      <div class="search_results_nav">
+      </div>
+
+      <div class="questions_results_nav">
+        {{> database/paginationNavTemplate active=active pages=pages numberOfRecords=numberOfRecords }}
+      </div>
+    </nav>
+
+    <div class="search_and_question_results">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">
+              <div>Survey</div>
+              <div> <input class="form-control search survey" type="text" oninput="searchChooseSurvey(this)" /></div>
+            </th>
+          </tr>
+        </thead>
+        
+        <div class="search_results">
+
+        </div>
+
+        <div class="questions_results">
+          {{> submit_question/surveyListTemplate surveys=surveys}}
+        </div>
+
+      </table>
+    </div>
+
+  </div>
+</div>
+</div>

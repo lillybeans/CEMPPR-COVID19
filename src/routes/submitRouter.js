@@ -54,6 +54,35 @@ submitRouter.get('/question', function(req, res) {
 
 })
 
+submitRouter.get('/question/showAllSurveys/:page', function(req, res) {
+  const page = req.params.page
+
+  var numberOfRecords = 0
+  var pages = []
+
+  getService.fetchNumberOfSurveysPromise().then(count => {
+    numberOfRecords = count
+
+    numPages = Math.ceil(numberOfRecords / postService.searchResultsPerPage)
+    for (var i = 1; i <= numPages; i++) {
+      pages.push(i)
+    }
+
+    return getService.fetchSurveysByPagePromise(page, "all")
+  }).then(surveysRes => {
+
+    res.render("partials/submit_question/showAllSurveys", {
+      surveys: surveysRes,
+      numberOfRecords: numberOfRecords,
+      pages: pages,
+      active: page,
+      isAuthenticated: req.isAuthenticated(),
+      user: req.user
+    })
+  })
+
+})
+
 submitRouter.post('/question', function(req, res){
 
   const formData = req.body

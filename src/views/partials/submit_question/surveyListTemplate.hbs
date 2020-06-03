@@ -1,0 +1,12 @@
+{{#if isSearch}}
+  <div class="search_results_nav_template" hidden>
+    <!-- we are using this hidden div to render html -->
+    {{> database/paginationNavTemplate active=active pages=pages numberOfRecords=numberOfRecords isSearch=true}}
+  </div>
+{{/if}}
+
+{{#each surveys}}
+  <tr>
+    <td>{{poll_name}}</td>
+  </tr>
+{{/each}}

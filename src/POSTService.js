@@ -294,6 +294,7 @@ function deleteSurveyWithId(id) {
   });
 }
 
+//Two queries: COUNT, Results
 function searchQuestionAndSurvey(question, survey, status, page) {
   return new Promise((resolve, reject) => {
     var countQuery, perPageQuestionsQuery
@@ -324,6 +325,35 @@ function searchQuestionAndSurvey(question, survey, status, page) {
     perPageQuestionsQuery += " LIMIT " + searchResultsPerPage + " OFFSET " + rowsOffset
 
     mysqlConnection.query(countQuery + ";" + perPageQuestionsQuery, (err, res) => {
+      if (err) {
+        console.log("MYSQL Error:" + err)
+        return reject(err);
+      }
+      resolve(res);
+    });
+  });
+}
+
+//Two queries: COUNT, Results
+function searchSurveys(survey, status, page) {
+  return new Promise((resolve, reject) => {
+    var rowsOffset = (page - 1) * searchResultsPerPage
+
+    var countQuery = "SELECT COUNT(*) as count FROM Surveys WHERE poll_name LIKE '%" + sanitize(survey) + "%'"
+    var surveyQuery = "SELECT * FROM Surveys WHERE poll_name LIKE '%" + sanitize(survey) + "%'"
+
+    if (status == "approved") {
+      countQuery = countQuery + " AND approved = true"
+      surveyQuery = surveyQuery + " AND approved = true"
+    } else if (status == "pending") {
+      countQuery = countQuery + " AND approved = false"
+      surveyQuery = surveyQuery + " AND approved = false"
+    }
+
+    //add limit and offset
+    surveyQuery += " LIMIT " + searchResultsPerPage + " OFFSET " + rowsOffset
+
+    mysqlConnection.query(countQuery + ";" + surveyQuery, (err, res) => {
       if (err) {
         console.log("MYSQL Error:" + err)
         return reject(err);
@@ -423,6 +453,7 @@ module.exports = {
   deleteQuestionWithId: deleteQuestionWithId,
   deleteSurveyWithId: deleteSurveyWithId,
   searchQuestionAndSurvey: searchQuestionAndSurvey,
+  searchSurveys:searchSurveys,
   searchResultsPerPage: searchResultsPerPage,
   approveSurveyWithId: approveSurveyWithId,
   approveQuestionWithId: approveQuestionWithId,
