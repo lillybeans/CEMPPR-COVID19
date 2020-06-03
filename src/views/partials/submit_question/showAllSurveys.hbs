@@ -10,30 +10,29 @@
       </div>
 
       <div class="questions_results_nav">
-        {{> database/paginationNavTemplate active=active pages=pages numberOfRecords=numberOfRecords }}
+        {{> database/paginationNavTemplate active=active pages=pages endpoint=endpoint status=status numberOfRecords=numberOfRecords }}
       </div>
     </nav>
 
     <div class="search_and_question_results">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">
-              <div>Survey</div>
-              <div> <input class="form-control search survey" type="text" oninput="searchChooseSurvey(this)" /></div>
-            </th>
-          </tr>
-        </thead>
-        
-        <div class="search_results">
 
+      <div class="searchBar form-group card px-3 py-2 bg-light">
+        <div class="row">
+        <div class="col-lg-1 col-md-3">Search</div>
+        <div class="col-lg-11 col-md-9">
+           <input class="form-control form-control-sm search survey" type="text" placeholder="USM_20200409" oninput="searchChooseSurvey(this)" />
         </div>
+      </div>
+      </div>
 
-        <div class="questions_results">
-          {{> submit_question/surveyListTemplate surveys=surveys}}
-        </div>
 
-      </table>
+      <div class="search_results">
+
+      </div>
+
+      <div class="questions_results">
+        {{> submit_question/surveyListTemplate surveys=surveys active=active}}
+      </div>
     </div>
 
   </div>

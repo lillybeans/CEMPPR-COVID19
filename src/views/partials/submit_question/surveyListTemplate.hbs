@@ -6,7 +6,12 @@
 {{/if}}
 
 {{#each surveys}}
-  <tr>
-    <td>{{poll_name}}</td>
-  </tr>
+    <div class="row mx-1 py-2 border-bottom">
+      <div class="col-1">
+      {{list @index ../active}}
+    </div>
+    <div class="col-11">
+      {{poll_name}}
+    </div>
+    </div>
 {{/each}}

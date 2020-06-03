@@ -60,7 +60,7 @@ submitRouter.get('/question/showAllSurveys/:page', function(req, res) {
   var numberOfRecords = 0
   var pages = []
 
-  getService.fetchNumberOfSurveysPromise().then(count => {
+  getService.fetchNumberOfSurveysPromise("approved").then(count => {
     numberOfRecords = count
 
     numPages = Math.ceil(numberOfRecords / postService.searchResultsPerPage)
@@ -68,7 +68,7 @@ submitRouter.get('/question/showAllSurveys/:page', function(req, res) {
       pages.push(i)
     }
 
-    return getService.fetchSurveysByPagePromise(page, "all")
+    return getService.fetchSurveysByPagePromise(page, "approved")
   }).then(surveysRes => {
 
     res.render("partials/submit_question/showAllSurveys", {

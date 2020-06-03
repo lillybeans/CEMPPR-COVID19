@@ -61,7 +61,7 @@ function search(questionText, surveyText, input, searchUrl) {
         "survey": surveyText
       })
       .then(function(searchHTML) {
-        console.log("searchHTML:"+ searchHTML)
+
         //Hide question nav + results
         $(questionsResultsNavDiv).addClass("hide") //hide question results
         $(questionsResultsDiv).addClass("hide")
@@ -74,7 +74,6 @@ function search(questionText, surveyText, input, searchUrl) {
         var searchResultsNavTemplateHtml = $(searchResultsDiv).find('.search_results_nav_template').first().html()
         $(searchResultsNavDiv).html(searchResultsNavTemplateHtml)
 
-
       }).fail(function() {
         console.log("Search Questions failed!")
       })
@@ -82,11 +81,13 @@ function search(questionText, surveyText, input, searchUrl) {
 }
 
 
-function searchPage(pageNumber){
+function searchPage(pageNumber, endpoint, status){
   var questionSearchText = $('input.search.question').first().val()
   var surveySearchText = $('input.search.survey').first().val()
-  var input = $('input.search.question').first()
+  var input = $('input.search').first()
 
   currentPage = pageNumber
-  search(questionSearchText, surveySearchText, input)
+
+  var searchUrl = "/database/search/"+endpoint+"/"+status+"/"+currentPage
+  search(questionSearchText, surveySearchText, input, searchUrl)
 }

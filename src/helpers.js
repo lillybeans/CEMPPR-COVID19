@@ -6,6 +6,9 @@ const helpers = {
   minus: function(a, b) {
     return  a - b
   },
+  list: function(index, page){
+    return (page - 1)*20 + Number(index) + 1
+  },
   add: function(a, b) {
     return  Number(a) + Number(b)
   },

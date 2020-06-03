@@ -90,6 +90,8 @@ searchRouter.post('/questions/:status/:page', function(req, res) {
       groups: groups,
       themes: themes,
       keywords: keywords,
+      endpoint: "questions",
+      status: status,
       isSearch: true,
       layout: false
     }, function(err, html) {
@@ -125,6 +127,8 @@ searchRouter.post('/surveys/:status/:page', function(req, res) {
       active: page,
       surveys: perPageSurveys,
       isSearch: true,
+      endpoint: "surveys",
+      status: status,
       layout: false
     }, function(err, html) {
       res.send(html)
