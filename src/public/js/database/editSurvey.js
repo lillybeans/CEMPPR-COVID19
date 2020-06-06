@@ -1,4 +1,4 @@
-function editSurvey(editButton) {
+function editSurvey(editButton, name) {
   var saveButton = $(editButton).siblings('.saveButton').first()
   var cancelButton = $(editButton).siblings('.cancelButton').first()
   var deleteButton = $(editButton).siblings('.deleteButton').first()
@@ -14,8 +14,8 @@ function editSurvey(editButton) {
   //Change all inputs to be editable
   var inputs = $(form).find('input').removeAttr('readonly')
 
-  //Clear Updated By so user can fill it out
-  $(form).find('input[name="updated_by"]').val("")
+  //Set updated val to user's name
+  $(form).find('input[name="updated_by_name"]').val(name)
 
   //remove any disabled dropdown options
   var dropdowns = $(form).find('option').removeAttr('disabled')

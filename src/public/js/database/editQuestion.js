@@ -1,4 +1,4 @@
-function editQuestion(editButton) {
+function editQuestion(editButton, name) {
   var saveButton = $(editButton).siblings('.saveButton').first()
   var cancelButton = $(editButton).siblings('.cancelButton').first()
   var deleteButton = $(editButton).siblings('.deleteButton').first()
@@ -21,8 +21,7 @@ function editQuestion(editButton) {
     }
   })
 
-  //Clear Updated By so user can fill it out
-  $(form).find('input[name="updated_by"]').val("")
+  $(form).find('input[name="updated_by_name"]').val(name)
 
   //Enabling dropdowns: remove any disabled dropdown options
   var dropdowns = $(form).find('option').removeAttr('disabled')

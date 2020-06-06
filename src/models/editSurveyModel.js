@@ -117,10 +117,11 @@ var editSurveyModel = {
       "type": "paragraph_break"
     },
     {
-      "name": "updated_by",
+      "name": "updated_by_name",
       "title":"Updated By",
       "type":"text",
       "required": true,
+      "disabled": true,
       "special_font": true
     },
     {

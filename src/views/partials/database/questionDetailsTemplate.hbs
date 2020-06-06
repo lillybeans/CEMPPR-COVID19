@@ -119,7 +119,8 @@
 
           <div class="col-6">
             <span class="my-2"><i><b>Updated By:</b></i></span>
-            <input class="form-control my-2" type="text" name="updated_by" value="{{question.updated_by}}" readonly required>
+            <input type=hidden name="updated_by" value="{{user.id}}">
+            <input class="form-control my-2" type="text" name="updated_by_name" value="{{question.updated_by_name}}" readonly required disabled>
 
             <span class="my-2"><i><b>Updated At:</b></i></span>
             <input class="form-control my-2" type="text" name="updated_at" value="{{question.updated_at}}" readonly required disabled>
@@ -144,7 +145,7 @@
       <button type="button" class="btn btn-success mx-2 approveButton" disabled>Please Approve Survey</button>
     {{/if}}
   {{/if}}
-  <button type="button" class="btn btn-primary mx-2 editButton" onClick="editQuestion(this)">Edit</button>
+  <button type="button" class="btn btn-primary mx-2 editButton" onClick="editQuestion(this, '{{user.first_name}} {{user.last_name}}')">Edit</button>
   <button type="button" class="btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteQuestionModal{{id}}">
     {{#if pending}}
     Reject

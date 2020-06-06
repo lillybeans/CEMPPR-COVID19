@@ -91,7 +91,7 @@ function insertQuestionKeywords(questionId, dict) {
 }
 
 
-function updateQuestionWithId(id, dict) {
+function updateQuestionWithId(id, dict, userId) {
   var fieldsToUpdate = ""
   var keys = Object.keys(dict);
 
@@ -199,7 +199,7 @@ function updateQuestionWithId(id, dict) {
 /** Surveys **/
 
 
-function insertSurvey(dict) {
+function insertSurvey(dict, userId) {
 
   var polling_group = mysqlConnection.escape(dict["polling_group"])
   var poll_name = mysqlConnection.escape(dict["poll_name"])
@@ -214,7 +214,7 @@ function insertSurvey(dict) {
   var publication_date = mysqlConnection.escape(dict["publication_date"])
   var start_date = mysqlConnection.escape(dict["start_date"])
   var end_date = mysqlConnection.escape(dict["end_date"])
-  var created_by = mysqlConnection.escape(dict["created_by"])
+  var created_by = mysqlConnection.escape(userId)
 
 
   var insertSurveyQuery = "INSERT INTO Surveys (polling_group, poll_name, country, subnational, population, `language`, sample_size, sample_method, type_of_study, url, publication_date, start_date, end_date, created_by) \
@@ -231,12 +231,13 @@ function insertSurvey(dict) {
   })
 }
 
-function updateSurveyWithId(id, dict) {
+function updateSurveyWithId(id, dict, userId) {
   var fieldsToUpdate = ""
   var keys = Object.keys(dict);
 
   for (var i = 0; i < keys.length; i++) {
     var key = keys[i]
+
     fieldsToUpdate = fieldsToUpdate + key + "=" + mysqlConnection.escape(dict[key])
     if (i < keys.length - 1) {
       fieldsToUpdate = fieldsToUpdate + ",\n"
