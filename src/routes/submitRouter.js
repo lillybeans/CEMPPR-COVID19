@@ -17,10 +17,14 @@ submitRouter.use(authService.checkAccountApproved)
 submitRouter.get('/question', function(req, res) {
   const status = req.query.status //optional, either "submitted" or nothing
 
+  //question?submitted=true
   var isSubmitted = false
   if (status && status == "submitted"){
     isSubmitted = true
   }
+
+  //question?survey_id=60
+  const surveyId = req.query.survey_id //if user has chosen "show all surveys"
 
   var surveys = []
 
@@ -41,7 +45,15 @@ submitRouter.get('/question', function(req, res) {
   }).then(keywordsRes => {
     keywords = keywordsRes
 
+    if(surveyId){
+      return getService.fetchSurveyWithId(surveyId)
+    } else {
+      return Promise.resolve(null)
+    }
+
+  }).then(selectedSurvey => {
     res.render("submit/question", {
+      selectedSurvey: selectedSurvey,
       surveys: surveys,
       groups: groups,
       themes: themes,

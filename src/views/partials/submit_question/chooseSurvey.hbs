@@ -6,7 +6,12 @@
     </label>
     <div>
       <select class="form-control-sm" name="survey_id" id="select_survey" onchange="onSelectSurvey(this)" required>
+        {{#if selectedSurvey}}
+        <option value={{selectedSurvey.id}} data-sample-size={{selectedSurvey.sample_size}} data-poll-name="{{selectedSurvey.poll_name}}">{{selectedSurvey.poll_name}}</option>
+        {{else}}
         <option value="">Select Survey</option>
+        {{/if}}
+
         {{#each surveys}}
           <option value={{this.id}} data-sample-size={{this.sample_size}} data-poll-name="{{this.poll_name}}">{{this.poll_name}}</option>
         {{/each}}
@@ -15,7 +20,7 @@
       <div>
         <a href="/submit/question/showAllSurveys/1">See All</a>
       </div>
-      <input type=hidden name="poll_name" value="">
+      <input type=hidden name="poll_name" value="{{selectedSurvey.poll_name}}">
     </div>
   </div>
 
@@ -24,7 +29,7 @@
   <div class="form-group" id="use_same_sample_size">
 
     <label for="use_same_sample_size_options" class="font-weight-bold">
-      Use the same sample size? (<span id="current_sample_size"></span>)
+      Use the same sample size? (<span id="current_sample_size">{{selectedSurvey.sample_size}}</span>)
     </label>
     <div class="form-check">
       <input class="form-check-input" type="radio" name="use_same_sample_size" value="yes" required>

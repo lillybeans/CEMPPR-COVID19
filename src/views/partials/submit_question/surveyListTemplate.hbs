@@ -8,9 +8,10 @@
 {{#each surveys}}
     <div class="row mx-1 py-2 border-bottom">
       <div class="col-1">
+        <input type="radio" name="radio" id="{{id}}" class="mr-2" onclick="chooseSurvey({{id}})">
       {{list @index ../active}}
     </div>
-    <div class="col-11">
+    <div class="col-10">
       {{poll_name}}
     </div>
     </div>
