@@ -322,7 +322,7 @@ function fetchQuestionsByUser(userId, page) {
     var rowsOffset = (page - 1) * perPage
 
     var countQuery = "SELECT COUNT(*) as count FROM Questions WHERE created_by = " + userId
-    var perPageQuestionsQuery = "SELECT * FROM Questions WHERE created_by = " + userId + " LIMIT " + perPage + " OFFSET " + rowsOffset
+    var perPageQuestionsQuery = "SELECT * FROM Questions WHERE created_by = " + userId + " ORDER BY created_at DESC LIMIT " + perPage + " OFFSET " + rowsOffset
 
     mysqlConnection.query(countQuery + ";" + perPageQuestionsQuery, (err, res) => {
       if (err) {
@@ -341,7 +341,7 @@ function fetchSurveysByUser(userId, page) {
     var rowsOffset = (page - 1) * perPage
 
     var countQuery = "SELECT COUNT(*) as count FROM Surveys WHERE created_by = " + userId
-    var perPageSurveysQuery = "SELECT * FROM Surveys WHERE created_by = " + userId + " LIMIT " + perPage + " OFFSET " + rowsOffset
+    var perPageSurveysQuery = "SELECT * FROM Surveys WHERE created_by = " + userId + " ORDER BY created_at DESC LIMIT " + perPage + " OFFSET " + rowsOffset
 
     mysqlConnection.query(countQuery + ";" + perPageSurveysQuery, (err, res) => {
       if (err) {
