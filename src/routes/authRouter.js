@@ -1,5 +1,6 @@
 const express = require("express")
 const router = express.Router()
+const getService = require("../GETService")
 const postService = require("../POSTService")
 const passport = require('passport')
 const authService = require("../auth")
@@ -47,10 +48,66 @@ authRouter.post('/register', authService.checkNotAuthenticated, function(req, re
 })
 
 authRouter.get('/profile', authService.checkAuthenticated, function(req, res) {
-  res.render("profile", {
-    isAuthenticated: req.isAuthenticated(),
-    user: req.user
-  })
+  var qPage = req.query.q_page //submitted questions page
+  var sPage = req.query.s_page //submitted surveys page
+
+  if (!qPage) {
+    qPage = 1
+  }
+
+  if (!sPage) {
+    sPage = 1
+  }
+
+  var qPages = []
+  var sPages = []
+
+  var numQuestions
+  var numSurveys
+  var currentPageQuestions
+  var currentPageSurveys
+
+  var userId = req.user.id
+
+  getService.fetchQuestionsByUser(userId, qPage)
+    .then(qResults => {
+
+      numQuestions = qResults[0][0].count
+      currentPageQuestions = qResults[1]
+      let numPages = Math.ceil(numQuestions / postService.searchResultsPerPage)
+
+      for (var i = 1; i <= numPages; i++) {
+        qPages.push(i)
+      }
+
+      return getService.fetchSurveysByUser(userId, sPage)
+    }).then(sResults => {
+
+      numSurveys = sResults[0][0].count
+      currentPageSurveys = sResults[1]
+      let numPages = Math.ceil(numSurveys / postService.searchResultsPerPage)
+
+      for (var i = 1; i <= numPages; i++) {
+        sPages.push(i)
+      }
+
+      res.render("profile", {
+        submittedQuestions: {
+          active: qPage,
+          pages: qPages,
+          numberOfRecords: numQuestions,
+          questions: currentPageQuestions
+        },
+        submittedSurveys: {
+          active: sPage,
+          pages: sPages,
+          numberOfRecords: numSurveys,
+          surveys: currentPageSurveys
+        },
+        isAuthenticated: req.isAuthenticated(),
+        user: req.user
+      })
+    })
 })
 
 module.exports = authRouter
