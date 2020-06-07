@@ -19,7 +19,7 @@ function searchSurvey(input) {
 function searchChooseSurvey(input){
   var surveySearchText = $(input).val()
 
-  var searchUrl = "/database/search/surveys/approved/"+currentPage
+  var searchUrl = "/database/search/surveys/all/"+currentPage
   search("", surveySearchText, input, searchUrl)
 }
 

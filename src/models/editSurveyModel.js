@@ -73,7 +73,7 @@ var editSurveyModel = {
       "required": true
     },
     {
-      "name": "created_by",
+      "name": "created_by_name",
       "title":"Created By",
       "type":"text",
       "required": true,
