@@ -113,6 +113,9 @@ databaseRouter.get('/approved/:page', function(req, res) {
       isAuthenticated: req.isAuthenticated(),
       user: req.user
     })
+  }).catch( err => {
+    res.status(500)
+    res.render("error")
   })
 
 })
