@@ -84,6 +84,7 @@ pendingRouter.get('/:page', function(req, res) {
       groups: groups,
       themes: themes,
       keywords: keywords,
+      status: "pending",
       isAuthenticated: req.isAuthenticated(),
       user: req.user
     })
