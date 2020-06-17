@@ -1,0 +1,104 @@
+<div class="mx-5 my-4">
+  <div class="mx-3">
+
+    <div class="my-2">
+      <h1 class="display-4 mb-4">User Profile</h1>
+
+      <div class="row my-1">
+        <div class="col-1"><b>Status</b></div>
+        <div class="col-2">
+          {{#if user.approved}}
+            <span class="text-success">Approved</span>
+          {{else}}
+            <span class="text-danger">Pending</span>
+          {{/if}}
+        </div>
+      </div>
+
+      <div class="row my-1">
+        <div class="col-1"><b>Role</b></div>
+        <div class="col-2">{{user.user_group}}</div>
+      </div>
+
+      <div class="row my-1">
+        <div class="col-1"><b>Name</b></div>
+        <div class="col-2">{{user.first_name}} {{user.last_name}}</div>
+      </div>
+
+      <div class="row my-1">
+        <div class="col-1"><b>Email</b></div>
+        <div class="col-2">{{user.email}}</div>
+      </div>
+    </div>
+
+    <div class="spacer-md"></div>
+
+    <div class="my-2">
+      <h2 class="mb-4">Submitted Questions</h1>
+      <div class="questions_results_nav">
+        {{> profile/userProfilePaginationNav active_q=submittedQuestions.active active_s=submittedSurveys.active pages=submittedQuestions.pages numberOfRecords=submittedQuestions.numberOfRecords isQuestions=true}}
+      </div>
+      <table class="table">
+      <thead>
+        <th>Question</th>
+        <th>Status</th>
+        <th>Survey Poll Name</th>
+        <th>Survey Item Number</th>
+        <th>Submitted</th>
+      </thead>
+
+      {{#each submittedQuestions.questions}}
+      <tr>
+        <td>{{question}}</td>
+        <td>
+          {{#if approved}}
+          <span class="text-success">Approved</span>
+          {{else}}
+          <span class="text-danger">Pending</span>
+          {{/if}}
+        </td>
+        <td>{{poll_name}}</td>
+        <td>{{survey_item_number}}</td>
+        <td>{{created_at}}</td>
+      </tr>
+      {{/each}}
+    </table>
+    </div>
+
+    <div class="spacer-md"></div>
+
+    <div class="my-2">
+      <h2 class="mb-4">Submitted Surveys</h1>
+      <div class="questions_results_nav">
+        {{> profile/userProfilePaginationNav active_q=submittedQuestions.active active_s=submittedSurveys.active pages=submittedSurveys.pages numberOfRecords=submittedSurveys.numberOfRecords isSurveys=true}}
+      </div>
+      <table class="table">
+      <thead>
+        <th>Poll Name</th>
+        <th>Status</th>
+        <th>Polling Group</th>
+        <th>Country</th>
+        <th>Submitted</th>
+      </thead>
+
+      {{#each submittedSurveys.surveys}}
+      <tr>
+        <td>{{poll_name}}</td>
+        <td>
+          {{#if approved}}
+          <span class="text-success">Approved</span>
+          {{else}}
+          <span class="text-danger">Pending</span>
+          {{/if}}
+        </td>
+        <td>{{polling_group}}</td>
+        <td>{{country}}</td>
+        <td>{{created_at}}</td>
+      </tr>
+      {{/each}}
+    </table>
+    </div>
+
+  </div>
+
+</div>

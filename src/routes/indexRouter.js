@@ -6,12 +6,20 @@ const getService = require("../GETService")
 const indexRouter = express.Router();
 const util = require("util")
 
+const authRouter = require("./authRouter")
+const usersRouter = require("./usersRouter")
+
+indexRouter.use('/', authRouter)
+indexRouter.use('/users', usersRouter)
+
 // home page route
 indexRouter.get('/', function(req, res) {
   res.render("home", {
     active: {
-      home: true
-    }
+      home: true,
+    },
+    isAuthenticated: req.isAuthenticated(),
+    user: req.user
   });
 })
 
@@ -19,9 +27,19 @@ indexRouter.get('/about', function(req, res) {
   res.render("about", {
     active: {
       about: true
-    }
+    },
+    isAuthenticated: req.isAuthenticated(),
+    user: req.user
   })
 })
+
+indexRouter.get('/unauthorized', function(req, res) {
+  res.render("unauthorized", {
+    isAuthenticated: req.isAuthenticated(),
+    user: req.user
+  })
+})
+
 
 indexRouter.get('/test', function(req, res) {
   res.render("test")

@@ -28,6 +28,12 @@
         <li class="nav-item {{#if active.home}}active{{/if}}">
           <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
         </li>
+
+        <li class="nav-item {{#if active.about}}active{{/if}}">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+
+        {{#if user.approved}}
         <li class="nav-item dropdown {{#if active.submit}}active{{/if}}">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Submit
@@ -37,9 +43,9 @@
             <a class="dropdown-item" href="/submit/survey">Survey</a>
           </div>
         </li>
-        <li class="nav-item {{#if active.about}}active{{/if}}">
-          <a class="nav-link" href="/about">About</a>
-        </li>
+        {{/if}}
+
+        {{#ifEquals user.user_group "admin"}}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Admin
@@ -47,9 +53,25 @@
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="/database/approved/1">Approved</a></li>
             <li><a class="dropdown-item" href="/database/pending/1">Pending</a></li>
+            <li><a class="dropdown-item" href="/users/approved/">Users</a></li>
             <li><a class="dropdown-item" href="/database/parameters">Parameters</a></li>
           </ul>
         </li>
+        {{/ifEquals}}
+
+        {{#if user}}
+        <li class="nav-item">
+          <a class="nav-link" href="/profile">My Profile</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+        {{else}}
+        <li class="nav-item {{#if active.login}}active{{/if}}">
+          <a class="nav-link" href="/login">Login</a>
+        </li>
+        {{/if}}
       </ul>
     </div>
     <span class="navbar-text">

@@ -288,6 +288,71 @@ function fetchSubmitQuestionDataPromise() {
     })
 }
 
+// USERS
+
+function getUsers(state){
+  var query = "SELECT * FROM Users"
+
+  switch (state){
+    case "approved":
+      query += " WHERE approved = true"
+      break
+    case "pending":
+      query += " WHERE approved = false"
+      break
+    case "all":
+      break
+  }
+
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query(query, (err, rows) => {
+      if (err)
+        return reject(err)
+      resolve(rows)
+    })
+  })
+}
+
+//User: Questions and Surveys
+
+//Two queries: COUNT, Results
+function fetchQuestionsByUser(userId, page) {
+  return new Promise((resolve, reject) => {
+
+    var rowsOffset = (page - 1) * perPage
+
+    var countQuery = "SELECT COUNT(*) as count FROM Questions WHERE created_by = " + userId
+    var perPageQuestionsQuery = "SELECT * FROM Questions WHERE created_by = " + userId + " ORDER BY created_at DESC LIMIT " + perPage + " OFFSET " + rowsOffset
+
+    mysqlConnection.query(countQuery + ";" + perPageQuestionsQuery, (err, res) => {
+      if (err) {
+        console.log("MYSQL Error:" + err)
+        return reject(err);
+      }
+      resolve(res);
+    });
+  });
+}
+
+//Two queries: COUNT, Results
+function fetchSurveysByUser(userId, page) {
+  return new Promise((resolve, reject) => {
+
+    var rowsOffset = (page - 1) * perPage
+
+    var countQuery = "SELECT COUNT(*) as count FROM Surveys WHERE created_by = " + userId
+    var perPageSurveysQuery = "SELECT * FROM Surveys WHERE created_by = " + userId + " ORDER BY created_at DESC LIMIT " + perPage + " OFFSET " + rowsOffset
+
+    mysqlConnection.query(countQuery + ";" + perPageSurveysQuery, (err, res) => {
+      if (err) {
+        console.log("MYSQL Error:" + err)
+        return reject(err);
+      }
+      resolve(res);
+    });
+  });
+}
+
 module.exports = {
   perPage: perPage,
   fetchSurveyWithId: fetchSurveyWithId,
@@ -305,5 +370,8 @@ module.exports = {
   fetchThemes: fetchThemes,
   fetchKeywords: fetchKeywords,
   fetchQuestionsForSurveyWithId: fetchQuestionsForSurveyWithId,
-  fetchOptionsAndKeywordsForQuestionWithId: fetchOptionsAndKeywordsForQuestionWithId
+  fetchOptionsAndKeywordsForQuestionWithId: fetchOptionsAndKeywordsForQuestionWithId,
+  getUsers: getUsers,
+  fetchQuestionsByUser: fetchQuestionsByUser,
+  fetchSurveysByUser: fetchSurveysByUser
 }

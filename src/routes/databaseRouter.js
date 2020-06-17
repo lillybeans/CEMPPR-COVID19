@@ -14,6 +14,7 @@ const searchRouter = require("./searchRouter")
 const pendingRouter = require("./pendingRouter")
 const approveRouter = require("./approveRouter")
 const parametersRouter = require("./parametersRouter")
+const authService = require("../auth")
 
 databaseRouter.use('/update', updateRouter)
 databaseRouter.use('/delete', deleteRouter)
@@ -21,6 +22,8 @@ databaseRouter.use('/search', searchRouter)
 databaseRouter.use('/pending', pendingRouter)
 databaseRouter.use('/approve', approveRouter)
 databaseRouter.use('/parameters', parametersRouter)
+
+databaseRouter.use(authService.checkAdmin)
 
 
 // home page route
@@ -106,8 +109,13 @@ databaseRouter.get('/approved/:page', function(req, res) {
       questions: questions,
       groups: groups,
       themes: themes,
-      keywords: keywords
+      keywords: keywords,
+      isAuthenticated: req.isAuthenticated(),
+      user: req.user
     })
+  }).catch( err => {
+    res.status(500)
+    res.render("error")
   })
 
 })
@@ -155,7 +163,9 @@ databaseRouter.get('/surveys/:page', function(req, res) {
       numberOfRecords: numberOfRecords,
       surveyModel: populatedModel,
       pages: pages,
-      active: page
+      active: page,
+      isAuthenticated: req.isAuthenticated(),
+      user: req.user
     })
   })
 })
@@ -202,7 +212,9 @@ databaseRouter.get('/surveys/:surveyId/questions/:page', function(req, res) {
 
     res.send({
       survey: survey,
-      questions: questions
+      questions: questions,
+      isAuthenticated: req.isAuthenticated(),
+      user: req.user
     })
   })
 
@@ -245,7 +257,9 @@ databaseRouter.get('/survey_partial/:surveyId', function(req, res) {
         survey: survey,
         surveyModel: populatedModel,
         layout: false,
-        pending: pending
+        pending: pending,
+        isAuthenticated: req.isAuthenticated(),
+        user: req.user
       }, function(err, html) {
         res.send(html)
       })
@@ -255,8 +269,11 @@ databaseRouter.get('/survey_partial/:surveyId', function(req, res) {
 
 
 
-databaseRouter.get('/parameters', function(req, res) {
-  res.render("database/parameters")
+databaseRouter.get('/parameters',function(req, res) {
+  res.render("database/parameters", {
+    isAuthenticated: req.isAuthenticated(),
+    user: req.user
+  })
 })
 
 function populateSurveyModelWithData(surveyModel, countries, populations, languages, sampleMethods, typeOfStudies) {
@@ -287,6 +304,5 @@ function populateSurveyModelWithData(surveyModel, countries, populations, langua
     "formItems": formItems
   }
 }
-
 
 module.exports = databaseRouter

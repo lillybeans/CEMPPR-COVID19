@@ -1,11 +1,13 @@
 const express = require("express")
 const router = express.Router()
 const getService = require("../GETService")
+const authService = require("../auth")
 
 //Define our Routes:
 const pendingRouter = express.Router();
 const util = require("util")
 
+pendingRouter.use(authService.checkAdmin)
 
 /** Database: Questions **/
 pendingRouter.get('/:page', function(req, res) {
@@ -81,7 +83,10 @@ pendingRouter.get('/:page', function(req, res) {
       questions: questions,
       groups: groups,
       themes: themes,
-      keywords: keywords
+      keywords: keywords,
+      status: "pending",
+      isAuthenticated: req.isAuthenticated(),
+      user: req.user
     })
   })
 

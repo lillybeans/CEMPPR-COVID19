@@ -1,0 +1,45 @@
+{{#if isQuestions}}
+<div class="d-flex justify-content-between">
+  <ul class="pagination">
+
+    <li class="page-item {{#ifEquals active_q 1}}disabled{{/ifEquals}}">
+      <a class="page-link" href="./{{minus active_q 1}}">Previous</a>
+    </li>
+
+    {{#each pages}}
+      <li class="page-item {{#ifEquals ../active_q this}}active{{/ifEquals}}"><a class="page-link" href="?s_page={{../active_s}}&q_page={{this}}">{{this}}</a></li>
+    {{/each}}
+
+    <li class="page-item {{#ifEquals active_q pages.length}}disabled{{/ifEquals}}">
+      <a class="page-link" href="./{{add active_q 1}}" tabindex="-1">Next</a>
+    </li>
+
+  </ul>
+  <div class="num_records_label">
+    {{recordsRange active_q numberOfRecords}} / {{numberOfRecords}} Records
+  </div>
+</div>
+{{/if}}
+
+{{#if isSurveys}}
+<div class="d-flex justify-content-between">
+  <ul class="pagination">
+
+    <li class="page-item {{#ifEquals active_s 1}}disabled{{/ifEquals}}">
+      <a class="page-link" href="./{{minus active_s 1}}">Previous</a>
+    </li>
+
+    {{#each pages}}
+      <li class="page-item {{#ifEquals ../active_s this}}active{{/ifEquals}}"><a class="page-link" href="?s_page={{this}}&q_page={{../active_q}}">{{this}}</a></li>
+    {{/each}}
+
+    <li class="page-item {{#ifEquals active_s pages.length}}disabled{{/ifEquals}}">
+      <a class="page-link" href="./{{add active_s 1}}" tabindex="-1">Next</a>
+    </li>
+
+  </ul>
+  <div class="num_records_label">
+    {{recordsRange active_s numberOfRecords}} / {{numberOfRecords}} Records
+  </div>
+</div>
+{{/if}}

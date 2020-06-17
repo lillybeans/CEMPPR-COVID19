@@ -1,0 +1,62 @@
+<script type="text/javascript" src="../../js/users.js"></script>
+
+<div class="mx-5 my-4">
+  <div class= "mx-3">
+  <h1 class="display-4">👩‍💼 Users: Approved ✅ </h1>
+  <hr class="bg-dark">
+
+  <a href="/users/pending">See Pending</a>
+
+  <div class="table table-hover my-3">
+    <table class="table">
+
+    <tr>
+      <td></td>
+      <td><b>Name</b></td>
+      <td><b>Email</b></td>
+      <td><b>User Group</b></td>
+      <td><b>Education</b></td>
+      <td><b>Languages</b></td>
+      <td><b>Joined</b></td>
+    </tr>
+
+    <div class="approved_users">
+    <button type="button" class="btn btn-danger rounded mb-4" data-toggle="modal" data-target="#deleteUsers">Delete</button>
+
+    <div class="modal fade" id="deleteUsers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Delete Users</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <img src="/img/shocked2.jpg" class="img-fluid mb-3">
+            <p class="font-weight-bold">Are you sure you want to delete all the selected users?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+            <button type="button" class="btn btn-primary" onClick="deleteUsers()">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{#each users}}
+      <tr>
+        <td><input type="checkbox" name="{{id}}"/></td>
+        <td>{{first_name}} {{last_name}}</td>
+        <td>{{email}}</td>
+        <td>{{user_group}}</td>
+        <td>{{education}}</td>
+        <td>{{language_proficiencies}}</td>
+        <td>{{created_at}}</td>
+      </tr>
+    {{/each}}
+  </div>
+
+  </div>
+</div>
+</div>

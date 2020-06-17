@@ -1,0 +1,18 @@
+{{#if isSearch}}
+  <div class="search_results_nav_template" hidden>
+    <!-- we are using this hidden div to render html -->
+    {{> database/paginationNavTemplate active=active pages=pages numberOfRecords=numberOfRecords isSearch=true}}
+  </div>
+{{/if}}
+
+{{#each surveys}}
+    <div class="row mx-1 py-2 border-bottom">
+      <div class="col-1">
+        <input type="radio" name="radio" id="{{id}}" class="mr-2" onclick="chooseSurvey({{id}})">
+      {{list @index ../active}}
+    </div>
+    <div class="col-10">
+      {{poll_name}}
+    </div>
+    </div>
+{{/each}}

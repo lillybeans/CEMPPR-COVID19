@@ -33,7 +33,7 @@
 
         {{#ifEquals type "text"}}
           <div>
-            <input class="form-control col-8" type="text" name="{{name}}" id="{{name}}" placeholder="{{placeholder}}" value="" {{#if required}} required {{/if}}>
+            <input class="form-control col-8" type={{#ifEquals subtype "number"}}"number"{{else}}"text"{{/ifEquals}} name="{{name}}" id="{{name}}" placeholder="{{placeholder}}" value="" {{#if required}} required {{/if}}>
             <small id="description" class="form-text text-muted">{{description}}</small>
           </div>
         {{/ifEquals}}

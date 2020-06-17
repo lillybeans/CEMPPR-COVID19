@@ -13,11 +13,11 @@
     </div>
 
     <div class="questions_results_nav">
-      {{> database/paginationNavTemplate active=active pages=pages numberOfRecords=numberOfRecords }}
+      {{> database/paginationNavTemplate active=active pages=pages endpoint=endpoint status=status numberOfRecords=numberOfRecords }}
     </div>
   </nav>
 
-  <div class="table">
+  <div class="search_and_question_results">
     <div class="header bg-light border rounded mx-3 my-1">
       <div class="row m-1 p-1">
         <div class="col-9">
@@ -44,7 +44,7 @@
     </div>
 
     <div class="questions_results">
-      {{> database/questionsListTemplate question=questions groups=groups themes=themes keywords=keywords pending=true }}
+      {{> database/questionsListTemplate question=questions groups=groups themes=themes keywords=keywords status=status }}
     </div>
   </div>
 </div>

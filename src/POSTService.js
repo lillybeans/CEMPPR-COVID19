@@ -1,4 +1,5 @@
 const mysqlConnection = require("./connection")
+const bcrypt = require("bcrypt")
 const util = require("util")
 const searchResultsPerPage = 20
 
@@ -7,7 +8,7 @@ function sanitize(myString) {
   return newString
 }
 
-function insertQuestion(dict) {
+function insertQuestion(dict, userId) {
 
   var question = mysqlConnection.escape(dict["question"])
   var survey_id = mysqlConnection.escape(dict["survey_id"])
@@ -16,7 +17,7 @@ function insertQuestion(dict) {
   var sample_size = mysqlConnection.escape(dict["sample_size"])
   var group = mysqlConnection.escape(dict["group"])
   var theme = mysqlConnection.escape(dict["theme"])
-  var created_by = mysqlConnection.escape(dict["created_by"])
+  var created_by = mysqlConnection.escape(userId)
 
   var insertQuestionQuery = "INSERT INTO Questions (question, survey_id, poll_name, survey_item_number, sample_size, `group`, theme, created_by) \
                              VALUES (" + question + "," + survey_id + "," + poll_name + "," + survey_item_number + "," + sample_size + "," + group + "," + theme + "," + created_by + ")"
@@ -90,7 +91,7 @@ function insertQuestionKeywords(questionId, dict) {
 }
 
 
-function updateQuestionWithId(id, dict) {
+function updateQuestionWithId(id, dict, userId) {
   var fieldsToUpdate = ""
   var keys = Object.keys(dict);
 
@@ -198,7 +199,7 @@ function updateQuestionWithId(id, dict) {
 /** Surveys **/
 
 
-function insertSurvey(dict) {
+function insertSurvey(dict, userId) {
 
   var polling_group = mysqlConnection.escape(dict["polling_group"])
   var poll_name = mysqlConnection.escape(dict["poll_name"])
@@ -213,7 +214,7 @@ function insertSurvey(dict) {
   var publication_date = mysqlConnection.escape(dict["publication_date"])
   var start_date = mysqlConnection.escape(dict["start_date"])
   var end_date = mysqlConnection.escape(dict["end_date"])
-  var created_by = mysqlConnection.escape(dict["created_by"])
+  var created_by = mysqlConnection.escape(userId)
 
 
   var insertSurveyQuery = "INSERT INTO Surveys (polling_group, poll_name, country, subnational, population, `language`, sample_size, sample_method, type_of_study, url, publication_date, start_date, end_date, created_by) \
@@ -230,12 +231,13 @@ function insertSurvey(dict) {
   })
 }
 
-function updateSurveyWithId(id, dict) {
+function updateSurveyWithId(id, dict, userId) {
   var fieldsToUpdate = ""
   var keys = Object.keys(dict);
 
   for (var i = 0; i < keys.length; i++) {
     var key = keys[i]
+
     fieldsToUpdate = fieldsToUpdate + key + "=" + mysqlConnection.escape(dict[key])
     if (i < keys.length - 1) {
       fieldsToUpdate = fieldsToUpdate + ",\n"
@@ -293,6 +295,7 @@ function deleteSurveyWithId(id) {
   });
 }
 
+//Two queries: COUNT, Results
 function searchQuestionAndSurvey(question, survey, status, page) {
   return new Promise((resolve, reject) => {
     var countQuery, perPageQuestionsQuery
@@ -332,6 +335,35 @@ function searchQuestionAndSurvey(question, survey, status, page) {
   });
 }
 
+//Two queries: COUNT, Results
+function searchSurveys(survey, status, page) {
+  return new Promise((resolve, reject) => {
+    var rowsOffset = (page - 1) * searchResultsPerPage
+
+    var countQuery = "SELECT COUNT(*) as count FROM Surveys WHERE poll_name LIKE '%" + sanitize(survey) + "%'"
+    var surveyQuery = "SELECT * FROM Surveys WHERE poll_name LIKE '%" + sanitize(survey) + "%'"
+
+    if (status == "approved") {
+      countQuery = countQuery + " AND approved = true"
+      surveyQuery = surveyQuery + " AND approved = true"
+    } else if (status == "pending") {
+      countQuery = countQuery + " AND approved = false"
+      surveyQuery = surveyQuery + " AND approved = false"
+    }
+
+    //add limit and offset
+    surveyQuery += " LIMIT " + searchResultsPerPage + " OFFSET " + rowsOffset
+
+    mysqlConnection.query(countQuery + ";" + surveyQuery, (err, res) => {
+      if (err) {
+        console.log("MYSQL Error:" + err)
+        return reject(err);
+      }
+      resolve(res);
+    });
+  });
+}
+
 /** Approve **/
 
 function approveSurveyWithId(surveyId) {
@@ -359,6 +391,59 @@ function approveQuestionWithId(questionId) {
   });
 }
 
+/** User **/
+
+function createUser(form) {
+  return new Promise((resolve, reject) => {
+
+    var email = mysqlConnection.escape(form["email"])
+    var unescapedPassword = form["password"]
+    var first_name = mysqlConnection.escape(form["first_name"])
+    var last_name = mysqlConnection.escape(form["last_name"])
+    var how_did_you_hear_about_us = mysqlConnection.escape(form["how_did_you_hear_about_us"])
+    var why_get_involved = mysqlConnection.escape(form["why_get_involved"])
+    var language_proficiencies = mysqlConnection.escape(form["language_proficiencies"])
+    var education = mysqlConnection.escape(form["education"])
+
+    let hashedPassword = bcrypt.hashSync(unescapedPassword, 10)
+    let escapedHashPassword = mysqlConnection.escape(hashedPassword)
+
+    mysqlConnection.query("INSERT INTO Users (email, password, first_name, last_name, how_did_you_hear_about_us, why_get_involved, language_proficiencies, education) VALUES (" + email + "," + escapedHashPassword + "," + first_name + "," + last_name + "," + how_did_you_hear_about_us + "," + why_get_involved + "," + language_proficiencies + "," + education + ")", (err, res) => {
+      if (err) {
+        return reject(err.sqlMessage);
+      }
+      resolve(res);
+    });
+  });
+}
+
+function approveUsers(dict){
+  var ids = Object.keys(dict);
+  var idsString = ids.join(",")
+
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("UPDATE Users SET approved = true WHERE id in ("+ idsString +")", (err, res) => {
+      if (err) {
+        return reject(err.sqlMessage)
+      }
+      resolve(res)
+    })
+  })
+}
+
+function deleteUsers(ids){
+  var idsString = ids.join(",")
+
+  return new Promise((resolve, reject) => {
+    mysqlConnection.query("DELETE FROM Users WHERE id in ("+ idsString +")", (err, res) => {
+      if (err) {
+        return reject(err.sqlMessage)
+      }
+      resolve(res)
+    })
+  })
+}
+
 module.exports = {
   insertQuestion: insertQuestion,
   insertQuestionOptions: insertQuestionOptions,
@@ -369,7 +454,11 @@ module.exports = {
   deleteQuestionWithId: deleteQuestionWithId,
   deleteSurveyWithId: deleteSurveyWithId,
   searchQuestionAndSurvey: searchQuestionAndSurvey,
+  searchSurveys:searchSurveys,
   searchResultsPerPage: searchResultsPerPage,
   approveSurveyWithId: approveSurveyWithId,
-  approveQuestionWithId: approveQuestionWithId
+  approveQuestionWithId: approveQuestionWithId,
+  createUser: createUser,
+  approveUsers: approveUsers,
+  deleteUsers: deleteUsers
 }

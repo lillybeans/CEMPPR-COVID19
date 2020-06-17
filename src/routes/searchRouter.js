@@ -2,10 +2,13 @@ const express = require("express")
 const router = express.Router()
 const postService = require("../POSTService")
 const getService = require("../GETService")
+const authService = require("../auth")
 
 //Define our Routes:
 const searchRouter = express.Router();
 const util = require("util")
+
+searchRouter.use(authService.checkAccountApproved)
 
 searchRouter.post('/questions/:status/:page', function(req, res) {
   const questionSearchText = req.body["question"]
@@ -23,6 +26,7 @@ searchRouter.post('/questions/:status/:page', function(req, res) {
   var themes = []
   var keywords = []
 
+  //This question performs 2 query: count, actual results
   postService.searchQuestionAndSurvey(questionSearchText, surveySearchText, status, page).then(results => {
     //Results contains 2 parts
 
@@ -86,6 +90,8 @@ searchRouter.post('/questions/:status/:page', function(req, res) {
       groups: groups,
       themes: themes,
       keywords: keywords,
+      endpoint: "questions",
+      status: status,
       isSearch: true,
       layout: false
     }, function(err, html) {
@@ -95,6 +101,43 @@ searchRouter.post('/questions/:status/:page', function(req, res) {
   })
 
 })
+
+searchRouter.post('/surveys/:status/:page', function(req, res) {
+
+  const surveySearchText = req.body["survey"]
+
+  const status = req.params.status //"approved" or "pending"
+  const page = req.params.page
+
+  var pages = []
+  var numberOfRecords = 0
+
+  postService.searchSurveys(surveySearchText, status, page).then(surveysRes => {
+    var numberOfRecords = surveysRes[0][0].count
+    var perPageSurveys = surveysRes[1]
+
+    var numPages = Math.ceil(numberOfRecords / postService.searchResultsPerPage)
+    for (var i = 1; i <= numPages; i++) {
+      pages.push(i)
+    }
+
+    res.render("partials/submit_question/surveyListTemplate", {
+      numberOfRecords: numberOfRecords,
+      pages: pages,
+      active: page,
+      surveys: perPageSurveys,
+      isSearch: true,
+      endpoint: "surveys",
+      status: status,
+      layout: false
+    }, function(err, html) {
+      res.send(html)
+    })
+
+  })
+
+})
+
 
 
 module.exports = searchRouter

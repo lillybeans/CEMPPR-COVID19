@@ -1,0 +1,41 @@
+<script type="text/javascript" src="../../../js/database/search.js"></script>
+<script type="text/javascript" src="../../../js/submit/showAllSurveys.js"></script>
+
+<div class="questions_page mx-5 my-4">
+  <div class="mx-3">
+    <h1 class="display-4">Choose Survey</h1>
+    <hr class="bg-dark">
+
+    <nav class="my-2">
+      <div class="search_results_nav">
+      </div>
+
+      <div class="questions_results_nav">
+        {{> database/paginationNavTemplate active=active pages=pages endpoint=endpoint status=status numberOfRecords=numberOfRecords }}
+      </div>
+    </nav>
+
+    <div class="search_and_question_results">
+
+      <div class="searchBar form-group card px-3 py-2 bg-light">
+        <div class="row">
+        <div class="col-lg-1 col-md-3">Search</div>
+        <div class="col-lg-11 col-md-9">
+           <input class="form-control form-control-sm search survey" type="text" placeholder="USM_20200409" oninput="searchChooseSurvey(this)" />
+        </div>
+      </div>
+      </div>
+
+
+      <div class="search_results">
+
+      </div>
+
+      <div class="questions_results">
+        {{> submit_question/surveyListTemplate surveys=surveys active=active}}
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>

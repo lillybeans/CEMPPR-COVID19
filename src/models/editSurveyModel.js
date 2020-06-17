@@ -73,7 +73,7 @@ var editSurveyModel = {
       "required": true
     },
     {
-      "name": "created_by",
+      "name": "created_by_name",
       "title":"Created By",
       "type":"text",
       "required": true,
@@ -117,10 +117,11 @@ var editSurveyModel = {
       "type": "paragraph_break"
     },
     {
-      "name": "updated_by",
+      "name": "updated_by_name",
       "title":"Updated By",
       "type":"text",
       "required": true,
+      "disabled": true,
       "special_font": true
     },
     {

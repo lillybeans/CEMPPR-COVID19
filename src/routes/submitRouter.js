@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const getService = require("../GETService")
 const postService = require("../POSTService")
+const authService = require("../auth")
 
 const submitSurveyModel = require("../models/submitSurveyModel")
 
@@ -9,15 +10,21 @@ const submitSurveyModel = require("../models/submitSurveyModel")
 const submitRouter = express.Router();
 const util = require("util")
 
+submitRouter.use(authService.checkAccountApproved)
+
 // home page route
 
-submitRouter.get('/question/:status?', function(req, res) {
-  const status = req.params.status //optional, either "submitted" or nothing
+submitRouter.get('/question', function(req, res) {
+  const status = req.query.status //optional, either "submitted" or nothing
 
+  //question?submitted=true
   var isSubmitted = false
-  if (status == "submitted"){
+  if (status && status == "submitted"){
     isSubmitted = true
   }
+
+  //question?survey_id=60
+  const surveyId = req.query.survey_id //if user has chosen "show all surveys"
 
   var surveys = []
 
@@ -28,7 +35,6 @@ submitRouter.get('/question/:status?', function(req, res) {
 
   getService.fetchSurveysByPagePromise(1, "all").then(surveysRes => {
     surveys = surveysRes //only first 20
-    console.log("surveys: "+util.inspect(surveys))
     return getService.fetchGroups()
   }).then(groupsRes => {
     groups = groupsRes
@@ -39,12 +45,51 @@ submitRouter.get('/question/:status?', function(req, res) {
   }).then(keywordsRes => {
     keywords = keywordsRes
 
+    if(surveyId){
+      return getService.fetchSurveyWithId(surveyId)
+    } else {
+      return Promise.resolve(null)
+    }
+
+  }).then(selectedSurvey => {
     res.render("submit/question", {
+      selectedSurvey: selectedSurvey,
       surveys: surveys,
       groups: groups,
       themes: themes,
       keywords: keywords,
-      submitted: isSubmitted
+      submitted: isSubmitted,
+      isAuthenticated: req.isAuthenticated(),
+      user: req.user
+    })
+  })
+
+})
+
+submitRouter.get('/question/showAllSurveys/:page', function(req, res) {
+  const page = req.params.page
+
+  var numberOfRecords = 0
+  var pages = []
+
+  getService.fetchNumberOfSurveysPromise("all").then(count => {
+    numberOfRecords = count
+
+    numPages = Math.ceil(numberOfRecords / postService.searchResultsPerPage)
+    for (var i = 1; i <= numPages; i++) {
+      pages.push(i)
+    }
+
+    return getService.fetchSurveysByPagePromise(page, "all")
+  }).then(surveysRes => {
+
+    res.render("partials/submit_question/showAllSurveys", {
+      surveys: surveysRes,
+      numberOfRecords: numberOfRecords,
+      pages: pages,
+      active: page,
+      isAuthenticated: req.isAuthenticated(),
+      user: req.user
     })
   })
 
@@ -54,8 +99,9 @@ submitRouter.post('/question', function(req, res){
 
   const formData = req.body
   var questionId = ""
+  const userId = req.user.id
 
-  postService.insertQuestion(formData).then(newInsertQuestionId => {
+  postService.insertQuestion(formData, userId).then(newInsertQuestionId => {
     questionId = newInsertQuestionId
     return postService.insertQuestionOptions(questionId, formData)
   }).then(insertQuestionOptionsRes => {
@@ -65,12 +111,12 @@ submitRouter.post('/question', function(req, res){
   })
 })
 
-submitRouter.get('/survey/:status?', function(req, res) {
+submitRouter.get('/survey', function(req, res) {
 
-  const status = req.params.status //optional, either "submitted" or nothing
+  const status = req.query.status //optional, either "submitted" or nothing
 
   var isSubmitted = false
-  if (status == "submitted"){
+  if (status && status == "submitted"){
     isSubmitted = true
   }
 
@@ -100,7 +146,9 @@ submitRouter.get('/survey/:status?', function(req, res) {
       var populatedModel = populateSurveyModelWithData(submitSurveyModel, countries, populations, languages, sampleMethods, typeOfStudies)
       res.render("submit/survey", {
         surveyModel: populatedModel,
-        submitted: isSubmitted
+        submitted: isSubmitted,
+        isAuthenticated: req.isAuthenticated(),
+        user: req.user
       })
     })
 })
@@ -108,8 +156,9 @@ submitRouter.get('/survey/:status?', function(req, res) {
 submitRouter.post('/survey', function(req, res){
 
   const formData = req.body
+  const userId = req.user.id
 
-  postService.insertSurvey(formData).then(newInsertSurveyId => {
+  postService.insertSurvey(formData, userId).then(newInsertSurveyId => {
     res.send("success")
   })
 })
