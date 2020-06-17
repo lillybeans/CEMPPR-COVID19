@@ -33,7 +33,8 @@ contains script for the Google Sheet (our old data entry portal)
 
 If you want to deploy the website locally:
 
-1. install Node
-2. Clone repository
-3. Make sure you are at root,  `cd src`
-2. Then run the command `nodemon server.js`
+1. Install node. If you are on Mac: `brew install node`. If you already have node installed, run: `node -v` and `npm -v` and make sure you have the latest versions.
+2. Clone this repository
+3. Make sure you are at root of the repo, then  `cd src`
+4. Then run the command `nodemon server.js`
+5. Open web browser, go to `localhost:3000`. You should now be able to see the homepage of the website.
